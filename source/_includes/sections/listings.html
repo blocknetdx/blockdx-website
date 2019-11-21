@@ -1,0 +1,93 @@
+{% assign global = site.translations[site.lang].global %}
+{% assign listings = site.translations[site.lang].listings %}
+
+<section class="section section-first bg-light">
+  <div class="container"> 
+    <div class="row">
+      <div class="col-md-12 dx-animate">
+        <div class="table-responsive">
+          <table class="table shadow-sm">
+            <thead class="thead-primary">
+              <tr>
+                <th>{{ listings.table_assets }}</th>
+                <th>{{ listings.table_ticker }}</th>
+                <th>{{ listings.table_wallets }} 
+                  <i class="fas fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="{{ listings.table_wallet_info }}"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% comment %}
+                  Example manifest version group entry
+                  {
+                    "blockchain": "AeriumX",
+                    "ticker": "AEX",
+                    "ver_id": "aeriumx--v2.0",
+                    "ver_name": "AeriumX",
+                    "conf_name": "aeriumx.conf",
+                    "dir_name_linux": "aeriumx",
+                    "dir_name_mac": "AeriumX",
+                    "dir_name_win": "AeriumX",
+                    "repo_url": "https://github.com/aeriumcoin/AeriumX",
+                    "versions": [
+                      "v2.2"
+                    ],
+                    "xbridge_conf": "aeriumx--v2.0.conf",
+                    "wallet_conf": "aeriumx--v2.0.conf"
+                  }
+              {% endcomment %}
+
+              {% comment %}<!-- Create manifest array containing manifest-latest.json data  -->{% endcomment %}
+              {% assign manifest = site.data.manifest-latest %}
+
+              {% comment %}<!-- Create array of unique blockchain names -->{% endcomment %}
+              {% assign blockchains = manifest | map: "blockchain" | uniq %}
+
+              {% comment %}<!-- For each unique blockchain name -->{% endcomment %}
+              {% for blockchain in blockchains %}
+
+                {% comment %}<!-- Temporary string variable to store the wallet versions for each unique blockchain name -->{% endcomment %}
+                {% assign versionList = "" %}
+
+                {% comment %}<!-- Create array of version groups that match the unique blockchain name -->{% endcomment %}
+                {% assign groups = manifest | where: "blockchain", blockchain %}
+
+                {% comment %}<!-- Temporary variables to reference other info for each unique blockchain name -->{% endcomment %}
+                {% assign currentBlockchain = groups | first %}
+                {% assign blockchainName = currentBlockchain.blockchain %}
+                {% assign blockchainTicker = currentBlockchain.ticker %}
+                {% assign blockchainRepo = currentBlockchain.repo_url %}
+
+                {% comment %}<!-- For each manifest version groups that matches the unique blockchain name  -->{% endcomment %}
+                {% for group in groups %}
+
+                  {% comment %}<!-- For each wallet version in that version group -->{% endcomment %}
+                  {% for version in group.versions %}
+
+                    {% comment %}<!-- Add the version and delimiter to the versionList string -->{% endcomment %}
+                    {% assign versionList = versionList | append: version %}
+                    {% assign versionList = versionList | append: "||" %}
+                  {% endfor %}
+                {% endfor %}
+
+                {% comment %}<!-- Create array of versions from the versionList string -->{% endcomment %}
+                {% assign versionListArray =  versionList | split: "||" %}
+                <tr>
+                  <td>{{ blockchainName }}</td>
+                  <td>{{ blockchainTicker }}</td>
+                  <td>
+                    {% for version in versionListArray %}
+                      {% comment %}<!-- kept on same line to avoid a space being added before the comma -->{% endcomment %}
+                      <a href="{{ blockchainRepo }}/releases/tag/{{ version }}" target="_blank">{{ version }}</a>{% if version != versionListArray.last %}, {% endif %}
+                    {% endfor %}
+                  </td>
+                </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

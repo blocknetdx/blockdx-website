@@ -1,0 +1,19 @@
+---
+title: global.meta_title
+description: global.meta_description
+keywords: global.meta_keywords
+layout: default
+namespace: e404
+permalink: /404/
+---
+
+
+{% assign global = site.translations[site.lang].global %}
+{% assign e404 = site.translations[site.lang].e404 %}
+
+{% 
+  include templates/page-header.html
+  title=e404.title
+  intro=e404.error
+  class='bg-light'
+%}

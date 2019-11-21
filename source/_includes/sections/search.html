@@ -1,0 +1,32 @@
+<section class="section bg-light">
+  <div class="container">
+
+    {% 
+      include templates/section-header.html
+      header='Search'
+      subheader='Search Listings'
+      p='Learn more about the listed projects and securely trade your favorite assets.'
+      {% comment %}
+        p='Learn more about your favorite projects and securely trade their assets.'
+        p='Securely trade your favorite assets and learn more about the listed projects.'
+      {% endcomment %}
+    %}
+
+    <div class="row justify-content-center">
+      <div class="col-md-10 dx-animate">
+        <form action="#" class="search-form">
+          <div class="form-group d-md-flex">
+            <input type="text" class="form-control px-4" placeholder="Enter your search term...">
+            <input type="submit" class="submit-search btn btn-primary px-5" value="Search">
+          </div>
+        </form>
+        <p class="text-center">
+          <span class="mr-4"><small class="mr-1">BTC</small> $45,234</span> 
+          <span class="mr-4"><small class="mr-1">ETH</small> $1,923</span> 
+          <span class="mr-4"><small class="mr-1">LTC</small> $327</span> 
+          <span class="mr-4"><small class="mr-1">DAI</small> $1</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

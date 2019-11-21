@@ -1,0 +1,27 @@
+{% assign global = site.translations[site.lang].global %}
+{% assign features = site.translations[site.lang].features %}
+
+<section id="features" class="section section-firstt">
+  <div class="container">
+
+    {%
+      include templates/section-header.html
+      header=features.header
+      subheader=features.subheader
+      p=features.intro
+    %}
+
+    <div class="row">
+
+      {% for item in features.items %}
+        {%
+          include templates/feature.html
+          icon=item.icon
+          feature=item.feature
+          description=item.description
+        %}
+      {% endfor %}
+
+    </div>
+  </div>
+</section>

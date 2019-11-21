@@ -1,0 +1,24 @@
+{% if 
+  include.postUrl and
+  include.postUrl != '' and
+  include.postTitle and
+  include.postTitle != '' and
+  include.postImg and
+  include.postImg != ''
+%}
+  <div class="col-lg-4 col-md-10 dx-animate">
+    <div class="blog-entry mb-4 h-shadow h-scale shadow-sm" {% if include.animationDelay and include.animationDelay != '' %}data-aos-delay="{{ include.animationDelay }}"{% endif %}>
+      <a href="{{ include.postUrl }}" class="blog-img" 
+        style="background-image: url('{{ include.postImg }}');
+          {% if include.coverPos %}
+            background-position: {{ include.coverPos }};
+          {% endif %} 
+          height: 300px;"></a>
+      <div class="text p-3">
+        <h5 class="heading">
+          <a href="{{ include.postUrl }}">{{ include.postTitle }}</a>
+        </h5>
+      </div>
+    </div>
+  </div>
+{% endif %}

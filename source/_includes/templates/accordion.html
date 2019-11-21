@@ -1,0 +1,27 @@
+{% if 
+  include.section and
+  include.section != '' and
+  include.header and
+  include.header != ''
+  include.num and
+  include.num != ''
+  include.content and
+  include.content != ''
+%}
+  <div class="card h-shadow h-scale">
+    <div class="card-header">
+      <a class="card-link" data-toggle="collapse" href="#{{ include.section }}{{ include.num }}" aria-expanded="{% if include.expanded %}true{% else %}false{% endif %}" aria-controls="{{ include.section }}{{ include.num }}">
+        <div class="text">{{ include.header }}</div>
+        <span class="collapsed"><i class="fas fa-plus-circle"></i></span>
+        <span class="expanded"><i class="fas fa-minus-circle"></i></span>
+      </a>
+    </div>
+    <div id="{{ include.section }}{{ include.num }}" class="collapse {% if include.expanded %}show{% endif %}">
+      <div class="card-body">
+        <p>
+          {{ include.content }}
+        </p>
+      </div>
+    </div>
+  </div>
+{% endif %}

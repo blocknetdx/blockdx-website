@@ -1,0 +1,35 @@
+{% comment %}
+  Inspect data with set outputType method.
+
+  Start: JEKYLL_ENV=dev bundle exec jekyll serve
+  Usage: {% include test.html key='optional description' val='value to inspect' %}
+
+  Could be useful to expand if needed: 
+  https://stackoverflow.com/a/53693728/4462930
+{% endcomment %}
+
+
+
+{% assign outputType = "log" %}
+
+
+{% if include.key %}
+  {% assign key = include.key | append: ': ' %}
+{% else %}
+  {% assign key = '' %}
+{% endif %}
+{% assign val = include.val %}
+
+
+{% if jekyll.environment == "dev" %}
+  {% case outputType %}
+    {% when 'log' %}
+      <script>console.log("{{ key }}{{ val }}");</script>
+    {% when 'alert' %}
+      <script>alert("{{ key }}{{ val }}");</script>
+    {% when 'page' %}
+      {{ key }}{{ content }}
+    {% else %}
+      {{ key }}{{ content }}
+  {% endcase %}
+{% endif %}

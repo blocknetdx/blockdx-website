@@ -1,0 +1,77 @@
+{% assign global = site.translations[site.lang].global %}
+{% assign downloads = site.translations[site.lang].downloads %}
+
+<section id="downloads" class="section bg-light">
+  <div class="container">
+
+    {% 
+      include templates/section-header.html
+      header=downloads.header
+      subheader=downloads.subheader
+      p=''
+    %}
+
+    <div class="row justify-content-center">
+      <div class="col-10 col-sm-10 col-md-4 mb-4 mb-lg-0 dx-animate">
+        <div class="dx-card shadow-sm h-shadow h-scale">
+          <div class="text-center">
+            <h3 class="heading">{{ downloads.macos }}</h3>
+            <img class="os-logo" style="max-height: 125px;" src="/assets/img/apple-logo.svg">
+            <hr>
+            {% comment %}
+            <!-- <a href="{{ site.exlink_mac_setup }}" class="resource-link d-block">{{ downloads.setup }}</a>
+            <a href="{{ site.exlink_trading }}" class="resource-link d-block">{{ downloads.trading }}</a>
+            <a href="{{ site.exlink_troubleshooting }}" class="resource-link d-block">{{ downloads.troubleshooting }}</a> -->
+            {% endcomment %}
+            <a href="{{ site.exlink_docs_setup }}" class="resource-link d-block">{{ downloads.setup }}</a>
+            <a href="{{ site.exlink_docs_trading }}" class="resource-link d-block">{{ downloads.trading }}</a>
+            <hr>
+            <a class="download btn btn-primary d-block px-3 py-3" href="{{ site.exlink_mac_download }}">{{ downloads.download }}</a>
+            <a class="all-dwnlds" href="{{ site.exlink_all_downloads }}">{{ downloads.all_downloads }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-10 col-sm-10 col-md-4 mb-4 mb-lg-0 dx-animate">
+        <div class="dx-card shadow-sm h-shadow h-scale">
+          <div class="text-center">
+            <h3 class="heading">{{ downloads.windows }}</h3>
+            <img class="os-logo" style="max-height: 125px;" src="/assets/img/windows-logo.svg">
+            <hr>
+            {% comment %}
+            <!-- <a href="{{ site.exlink_windows_setup }}" class="resource-link d-block">{{ downloads.setup }}</a>
+            <a href="{{ site.exlink_trading }}" class="resource-link d-block">{{ downloads.trading }}</a>
+            <a href="{{ site.exlink_troubleshooting }}" class="resource-link d-block">{{ downloads.troubleshooting }}</a> -->
+            {% endcomment %}
+            <a href="{{ site.exlink_docs_setup }}" class="resource-link d-block">{{ downloads.setup }}</a>
+            <a href="{{ site.exlink_docs_trading }}" class="resource-link d-block">{{ downloads.trading }}</a>
+            <hr style="height: 1px;">
+            <a class="download btn btn-primary d-block px-3 py-3" href="{{ site.exlink_win_download }}">{{ downloads.download }}</a>
+            <a class="all-dwnlds" href="{{ site.exlink_all_downloads }}">{{ downloads.all_downloads }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-10 col-sm-10 col-md-4 mb-4 mb-lg-0 dx-animate">
+        <div class="dx-card shadow-sm h-shadow h-scale">
+          <div class="text-center">
+            <h3 class="heading">{{ downloads.linux }}</h3>
+            <img class="os-logo" style="max-height: 125px;" src="/assets/img/linux-logo.svg">
+            <hr>
+            {% comment %}
+            <!-- <a href="{{ site.exlink_linux_setup }}" class="resource-link d-block">{{ downloads.setup }}</a>
+            <a href="{{ site.exlink_trading }}" class="resource-link d-block">{{ downloads.trading }}</a>
+            <a href="{{ site.exlink_troubleshooting }}" class="resource-link d-block">{{ downloads.troubleshooting }}</a> -->
+            {% endcomment %}
+            <a href="{{ site.exlink_docs_setup }}" class="resource-link d-block">{{ downloads.setup }}</a>
+            <a href="{{ site.exlink_docs_trading }}" class="resource-link d-block">{{ downloads.trading }}</a>
+            <hr style="height: 1px;">
+            <a class="download btn btn-primary d-block px-3 py-3" href="{{ site.exlink_linux_download }}">{{ downloads.download }}</a>
+            <a class="all-dwnlds" href="{{ site.exlink_all_downloads }}">{{ downloads.all_downloads }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center text-secondary mt-3">
+      {{ downloads.version }}: {{ site.blockdx_version }}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+---
+title: fees.meta_title
+description: fees.meta_description
+keywords: fees.meta_keywords
+layout: default
+namespace: fees
+permalink: /fees/
+permalink_zh: /费用/
+---
+
+
+{% assign global = site.translations[site.lang].global %}
+{% assign fees = site.translations[site.lang].fees %}
+
+{% 
+  include templates/page-header.html
+  title=fees.title
+  class='bg-light'
+%}
+
+<section class="section section-first bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mb-3 dx-animate">
+        <div class="dx-card shadow-sm h-shadow h-scale">
+          <h2 class="heading pl-0">{{ fees.maker }}</h2>
+          <p>{{ fees.maker_fees }}</p>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3 dx-animate">
+        <div class="dx-card shadow-sm h-shadow h-scale">
+          <h2 class="heading pl-0">{{ fees.taker }}</h2>
+          <p>{{ fees.taker_fees }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+{% assign global = site.translations[site.lang].global %}
+{% assign stats = site.translations[site.lang].stats %}
+
+<section id="stats" class="stats bg-dark section">
+  <div class="container">
+
+    {% 
+      include templates/section-header.html
+      header=stats.header
+      subheader=stats.subheader
+      p=stats.intro
+    %}
+
+    {% comment %} <!-- Create manifest array containing manifest-latest.json data  --> {% endcomment %}
+    {% assign manifest = site.data.manifest-latest %}
+    {% comment %} <!-- Create array of unique blockchain names --> {% endcomment %}
+    {% assign blockchains = manifest | map: "blockchain" | uniq %}
+    {% comment %} <!-- Number of unique blockchains listed --> {% endcomment %}
+    {% assign assetCount = blockchains | size %}
+    {% comment %} <!-- Calculate number of trading pairs combinations --> {% endcomment %}
+    {% assign n = assetCount | minus: 1 %}
+    {% assign combinations = 0 %}
+    {% for i in (1..n) %}
+      {% assign combinations = combinations | plus: i %}
+    {% endfor %}
+
+
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-md d-flex justify-content-center stats-wrap dx-animate text-center">
+            <strong class="number" data-number="{{ assetCount }}">0</strong>
+            <span class="stat">{{ stats.assets }}</span>
+          </div>
+          <div class="col-md d-flex justify-content-center stats-wrap dx-animate text-center">
+            <strong class="number" data-number="{{ combinations }}">0</strong>
+            <span class="stat">{{ stats.pairs }}</span>
+          </div>
+          <div class="col-md d-flex justify-content-center stats-wrap dx-animate text-center">
+            <strong class="number" data-number="{{ stats.trades_val }}">0</strong><strong><em>+</em></strong>
+            <span class="stat">{{ stats.trades }}</span>
+          </div>
+          <div class="col-md d-flex justify-content-center stats-wrap dx-animate text-center">
+            <strong class="number" data-number="0">0</strong>
+            <span class="stat">{{ stats.middlemen }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
