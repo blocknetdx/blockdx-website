@@ -1,0 +1,74 @@
+{% assign global = site.translations[site.lang].global %}
+
+{% assign title = site.translations[site.lang].global.meta_title %}
+  {% if page.title %}
+    {% capture page_title %}{% t page.title %} | {{ title }}{% endcapture %}
+    {% assign title = page_title %}
+  {% endif %}
+
+{% assign description = site.translations[site.lang].global.meta_description %}
+  {% if page.description %}
+    {% capture page_description %}{% t page.description %}{% endcapture %}
+    {% assign description = page_description %}
+  {% endif %}
+
+{% assign keywords = site.translations[site.lang].global.meta_keywords %}
+  {% if page.keywords %}
+    {% capture page_keywords %}{% t page.keywords %}{% endcapture %}
+    {% assign keywords = page_keywords %}
+  {% endif %}
+
+{% assign page_link = site.url | append: '/' | append: site.lang | append: page.url %}
+{% if site.lang == 'en' %}
+  {% assign page_link = site.url | append: page.url %}
+{% endif %}
+
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109213957-6"></script>
+  <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-109213957-6');</script>
+
+  <meta http-equiv="Content-Type" content="text/html" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="{{ keywords }}">
+  <meta name="description" content="{{ description }}">
+  <title>{{ title }}</title>
+
+  <link rel="profile" href="http://gmpg.org/xfn/11">
+  <link rel="dns-prefetch" href="//www.blockdx.com">
+  <link rel="canonical" href="{{ site.url }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico">
+
+  <meta name="msapplication-TileColor" content="#fff">
+  <meta name="theme-color" content="#fff">
+  <meta property="og:locale" content="{{ global.locale }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:url" content="{{ page_link }}">
+  <meta property="og:site_name" content="{{ global.meta_title }}">
+  <meta property="og:image" content="/assets/img/blockdx.png">
+  <meta property="og:image:secure_url" content="/assets/img/blockdx.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:description" content="{{ description }}">
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:image" content="/assets/img/blockdx.png"> 
+
+
+  {% comment %}
+    <link rel="stylesheet" href="/assets/css/normalize.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/aos.css">
+
+    <!-- <link rel="stylesheet" href="/assets/css/bootstrap.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl_root }}"> -->
+  {% endcomment %}
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <script src="https://kit.fontawesome.com/47c7ccecfb.js"></script>
+</head>

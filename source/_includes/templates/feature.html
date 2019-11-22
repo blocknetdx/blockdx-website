@@ -1,0 +1,44 @@
+{% comment %}
+  format 1 = centered icon
+  format 2 = justfied left icon
+{% endcomment %}
+
+{% assign format = '2' %}
+{% if 
+  include.icon and
+  include.icon != '' and
+  include.feature and
+  include.feature != '' and
+  include.description and
+  include.description != ''
+%}
+  {% if format == '1' %}
+    <div class="col-lg-4 col-md-6 d-flex dx-animate">
+      <div class="feature media d-block text-center h-shadow h-scale">
+        <div class="d-flex justify-content-center">
+          <div class="icon" style="font-size: 55px;">
+            {{ include.icon }}
+          </div>
+        </div>
+        <div class="media-body p-2 mt-3">
+          <h3 class="heading">{{ include.feature }}</h3>
+          <p>{{ include.description }}</p>
+        </div>
+      </div>
+    </div>
+  {% elsif format == '2' %}
+    <div class="col-lg-4 col-md-6 d-flex dx-animate">
+      <div class="feature media d-block h-shadow h-scale">
+        <div class="d-flex">
+          <div class="icon" style="font-size: 55px; margin-left: 20px;">
+            {{ include.icon }}
+          </div>
+        </div>
+        <div class="media-body p-2 mt-3">
+          <h3 class="heading">{{ include.feature }}</h3>
+          <p>{{ include.description }}</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}

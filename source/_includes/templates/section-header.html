@@ -1,0 +1,15 @@
+<div class="row justify-content-center pb-5">
+  <div class="col-md-7 text-center heading-section dx-animate">
+    {% comment %}
+      {% if include.header and include.header != '' %}
+        <span class="subheading">{{ include.header }}</span>
+      {% endif %}
+    {% endcomment %}
+    {% if include.subheader and include.subheader != '' %}
+      <h2 class="mb-4">{{ include.subheader }}</h2>
+    {% endif %}
+    {% if include.p and include.p != '' %}
+      <p>{{ include.p }}</p>
+    {% endif %}
+  </div>
+</div>

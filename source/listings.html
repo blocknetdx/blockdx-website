@@ -1,0 +1,39 @@
+---
+title: listings.meta_title
+description: listings.meta_description
+keywords: listings.meta_keywords
+layout: default
+namespace: listings
+permalink: /listings/
+permalink_zh: /列表/
+---
+
+
+{% assign global = site.translations[site.lang].global %}
+{% assign baseurl = site.url | append: site.translations[site.lang].global.link_index %}
+{% assign listings = site.translations[site.lang].listings %}
+
+{% assign listing_application = baseurl | append: global.link_application %}
+
+{% comment %}
+<!--
+Content notes:
+- uncensored, open network, no listing fee, trading pair freedom
+- no third party controls your trading or takes on liability for delivering Block DX’s service
+
+- Listings are decentralized because no party controls which coins you can use on Block DX. Equally, there is no limitation on which currency pairs you use: any coin can be traded with any other coin directly. A coin’s community can start using Block DX without requiring permission from anyone. While the Blocknet project tests and ensures support for very many coins, our open source codebase enables dev teams from anywhere to do the same, so that they can independently confirm support. In outside cases where Block DX does not already support a coin, anyone may contribute code that enables support.
+
+- Access for everyone. Freedom to trade between any assets. Complete trading pair freedom allowing any coin on Block DX to be traded with any other. Every coin is accepted. There’re no listing fees to be added to Block DX. However, we do preliminary testing to ensure 100% compatibility. Contact us to submit your coin.
+-->
+{% endcomment %}
+
+{% 
+  include templates/page-header.html
+  title=listings.title
+  intro=listings.intro
+  button_text=listings.button
+  button_link=listing_application
+  class='bg-light'
+%}
+
+{% include sections/listings.html %}

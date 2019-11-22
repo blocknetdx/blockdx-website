@@ -1,0 +1,44 @@
+{% assign global = site.translations[site.lang].global %}
+{% assign subscribe = site.translations[site.lang].subscribe %}
+
+<section id="subscribe" class="section bg-dark">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col text-center heading-section dx-animate">
+        <h2>{{ subscribe.subheader }}</h2>
+        <p>{{ subscribe.intro }}</p>
+
+        <div id="mc_embed_signup" class="subscribe-form mt-5">
+          <form id="mc-embedded-subscribe-form" class="form-inline validate" action="https://blocknet.us16.list-manage.com/subscribe/post?u=5d0a376e982034a2ddd6edb98&amp;id=6ae2c503df" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <div class="container">
+              <div class="input-group mx-auto">
+                <input id="mce-EMAIL" class="required email form-control" type="email" value="" name="EMAIL" placeholder="{{ subscribe.input }}" aria-label="{{ subscribe.input }}">
+                <div class="input-group-append">
+                  <!-- <button id="mc-embedded-subscribe" class="btn btn-primary" type="submit" name="subscribe">{{ subscribe.button }}</button> -->
+                  <input id="mc-embedded-subscribe" class="btn btn-primary" type="submit" value="{{ subscribe.button }}" name="subscribe">
+                </div>
+              </div>
+            </div>
+            <div class="form-group mc-field-group input-group" style="display:none">
+              <strong>What topics are you interested in? </strong>
+              <ul>
+                <li><input type="checkbox" value="1" name="group[7173][1]" id="mce-group[7173]-7173-0"><label for="mce-group[7173]-7173-0">General</label></li>
+                <li><input type="checkbox" value="2" name="group[7173][2]" id="mce-group[7173]-7173-1"><label for="mce-group[7173]-7173-1">Service Node</label></li>
+                <li><input type="checkbox" value="4" name="group[7173][4]" id="mce-group[7173]-7173-2"><label for="mce-group[7173]-7173-2">Developer</label></li>
+                <li><input type="checkbox" value="8" name="group[7173][8]" id="mce-group[7173]-7173-3" checked><label for="mce-group[7173]-7173-3">Block DX</label></li>
+              </ul>
+            </div>
+            <div id="mce-responses" class="clear mx-auto mt-2">
+              <div class="response" id="mce-error-response" style="display:none"></div>
+              <div class="response" id="mce-success-response" style="display:none"></div>
+            </div> 
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+              <input type="text" name="b_5d0a376e982034a2ddd6edb98_6ae2c503df" tabindex="-1" value="">
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

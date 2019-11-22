@@ -1,0 +1,85 @@
+{% assign global = site.translations[site.lang].global %}
+{% assign baseurl = site.url | append: site.translations[site.lang].global.link_index %}
+{% assign footer = site.translations[site.lang].footer %}
+
+<footer id="footer" class="section bg-dark">
+  <div class="container">
+    <div class="row">
+      <div class="col-md">
+        <div class="mb-5">
+          <img class="logo" style="height: 32px;" src="/assets/img/logo-light-horz.svg">
+          <p><strong><em class="d-block">{{ footer.tagline }}</em></strong></p>
+          <ul class="social-links list-unstyled float-md-left float-lft mt-2">
+            <li class="dx-animate"><a href="{{ site.exlink_discord }}"><i class="fab fa-discord"></i></a></li>
+            <li class="dx-animate"><a href="{{ site.exlink_twitter }}"><i class="fab fa-twitter"></i></a></li>
+            <li class="dx-animate"><a href="{{ site.exlink_facebook }}"><i class="fab fa-facebook-f"></i></a></li>
+            <li class="dx-animate"><a href="{{ site.exlink_github }}"><i class="fab fa-github"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="mb-4 ml-md-5">
+          <h2>{{ footer.start_header }}</h2>
+          <ul class="list-unstyled">
+            <li><a href="{{ baseurl | append: '#downloads' }}" class="py-2 d-block">{{ footer.downloads }}</a></li>
+            <li><a href="{{ site.exlink_docs_setup }}" class="py-2 d-block">{{ footer.setup }}</a></li>
+            <li><a href="{{ site.exlink_docs_trading }}" class="py-2 d-block">{{ footer.trading }}</a></li>
+            {% comment %}
+            <!-- <li><a href="{{ baseurl | append: global.link_setup }}" class="py-2 d-block">{{ footer.setup }}</a></li>
+            <li><a href="{{ baseurl | append: global.link_trading }}" class="py-2 d-block">{{ footer.trading }}</a></li>
+            <li><a href="{{ baseurl | append: global.link_troubleshooting }}" class="py-2 d-block">{{ footer.troubleshooting }}</a></li> -->
+            {% endcomment %}
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="mb-4 ml-md-5">
+          <h2>{{ footer.learn_header }}</h2>
+          <ul class="list-unstyled">
+            <li><a href="{{ baseurl | append: '#features' }}" class="py-2 d-block">{{ footer.features }}</a></li>
+            {% comment %}
+            <!-- <li><a href="{{ baseurl | append: global.link_comparisons }}" class="py-2 d-block">{{ footer.comparisons }}</a></li> -->
+            <!-- <li><a href="{{ baseurl | append: global.link_how }}" class="py-2 d-block">{{ footer.how }}</a></li> -->
+            {% endcomment %}
+            <li><a href="{{ baseurl | append: '#faq' }}" class="py-2 d-block">{{ footer.faq }}</a></li>
+            <li><a href="{{ baseurl | append: '#blog' }}" class="py-2 d-block">{{ footer.blog }}</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="mb-4">
+          <h2>{{ footer.trading_header }}</h2>
+          <ul class="list-unstyled">
+            <li><a href="{{ baseurl | append: global.link_listings }}" class="py-2 d-block">{{ footer.listings }}</a></li>
+            <li><a href="{{ baseurl | append: global.link_application }}" class="py-2 d-block">{{ footer.application }}</a></li>
+            {% comment %}
+            <!-- <li><a href="{{ baseurl | append: global.link_orders }}" class="py-2 d-block">{{ footer.orders }}</a></li> -->
+            {% endcomment %}
+            <li><a href="{{ baseurl | append: global.link_fees }}" class="py-2 d-block">{{ footer.fees }}</a></li>
+            <li><a href="{{ baseurl | append: global.link_branding }}" class="py-2 d-block">{{ footer.branding }}</a></li>
+          </ul>
+        </div>
+      </div>
+      {% comment %}
+      <!-- <div class="col-md">
+        <div class="mb-4">
+          <h2>{{ footer.developers_header }}</h2>
+          <ul class="list-unstyled">
+            <li><a href="{{ site.exlink_api }}" class="py-2 d-block">{{ footer.api }}</a></li>
+            <li><a href="{{ baseurl | append: global.link_market_making }}" class="py-2 d-block">{{ footer.market_making }}</a></li>
+            <li><a href="{{ baseurl | append: global.link_nodes }}" class="py-2 d-block">{{ footer.nodes }}</a></li>
+            <li><a href="{{ baseurl | append: global.link_whitelabel }}" class="py-2 d-block">{{ footer.whitelabel }}</a></li>
+            <li><a href="{{ site.exlink_dx_contributor }}" class="py-2 d-block">{{ footer.contribute }}</a></li>
+          </ul>
+        </div>
+      </div> -->
+      {% endcomment %}
+    </div>
+    <div class="powered-by mt-5 text-center">
+      <a href="{{ site.exlink_blocknet }}">
+        <div>{{ footer.powered_by }}</div>
+        <img style="width: 150px;" src="/assets/img/blocknet-logo-light.svg">
+      </a>
+    </div>
+  </div>
+</footer>

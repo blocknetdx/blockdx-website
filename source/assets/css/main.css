@@ -1,0 +1,8 @@
+---
+---
+
+{% include css/normalize.min.css %}
+{% include css/animate.min.css %}
+{% include css/aos.min.css %}
+{% include css/bootstrap.min.css %}
+{% include css/style.css %}

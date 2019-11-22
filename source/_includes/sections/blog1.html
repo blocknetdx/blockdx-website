@@ -1,0 +1,31 @@
+{% assign global = site.translations[site.lang].global %}
+{% assign blog1 = site.translations[site.lang].blog1 %}
+
+<section id="blog" class="section bg-light">
+  <div class="container">
+
+    {% 
+      include templates/section-header.html
+      header=blog1.header
+      subheader=blog1.subheader
+      p=''
+    %}
+
+    <div class="row justify-content-center">
+
+      {% assign delay = 0 %}
+      {% for post in blog1.posts %}
+        {% 
+          include templates/blog-tile.html
+          postUrl=post.url
+          postTitle=post.title
+          postImg=post.image
+          coverPos=post.image_position
+          animationDelay=delay
+        %}
+        {% assign delay = delay | plus: 100 %}
+      {% endfor %}
+
+    </div>
+  </div>
+</section>

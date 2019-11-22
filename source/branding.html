@@ -1,0 +1,50 @@
+---
+title: branding.meta_title
+description: branding.meta_description
+keywords: branding.meta_keywords
+layout: default
+namespace: branding
+permalink: /branding/
+permalink_zh: /品牌化/
+---
+
+
+{% assign global = site.translations[site.lang].global %}
+{% assign branding = site.translations[site.lang].branding %}
+
+{% 
+  include templates/page-header.html
+  title=branding.title
+  intro=branding.intro
+  button_text=branding.button
+  button_link="/assets/files/blockdx-media-kit.zip"
+  class='bg-light'
+%}
+
+<section id="branding" class="section section-first bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-3 dx-animate">
+        <div class="dx-card bg-dark text-center py-4 shadow-sm">
+          <img class="logo logo-basic d-block mx-auto my-5" style="max-width: 100%" src="/assets/img/logo-light.svg">
+          <img class="logo logo-horz d-block mx-auto my-5" style="max-width: 100%" src="/assets/img/logo-light-horz.svg">
+          <img class="logo logo-vert d-block mx-auto my-5" style="max-width: 100%" src="/assets/img/logo-light-vert.svg">
+        </div>
+      </div>
+      <div class="col-md-4 mb-3 dx-animate">
+        <div class="dx-card bg-grey text-center py-4 shadow-sm">
+          <img class="logo logo-basic d-block mx-auto my-5" style="max-width: 100%" src="/assets/img/logo-dark.svg">
+          <img class="logo logo-horz d-block mx-auto my-5" style="max-width: 100%" src="/assets/img/logo-dark-horz.svg">
+          <img class="logo logo-vert d-block mx-auto my-5" style="max-width: 100%" src="/assets/img/logo-dark-vert.svg">
+        </div>
+      </div>
+      <div class="col-md-4 mb-3 dx-animate">
+        <div class="dx-card bg-black text-center py-4 shadow-sm">
+          <img class="logo logo-basic d-block mx-auto my-5" style="max-width: 100%" src="/assets/img/logo-white.svg">
+          <img class="logo logo-horz d-block mx-auto my-5" style="max-width: 100%" src="/assets/img/logo-white-horz.svg">
+          <img class="logo logo-vert d-block mx-auto my-5" style="max-width: 100%" src="/assets/img/logo-white-vert.svg">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

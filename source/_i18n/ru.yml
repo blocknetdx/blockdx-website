@@ -1,0 +1,128 @@
+nav: 
+  menu: Menu
+  home: Home
+  features: Features
+  listings: Listings
+  setup: Setup
+  macos: MacOS
+  windows: Windows
+  linux: Linux
+  trading: Trading Guide
+  troubleshooting: Troubleshooting
+  faq: FAQ
+  lang: Pусский
+  downloads: Downloads
+footer: 
+  tagline: Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.
+  powered_by: Powered by the Blocknet Protocol
+  start_header: Get Started
+  downloads: Downloads
+  setup: Setup Guide
+  trading: Trading Guide
+  troubleshooting: Troubleshooting
+  learn_header: Learn
+  features: Features
+  comparisons: Comparisons
+  how: How It Works
+  faq: FAQ
+  blog: Blog
+  trading_header: Exchange
+  listings: Listings
+  application: Listing Application
+  orders: Orders
+  fees: Fees
+  branding: Branding
+  developers_header: Developers
+  api: API
+  market_making: Market Making
+  nodes: Exchange Nodes
+  whitelabel: Whitelabel DEX
+  contribute: Contribute
+index: 
+  header: The Most Secure & Decentralized Exchange
+  # subheader: Block DX offers completely decentralized and trustless cross-chain trading via atomic swaps.
+  subheader: Block DX offers completely decentralized and trustless trading via cross-chain atomic swaps.
+  button1: Start trading
+  button2: Learn more
+features: 
+  header: Features
+  subheader: Why Block DX
+  intro: 
+downloads: 
+  header: Downloads
+  subheader: Get Started
+  # intro: 
+  macos: MacOS
+  windows: Windows
+  linux: Linux
+  setup: Setup Guide
+  trading: Trading Guide
+  troubleshooting: Troubleshooting
+  download: Download
+  all_downloads: View all downloads
+stats:
+  header: Stats
+  # subheader: 
+  # intro: 
+  assets: Assets
+  # assets_val: # dynamic
+  pairs: Trading Pairs
+  # pairs_val: # dynamic
+  trades: Trustless Trades
+  trades_val: 35000
+  middlemen: Middlemen
+  # middlemen_val: # static (0)
+faq: 
+  header: FAQ
+  subheader: Frequently Asked Questions
+  # intro: 
+subscribe: 
+  # header: 
+  subheader: Subscribe to Our Newsletter
+  intro: Stay up-to-date on our latest features, updates, and news!
+  input: Enter email address
+  button: Subscribe
+blog1: 
+  header: Blog
+  subheader: Recent Articles
+  # intro: 
+fees:
+  title: Trading Fees
+  # intro: 
+  maker: Maker
+  maker_fees: There are no maker fees — zero, zip, zilch, nada.
+  taker: Taker
+  taker_fees: There is a small 0.015 BLOCK fee when taking an existing order. If you do not have BLOCK, you can make an order to buy BLOCK without needing to pay a fee.
+listings:
+  meta_title: content title
+  meta_description: content desc
+  meta_keywords: content keywords
+  title: Listed Assets
+  intro: Securely trade over 115 native assets from your own wallets in a decentralized and trustless manner.
+  # intro: Block DX decentralized exchange enables you to securely trade over 115 native assets from your own wallet.
+  # intro: Block DX enables secure and decentralized trading of more than 115 native assets from your own wallet.
+  # intro: Securely trade over 115 native assets from your own wallet.
+  button: Listing Application
+  table_assets: Digital Asset
+  table_ticker: Ticker
+  table_wallets: Supported Wallet Versions
+  table_wallet_info: Block DX allows you to trade directly out of your wallet. Below is a list of supported wallets for each asset. This list is continuously updated.
+listing_application:
+  title: Listing Application
+  # intro: 
+  button: Application Form
+  benefits_header: Listing Benefits
+  benefits: A Block DX listing holds many benefits beyond just being traded on the exchange. Being listed means the asset has been integrated with the <a href="{{ site.link_docs }}">Blocknet Protocol</a>, which powers Block DX, and allows other services to be built utilizing the asset. This extends the demand, utility, and accessibility of the asset to the rest of the blockchain ecosystem.
+  process_header: Listing Process
+  process: Getting listed on Block DX is 100% free. If you would like to have a digital asset listed, please ask a member of that project to fill out the application form. After submission, the asset will be added to the queue for integration and compatibility testing.
+  requirements_header: Requirements
+  requirements: 'In order for for a blockchain to be compatible it must support JSON RPC and the following calls:'
+branding:
+  title: Media Kit
+  intro: The Block DX media kit includes <a href="/assets/files/blockdx-brand-guidelines.pdf">branding guidelines</a>, PNG/SVG/ESP file types, and RGB/CMYK/PMS versions of our branding.
+  button: Download Media Kit
+
+
+
+
+

@@ -1,0 +1,78 @@
+# Read about configuration here: https://jekyllrb.com/docs/configuration/options/
+name: 'Block DX'
+title: 'Block DX'
+description: 'Block DX is the fastest, most secure, most reliable, and most decentralized exchange (DEX), utilizing cross-chain atomic swaps powered by the Blocknet Protocol.'
+keywords: 'block dx, decentralized, exchange, dex, atomic swap, trustless, cross-chain, blockchain, blocknet, protocol'
+url: 'https://blockdx.com' # Use for production
+# url: http://staging.blocknet.co.s3-website-us-east-1.amazonaws.com # Use for staging
+# url: 'http://127.0.0.1:4400' # Use for dev
+permalink: 'pretty' # Do not change this, it will break all links
+source: 'source/'
+destination: 'build/'
+data_dir: '_data/'
+timezone: 'America/New_York'
+markdown: 'kramdown'
+livereload: true
+port: 4400
+sass:
+  style: 'compressed'
+# Plugins ignored if building with Github pages
+plugins: 
+- 'jekyll-sitemap'
+# - 'jekyll-language-plugin'
+- 'jekyll-multiple-languages-plugin'
+
+# Localization settings
+# language_data: data.lang.%%
+# language_includes_dir: _i18n
+# The first lang is the default/root site
+# languages: ["en","zh","ko","es","ar","ru","it","de"]
+languages: ["en"]
+# exclude_from_localizations: ["assets/"]
+
+# Custom variables, use them within content like this: {{ site.variable_name }}
+# Example: 'Block DX requires Blocknet wallet v{{ site.min_wallet_version }} or greater.'
+
+# Version Updates
+blockdx_version: '1.5.0'
+min_wallet_version: '3.14.0'
+exlink_mac_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.5.0/BLOCK-DX-1.5.0-mac.dmg'
+exlink_win_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.5.0/BLOCK-DX-1.5.0-win.exe'
+exlink_linux_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.5.0/BLOCK-DX-1.5.0-linux.AppImage'
+exlink_all_downloads: 'https://github.com/blocknetdx/block-dx/releases'
+exlink_wallet_download: 'https://github.com/blocknetdx/blocknet/releases/latest'
+
+# !!!Announcement notices are not integrated yet!!!
+# Sticky announcement messages, expiration in epoch time (s)
+# To add more announcements the template needs to be updated
+announcement1: ''
+announcement1_expiration: ''
+announcement2: ''
+announcement2_expiration: ''
+announcement3: ''
+announcement3_expiration: ''
+
+# External Links
+exlink_blocknet: 'https://blocknet.co'
+exlink_api: 'https://api.blocknet.co'
+exlink_api_xbridge: 'https://api.blocknet.co/#xbridge-api'
+exlink_docs: 'https://docs.blocknet.co'
+exlink_docs_blockchain: 'https://docs.blocknet.co/blockchain/introduction'
+exlink_docs_exchanges: 'https://docs.blocknet.co/project/exchanges'
+exlink_docs_fees: 'https://docs.blocknet.co/blockdx/fees'
+exlink_docs_snodes: 'https://docs.blocknet.co/service-nodes/introduction'
+exlink_docs_setup: 'https://docs.blocknet.co/blockdx/setup/'
+exlink_docs_trading: 'https://docs.blocknet.co/blockdx/trading/'
+exlink_dx_contributor: 'https://github.com/blocknetdx/block-dx#dev-instructions'
+exlink_makerbot: 'https://github.com/blocknetdx/dxmakerbot'
+exlink_manifest: 'https://raw.githubusercontent.com/blocknetdx/blockchain-configuration-files/master/manifest-latest.json'
+exlink_listing_application: 'https://docs.google.com/forms/d/e/1FAIpQLScgW8lm9qwPf1pP3ROlydU410kGG9XQzhI5NwgMF8GuRtGQfg/viewform'
+
+# Social Links
+exlink_github: 'https://github.com/blocknetdx/block-dx'
+exlink_discord: 'https://discord.gg/tuJwdWY'
+exlink_twitter: 'https://twitter.com/BlockDXExchange'
+exlink_facebook: 'https://www.facebook.com/BlockDX'
+
+
+
