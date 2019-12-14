@@ -1,6 +1,6 @@
 global:
-  lang: English
-  locale: en_us
+  lang: English # Do not translate
+  locale: en_us # Do not translate
   meta_title: Block DX
   meta_description: Block DX is the fastest, most secure, most reliable, and most decentralized exchange (DEX), utilizing cross-chain atomic swaps powered by the Blocknet Protocol.
   meta_keywords: block dx, decentralized, exchange, dex, atomic swap, trustless, cross-chain, blockchain, blocknet, protocol
@@ -71,49 +71,49 @@ features:
   intro: Many exchanges <span class="text-italic">claim</span> to be decentralized while hiding the details of centralized components. Block DX is the only exchange that decentralizes every component. <strong class="d-block mt-2"><em>Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.</em></strong>
   items:
     - feature: Decentralized Order Books
-      icon: <i class="fas fa-network-wired"></i>
+      icon: <i class="fas fa-network-wired"></i> # Do not translate
       description: Traders broadcast their orders over a peer-to-peer network and each trader compiles the orderbook locally themselves. Unlike on-chain order books which enable frontrunning, with Block DX no one can get orders faster than anyone else by being closer to the server, since there is no server.
     - feature: Decentralized Order Matching
-      icon: <i class="fas fa-wave-square"></i>
+      icon: <i class="fas fa-wave-square"></i> # Do not translate
       description: All order matching is performed locally. As an order is taken, Block DX automatically begins communicating with the counterparty over the peer-to-peer network to conduct the trade. No third parties control this, all action is self-sovereign.
     - feature: Non-custodial
-      icon: <i class="fas fa-wallet"></i>
+      icon: <i class="fas fa-wallet"></i> # Do not translate
       description: Trading occurs directly from your own wallets and your funds remain in your control throughout the entire trade process. This means there's no third-party control over your funds, no need to transfer funds to another account, no waiting for deposit or withdrawal confirmations, and no withdrawal limits.
     - feature: Trustless
-      icon: <i class="fas fa-shield-alt"></i>
+      icon: <i class="fas fa-shield-alt"></i> # Do not translate
       description: Block DX allows you to securely trade with no middlemen or intermediaries, keeping you in control of your funds throughout the entire trade process. All trading logic, operations, verifications, and checks are also performed locally.
     - feature: Private
-      icon: <i class="fas fa-user-secret"></i>
+      icon: <i class="fas fa-user-secret"></i> # Do not translate
       description: No accounts, KYC, AML, or registration process are required since trading is purely peer-to-peer. As a result, no legal responsibility is created that would require registration to use Block DX. This protects your personal privacy and gives you true financial freedom.
     - feature: Native Assets, On-chain
-      icon: <i class="fas fa-coins"></i>
+      icon: <i class="fas fa-coins"></i> # Do not translate
       description: No wrapped proxy tokens or coloured coins are used in place of native assets. Many "DEXes" give you a wrapped marker (e.g. wBTC) to represent your real funds (e.g. BTC). This removes your sovereignty over your funds and requires you to trust this entity, smart contract, or third-party chain.
     - feature: Instant Trades
-      icon: <i class="fas fa-bolt"></i>
+      icon: <i class="fas fa-bolt"></i> # Do not translate
       description: Trades on Block DX are extremely fast. Many people believe that atomic swaps means that the trades are slow, but that depends on implementation. With Block DX the trade times are independent of the block times of the assets being traded.
     - feature: Open Source
-      icon: <i class="fab fa-github"></i>
+      icon: <i class="fab fa-github"></i> # Do not translate
       description: Block DX is entirely open source, enabling the community to review, audit, and contribute to Block DX freely and transparently. As a result, you may subject the code to high levels of scrutiny to satisfy your need for security no matter how high your standards are.
     - feature: Uncensored
-      icon: <i class="fas fa-globe-americas"></i>
+      icon: <i class="fas fa-globe-americas"></i> # Do not translate
       description: Listings and access to the exchange are open and uncensored. There are no restrictions on what users or regions have access to the exchange since there are no accounts and trading is decentralized. Listings are also decentralized with no single party that controls what assets can be traded.
     - feature: Lower Fees
-      icon: <i class="fab fa-creative-commons-nc"></i>
+      icon: <i class="fab fa-creative-commons-nc"></i> # Do not translate
       description: On Block DX there are lower trading fees and no withdrawal fee since trades are conducted directly from your wallets. While there are network fees of the assets being traded, this is a fee that exists when sending funds to and from other exchange addresses.
     - feature: Unstoppable
-      icon: <i class="fas fa-laptop-code"></i>
+      icon: <i class="fas fa-laptop-code"></i> # Do not translate
       description: Block DX is always online since it doesn't require accounts or any central entity to function. The true peer-to-peer nature of the exchange makes it impossible to shut down, offers zero downtime, and built-in DoS protection.
     - feature: Atomic Swaps
-      icon: <i class="fab fa-react"></i>
+      icon: <i class="fab fa-react"></i> # Do not translate
       description: Trade settlement is decentralized through the use of atomic swaps. Atomic swaps control the exchange of funds between you and your counterparty and are completely "trustless", meaning that you can safely trade with anyone without having to trust their intentions.
     - feature: Fee Sharing
-      icon: <i class="fas fa-hand-holding-usd"></i>
+      icon: <i class="fas fa-hand-holding-usd"></i> # Do not translate
       description: Some protocols return profits to a company or developer team, but this is a rent-seeking activity that enriches a central actor and does not fairly distribute fees. With Block DX, 100% of trade fees are distributed among <a href="https://docs.blocknet.co/service-nodes/introduction">nodes</a> on the network. No trade fees are paid to a central entity.
     - feature: Cross-chain
-      icon: <i class="fas fa-exchange-alt"></i>
+      icon: <i class="fas fa-exchange-alt"></i> # Do not translate
       description: There are no restrictions to only trading assets of a certain chain. You can trade between Bitcoin, Litecoin, Dash, Syscoin, Digibyte, and more than 100 other assets from different blockchains with complete trading pair freedom. Block DX aims to integrate all platforms and assets.
     - feature: Liquidity Network
-      icon: <i class="fas fa-layer-group"></i>
+      icon: <i class="fas fa-layer-group"></i> # Do not translate
       description: Block DX is powered by the Blocknet Protocol. All services using the Blocknet Protocol have a shared order book and contribute to the same liquidity pool, including Block DX. This creates a network effect for liquidity.
 downloads:
   # header: Downloads
@@ -133,13 +133,10 @@ stats:
   subheader: Stats
   # intro: 
   assets: Assets
-  # assets_val:  # dynamic
   pairs: Trading Pairs
-  # pairs_val:  # dynamic
   trades: Trustless Trades
   trades_val: '35000'
   middlemen: Middlemen
-  # middlemen_val:  # static (0)
 faq:
   # header: FAQ
   subheader: Frequently Asked Questions

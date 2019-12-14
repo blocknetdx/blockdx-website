@@ -36,4 +36,176 @@ Content notes:
   class='bg-light'
 %}
 
-{% include sections/listings.html %}
+<section class="section section-first bg-light">
+  <div class="container"> 
+    <div class="row">
+      <div class="col-md-12 dx-animate">
+        <div class="table-responsive">
+          <table class="table shadow-sm">
+            <thead class="thead-primary">
+              <tr>
+                <th>{{ listings.table_assets }}</th>
+                <th>{{ listings.table_ticker }}</th>
+                <th>{{ listings.table_wallets }} 
+                  <i class="fas fa-question-circle tool tip-icon" data-toggle="tooltip" data-placement="top" title="{{ listings.table_wallet_info }}"></i></th>
+              </tr>
+            </thead>
+            <tbody id="dx-tbody">
+
+              {% comment %}
+                  Example manifest version group entry
+                  {
+                    "blockchain": "AeriumX",
+                    "ticker": "AEX",
+                    "ver_id": "aeriumx--v2.0",
+                    "ver_name": "AeriumX",
+                    "conf_name": "aeriumx.conf",
+                    "dir_name_linux": "aeriumx",
+                    "dir_name_mac": "AeriumX",
+                    "dir_name_win": "AeriumX",
+                    "repo_url": "https://github.com/aeriumcoin/AeriumX",
+                    "versions": [
+                      "v2.2"
+                    ],
+                    "xbridge_conf": "aeriumx--v2.0.conf",
+                    "wallet_conf": "aeriumx--v2.0.conf"
+                  }
+              {% endcomment %}
+
+              {% comment %}<!-- Create manifest array containing manifest-latest.json data  -->{% endcomment %}
+              {% assign manifest = site.data.manifest-latest %}
+
+              {% comment %}<!-- Create array of unique blockchain names -->{% endcomment %}
+              {% assign blockchains = manifest | map: "blockchain" | uniq %}
+
+              {% comment %}<!-- For each unique blockchain name -->{% endcomment %}
+              {% for blockchain in blockchains %}
+
+                {% comment %}<!-- Temporary string variable to store the wallet versions for each unique blockchain name -->{% endcomment %}
+                {% assign versionList = "" %}
+
+                {% comment %}<!-- Create array of version groups that match the unique blockchain name -->{% endcomment %}
+                {% assign groups = manifest | where: "blockchain", blockchain %}
+
+                {% comment %}<!-- Temporary variables to reference other info for each unique blockchain name -->{% endcomment %}
+                {% assign currentBlockchain = groups | first %}
+                {% assign blockchainName = currentBlockchain.blockchain %}
+                {% assign blockchainTicker = currentBlockchain.ticker %}
+                {% assign blockchainRepo = currentBlockchain.repo_url %}
+
+                {% comment %}<!-- For each manifest version groups that matches the unique blockchain name  -->{% endcomment %}
+                {% for group in groups %}
+
+                  {% comment %}<!-- For each wallet version in that version group -->{% endcomment %}
+                  {% for version in group.versions %}
+
+                    {% comment %}<!-- Add the version and delimiter to the versionList string -->{% endcomment %}
+                    {% assign versionList = versionList | append: version %}
+                    {% assign versionList = versionList | append: "||" %}
+                  {% endfor %}
+                {% endfor %}
+
+                {% comment %}<!-- Create array of versions from the versionList string -->{% endcomment %}
+                {% assign versionListArray =  versionList | split: "||" %}
+                <tr>
+                  <td>{{ blockchainName }}</td>
+                  <td>{{ blockchainTicker }}</td>
+                  <td>
+                    {% for version in versionListArray %}
+                      {% comment %}<!-- kept on same line to avoid a space being added before the comma -->{% endcomment %}
+                      <a href="{{ blockchainRepo }}/releases/tag/{{ version }}" target="_blank">{{ version }}</a>{% if version != versionListArray.last %}, {% endif %}
+                    {% endfor %}
+                  </td>
+                </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script type="text/javascript">
+  var manifestURL = "https://raw.githubusercontent.com/blocknetdx/blockchain-configuration-files/master/manifest-latest.json";
+
+  getManifest().then(tabulate);
+  function getManifest() {
+    var manifestPromise = new Promise(function(resolve, reject){
+      ajax(manifestURL, true).then(function(manifest) {
+        manifestJSON = manifest;
+        localStorage.setItem('manifest', JSON.stringify(manifest));
+        resolve(manifestJSON);
+      }, false);
+    });
+    return manifestPromise;
+  }
+  function ajax(url, json) {
+    var ajaxPromise = new Promise(function(resolve, reject){
+      var xhr = new XMLHttpRequest();
+      var status = true;
+      xhr.open('GET', url);
+      xhr.send();
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4 && xhr.status === 200){
+          var response = json ? JSON.parse(this.responseText) : this.responseText
+          resolve(response);
+        }
+      }
+    });
+    return ajaxPromise;
+  }
+  function tabulate(data) {
+    var manifest = data;
+    var tableData = {};
+    var table = "";
+
+    for(var asset in manifest) {
+      var name = manifest[asset]["blockchain"];
+      var ticker = manifest[asset]["ticker"];
+
+      var repo = manifest[asset]["repo_url"];
+      if (repo.substr(-1) === "/") {
+        repo = repo.slice(0, -1);
+      }
+      repo += "/releases/tag/";
+
+      var versionsArray = manifest[asset]["versions"];
+      var versionLinks = "";
+      for (var version in versionsArray) {
+        // create linked text <a href="repo url">version</a>
+        var versionLink = '<a href="' + repo + versionsArray[version] + '" target="_blank">' + versionsArray[version] + '</a>';
+        // if only 1 or less versions
+        if (versionsArray.length < 2) {
+          versionLinks += versionLink;
+        } else {
+          // if last version in list (no comma)
+          if (version == versionsArray.length - 1) {
+            versionLinks += versionLink;
+          // if not the last version (add comma)
+          } else {
+            versionLinks += versionLink + ", ";
+          }
+        }
+      }
+
+      // combine version groups if same asset (e.g. btc v15-v19)
+      if (tableData[name]) {
+        tableData[name]["versions"] += ", " + versionLinks;
+      } else {
+        tableData[name] = {"name": name, "ticker": ticker, "versions": versionLinks};
+      }
+    }
+
+    for (var asset in tableData) {
+      var row = "<tr><td>" + tableData[asset]["name"] + "</td><td>" + tableData[asset]["ticker"] + "</td><td>" + tableData[asset]["versions"] + "</td><tr>";
+      table += row;
+    }
+    document.getElementById("dx-tbody").innerHTML = table;
+    console.log("Dynamically updated listings");
+  }
+</script>
+
