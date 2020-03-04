@@ -21,6 +21,7 @@ plugins:
 - 'jekyll-sitemap'
 # - 'jekyll-language-plugin'
 - 'jekyll-multiple-languages-plugin'
+- 'liquify'
 
 # Localization settings
 # language_data: data.lang.%%
