@@ -1,0 +1,25 @@
+{% assign global = site.translations[site.lang].global %}
+{% assign lang = site.translations[site.lang] %}
+
+
+{% comment %}
+<!-- Place in data file -->
+  test:
+    variables: |
+      * Version {{ site.blockdx_version }}
+      * [Github Downloads Link]({{ site.exlink_all_downloads }})
+      * Language: {{ global.lang }}
+      * [Branding Page Link]({{ global.link_branding }})
+      * **Bold Text**
+      * __More Bold Text__
+      * *Italic Text*
+{% endcomment %}
+
+<br><br>
+
+<h5>Liquify/Markdownify Converter:</h5>
+{{ lang.test.variables | liquify | markdownify }}
+
+<h5>Custom Converter:</h5>
+{% include tools/content-converter.html content=lang.test.variables %}
+

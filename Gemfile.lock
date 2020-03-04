@@ -50,6 +50,8 @@ GEM
       listen (~> 3.0)
     kramdown (1.17.0)
     liquid (4.0.3)
+    liquify (0.2.7)
+      liquid (>= 2.2.2)
     listen (3.2.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -92,6 +94,7 @@ DEPENDENCIES
   jekyll-last-modified-at (~> 1.1.0)
   jekyll-multiple-languages-plugin (~> 1.6.0)
   jekyll-sitemap (~> 1.2.0)
+  liquify (~> 0.2.7)
   tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.0)

@@ -68,7 +68,7 @@ index:
 features:
   # header: Features
   subheader: Why Block DX
-  intro: Many exchanges <span class="text-italic">claim</span> to be decentralized while hiding the details of centralized components. Block DX is the only exchange that decentralizes every component. <strong class="d-block mt-2"><em>Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.</em></strong>
+  intro: Many exchanges <em>claim</em> to be decentralized while hiding the details of centralized components. Block DX is the only exchange that decentralizes every component. <strong class="d-block mt-2"><em>Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.</em></strong>
   items:
     - feature: Decentralized Order Books
       icon: <i class="fas fa-network-wired"></i> # Do not translate
