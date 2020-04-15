@@ -1,18 +1,42 @@
-nav: 
+global:
+  lang: Français
+  locale: fr_ca
+  meta_title: Block DX
+  meta_description: Block DX is the fastest, most secure, most reliable, and most decentralized exchange (DEX), utilizing cross-chain atomic swaps powered by the Blocknet Protocol.
+  meta_keywords: block dx, decentralized, exchange, dex, atomic swap, trustless, cross-chain, blockchain, blocknet, protocol
+  link_index: '/fr/'
+  link_features: '#features' # Do not translate
+  link_mac_setup: 'mac-setup/'
+  link_windows_setup: 'windows-setup/'
+  link_linux_setup: 'linux-setup/'
+  link_listings: 'listings/'
+  link_application: 'listing-application/'
+  link_fees: 'frais/'
+  link_branding: 'branding/'
+  link_trading: 'trading/'
+  link_troubleshooting: 'troubleshooting/'
+  link_how: 'how-it-works/'
+  link_orders: 'orders/'
+  link_market_making: 'market-making/'
+  link_whitelabel: 'whitelabel/'
+  link_nodes: 'nodes/'
+
+nav:
   menu: Menu
   home: Home
   features: Features
   listings: Listings
-  setup: Setup
+  setup_menu: Setup
   macos: MacOS
   windows: Windows
   linux: Linux
+  setup: Setup Guide
   trading: Trading Guide
   troubleshooting: Troubleshooting
   faq: FAQ
-  lang: French
   downloads: Downloads
-footer: 
+
+footer:
   tagline: Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.
   powered_by: Powered by the Blocknet Protocol
   start_header: Get Started
@@ -38,91 +62,213 @@ footer:
   nodes: Exchange Nodes
   whitelabel: Whitelabel DEX
   contribute: Contribute
-index: 
-  header: The Most Secure & Decentralized Exchange
-  # subheader: Block DX offers completely decentralized and trustless cross-chain trading via atomic swaps.
-  subheader: Block DX offers completely decentralized and trustless trading via cross-chain atomic swaps.
-  button1: Start trading
-  button2: Learn more
-features: 
-  header: Features
-  subheader: Why Block DX
-  intro: 
-downloads: 
-  header: Downloads
-  subheader: Get Started
+
+index:
+  header: L'échange le plus sécurisé et décentralisé
+  # subheader: Block DX offre des échanges inter-chaînes complètement décentralisés et sans confiance via des swaps atomiques.
+  subheader: Block DX offre des échanges totalement décentralisés et sans confiance via des échanges atomiques inter-chaînes.
+  button1: Commencer à transiger
+  button2: En apprendre davantage
+
+features:
+  # header: Features
+  subheader: Pourquoi Block DX?
+  intro: Beaucoup d'échanges *prétendent* être décentralisés tout en cachant les détails de composants centralisés. Block DX est le seul échange dont tous les composants sont décentralisés. __*Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.*__
+  items:
+    - feature: Carnets de commandes décentralisés
+      icon: <i class="fas fa-network-wired"></i> # Do not translate
+      description: Les traders diffusent leurs commandes sur un réseau point-à-point et chacun compile lui-même le carnet de commandes localement. Contrairement aux carnets de commandes en ligne qui permettent la première exécution, avec Block DX, personne ne peut obtenir les commandes plus rapidement que quiconque en étant plus proche du serveur car il n'y a pas de serveur.
+    - feature: Jumelage des commandes décentralisée
+      icon: <i class="fas fa-wave-square"></i> # Do not translate
+      description: Le jumelage des commandes est effectué localement. Lorsqu'une commande est acceptée, Block DX commence automatiquement à communiquer avec la contrepartie sur le réseau point-à-point pour procéder à la transaction. Aucun tiers ne contrôle cela, toute action est souveraine.
+    - feature: N'a jamais la guarde des pièces
+      icon: <i class="fas fa-wallet"></i> # Do not translate
+      description: Le trading se déroule directement à partir de vos propres portefeuilles et vos fonds restent sous votre contrôle tout au long du processus. Cela signifie qu'il n'y a aucun contrôle tiers sur vos fonds, pas besoin de transférer des fonds vers un autre compte, pas d'attente pour les confirmations de dépôt ou de retrait et aucune limite de retrait.
+    - feature: Aucune confiance n'est requise
+      icon: <i class="fas fa-shield-alt"></i> # Do not translate
+      description: Block DX vous permet de transiger en toute sécurité sans intermédiaires, vous gardez le contrôle de vos fonds tout au long du processus. Toutes les logiques de négociation, opérations et vérifications sont également effectuées localement.
+    - feature: Privé
+      icon: <i class="fas fa-user-secret"></i> # Do not translate
+      description: Aucun compte, KYC, AML ou processus d'enregistrement n'est requis car le trading est purement point-à-point. En conséquence, aucune responsabilité légale qui nécessiterait une inscription pour utiliser Block DX. Cela protège votre vie privée et vous donne une véritable liberté financière.
+    - feature: Native Assets, On-chain
+      icon: <i class="fas fa-coins"></i> # Do not translate
+      description: Aucun jeton proxy ou pièce taintée n'est utilisé en lieu des actifs natifs. De nombreux "DEX" vous donnent un jeton proxy (par exemple wBTC) pour représenter vos fonds réels (par exemple BTC). Cela supprime la souveraineté que vous avez sur vos fonds et vous oblige à faire confiance à cette entité, contrat intelligent ou chaîne tierce.
+    - feature: Transactions immédiates
+      icon: <i class="fas fa-bolt"></i> # Do not translate
+      description: Les transactions sur Block DX sont extrêmement rapides. Beaucoup de gens croient que les échanges atomiques signifient que les échanges sont lents, mais cela dépend de la mise en œuvre. Avec Block DX, les heures de négociation sont indépendantes des heures de blocage des actifs négociés.
+    - feature: Open source
+      icon: <i class="fab fa-github"></i> # Do not translate
+      description: Block DX est entièrement open source, permettant ainsi à la communauté de réviser, auditer et contribuer à Block DX librement et de manière transparente. Par conséquent, vous pouvez soumettre le code à des niveaux de contrôle élevés pour satisfaire vos besoins de sécurité, quel que soit le niveau de vos normes.
+    - feature: Non Censuré
+      icon: <i class="fas fa-globe-americas"></i> # Do not translate
+      description: Les actifs supportés et l'accès à l'échange sont ouverts et non censurés. Il n'y a pas de restrictions sur les utilisateurs ou les régions qui ont accès à l'échange car il n'y a pas de comptes et le trading est décentralisé. Les inscriptions sont également décentralisées et aucune tierce partie ne contrôle quels actifs peuvent être échangés.
+    - feature: Coût inférieur
+      icon: <i class="fab fa-creative-commons-nc"></i> # Do not translate
+      description: Sur Block DX, les frais de transactions sont inférieurs et aucuns frais de retrait n'est exigé car les transactions sont effectuées directement à partir de vos portefeuilles. Bien qu'il y ait des frais de réseau pour les actifs transigés, il s'agit de frais qui existent lors de l'envoi de fonds vers et depuis d'autres adresses d'échange.
+    - feature: Inarrêtable
+      icon: <i class="fas fa-laptop-code"></i> # Do not translate
+      description: Block DX est toujours en ligne car il ne nécessite aucun compte ni aucune entité extérieure pour fonctionner. La véritable nature d'égal à égal de l'échange rend impossible la fermeture forcée, n'offre aucun temps d'arrêt et offre une protection DoS intégrée.
+    - feature: Échanges atomiques
+      icon: <i class="fab fa-react"></i> # Do not translate
+      description: Le règlement des échanges est décentralisé grâce à l'utilisation de swaps atomiques. Les swaps atomiques contrôlent l'échange de fonds entre vous et votre contrepartie et sont totalement "sans confiance", ce qui signifie que vous pouvez échanger en toute sécurité avec n'importe qui sans avoir à faire confiance à quiconque.
+    - feature: Partage des frais
+      icon: <i class="fas fa-hand-holding-usd"></i> # Do not translate
+      description: Certains protocoles rapportent des bénéfices à une entreprise ou à une équipe de développeurs, mais il s'agit d'une activité lucrative qui enrichit un acteur central et ne distribue pas équitablement les frais. Avec Block DX, 100% des frais sont répartis entre les [nœuds]({{ site.exlink_docs_snodes }}) du réseau. Aucun frais de transaction n'est payé à une entité centrale.
+    - feature: Interchaînes
+      icon: <i class="fas fa-exchange-alt"></i> # Do not translate
+      description: Il n'y a aucune restrictions à ne supporter que les actifs d'une certaine chaîne. Vous pouvez échanger entre Bitcoin, Litecoin, Dash, Syscoin, Digibyte et plus de 100 autres actifs de différentes chaînes de blocs avec une liberté totale de paires de négociation. Block DX vise à intégrer toutes les plateformes et tous les actifs.
+    - feature: Liquidité Réseau
+      icon: <i class="fas fa-layer-group"></i> # Do not translate
+      description: Block DX est propulsé par le protocole Blocknet. Tous les services utilisant le protocole Blocknet ont un carnet de commandes partagé et contribuent au même pool de liquidité y compris Block DX.
+
+downloads:
+  # header: Downloads
+  subheader: Commencer
   # intro: 
   macos: MacOS
   windows: Windows
   linux: Linux
-  setup: Setup Guide
-  trading: Trading Guide
-  troubleshooting: Troubleshooting
-  download: Download
-  all_downloads: View all downloads
+  setup: Guide d'installation
+  trading: Guide d'utilisation
+  troubleshooting: Résolution de problèmes
+  download: Téléchargement
+  all_downloads: Voir tous les téléchargements
+  version: Dernière version
+
 stats:
-  header: Stats
-  # subheader: 
+  # header:  
+  subheader: Statistiques
   # intro: 
-  assets: Assets
-  # assets_val: # dynamic
-  pairs: Trading Pairs
-  # pairs_val: # dynamic
-  trades: Trustless Trades
-  trades_val: 35000
-  middlemen: Middlemen
-  # middlemen_val: # static (0)
-faq: 
-  header: FAQ
-  subheader: Frequently Asked Questions
+  assets: Actifs
+  # assets_val:  # dynamic
+  pairs: Paires transigeables
+  # pairs_val:  # dynamic
+  trades: Échanges sans confiance
+  trades_val: '35000'
+  middlemen: Intermédiaire
+  # middlemen_val:  # static (0)
+
+faq:
+  # header: FAQ
+  subheader: Questions fréquemment posées
   # intro: 
-subscribe: 
+  questions:
+    - question: Quelles sont les différences entre Block DX, Blocknet, and BLOCK?
+      answer: Block DX est une application d'échange décentralisée. L'échange est alimentée par [Blocknet]({{ site.exlink_docs }}), un protocole d'interopérabilité de la chaîne de blocs qui permet la communication, l'interaction et les échanges entre différentes chaînes de blocs publiques et privées. [BLOCK]({{ site.exlink_docs_blockchain }}) est le jeton utilisé pour payer les frais des services sur le réseau de Blocknet, y compris l'échange décentralisée, les données oracle décentralisées hors chaîne, réseau SPV décentralisé et microservices décentralisés.
+      topic: general, block, blocknet # Do not translate
+    - question: Comment Block DX est different des autres échanges décentrailsés?
+      answer: >-
+        De nombreux échanges se disent décentralisés tout en cachant les détails des composants centralisés. Block DX est le seul échange qui décentralise chaque composant. Voir [Fonctionnalités]({{ baseurl | append: lang.global.link_features }}) pour savoir comment Block DX est l'échange le plus sécurisé et décentralisé. Un tableau de comparaison avec d'autres projets est également en préparation.
+      topic: general # Do not translate
+    - question: Est-ce que des BLOCK sont nécessaires pour utiliser Block DX?
+      answer: Une petite quantité de BLOCK est requise pour prendre en charge une commande existante, mais aucun BLOCK n'est requis pour créer une commande. Si vous avez besoin de BLOCK pour effectuer une commande, vous pouvez soit créer une commande pour acheter des BLOCK sur Block DX, soit acheter des BLOCK sur [divers autres échanges]({{ site.exlink_docs_exchanges }}). Voir la section [Frais]({{ lang.global.link_fees }}) pour plus de détails.
+      topic: general, block, trading # Do not translate
+    - question: Est-ce que Block DX a une application web?
+      answer: À ce moment-ci, Block DX n'a ​​pas d'application et n'est disponible qu'en tant qu'application bureautique. Cependant, un tiers développe le premier multiwallet léger décentralisé au monde sur le [protocole Blocknet]({{ site.exlink_docs }}), qui rendra possible un échange et une application basés sur un navigateur.
+      topic: general, dev, trading # Do not translate
+    - question: Qui developpe Block DX?
+      answer: Block DX est développé et maintenu par [Blocknet]({{ site.exlink_docs }}), un projet de protocole d'interopérabilité blockchain qui permet la communication, l'interaction et les échanges entre différentes blockchains publiques et privées.
+      topic: general, dev # Do not translate
+    - question: Est-ce que ETH, ERC20, EOS, NEO, etc vont être supportés?
+      answer: Oui, l'objectif est d'intégrer toutes les plateformes et tous les actifs. Le premier à être intégré sera l'ETH et un échange d'essai a déjà été effectué, mais il n'y a pas de temps estimé pour l'achèvement.
+      topic: general, dev, listings # Do not translate
+    - question: Est-ce que Monero sera listé?
+      answer: Malheureusement, Monero ne supporte pas actuellement les swaps atomiques, donc pour le moment il ne peut pas être répertorié.
+      topic: general, dev, listings # Do not translate
+    - question: Comment investir dans Block DX?
+      answer: Il existe plusieurs façons de supporter Block DX et, plus important encore, [Blocknet]({{ site.exlink_docs }}), le protocole d'interopérabilité de la blockchain alimentant l'échange. Vous pouvez acheter [BLOCK]({{ site.exlink_docs_blockchain }}), qui est le jeton utilisé pour les frais de services sur le réseau Blocknet, y compris l'échange décentralisé, les bureaux décentralisés - chaîne de données oracle, réseau SPV décentralisé et microservices décentralisés. Vous pouvez également configurer un [nœud de service]({{ site.exlink_docs_snodes }}), qui peut monétiser ces services et gagner 100% des frais générés.
+      topic: general, block, blocknet # Do not translate
+    - question: Block DX peut-il être utilisé avec Electrum, des portefeuilles matériels, des portefeuilles légers ou des portefeuilles Web comme MyEtherWallet?
+      answer: Block DX n'est actuellement pas compatible avec Electrum, les portefeuilles matériels, les portefeuilles légers ou les portefeuilles Web. Le nœud complet des chaînes de blocs que vous souhaitez échanger doit être téléchargé et synchronisé, ainsi que le [portefeuille Blocknet]({{ site.exlink_wallet_download }}) (utilisé pour alimenter le processus d'échange). Cependant, un tiers développe le premier multiwallet léger décentralisé au monde sur le [protocole Blocknet]({{ site.exlink_docs }}), qui permettra d'utiliser Block DX sans télécharger les blockchains des actifs négociés.
+      topic: general, trading  # Do not translate
+    - question: Comment un projet peut-il être répertorié sur Block DX?
+      answer: Il n'y a aucun coût à inscrire sur Block DX. Cependant, puisque Block DX utilise des swaps atomiques, la chaîne de blocs de l'actif doit répondre à certaines exigences de compatibilité et de tests. Voir [Actifs listés]({{ lang.global.link_listings }}) pour plus d'informations.
+      topic: general, listings, dev # Do not translate
+    - question: Block DX peut-il être utilisé dans un navigateur?
+      answer: Àctuellement, Block DX est uniquement disponible en tant qu'application bureautique. Cependant, un tiers développe le premier multiwallet léger décentralisé au monde sur le [protocole Blocknet]({{ site.exlink_blocknet }}), qui rendra possible un échange et une application utilisables dans un navigateur.
+      topic: general, trading # Do not translate
+    - question: Combien de temps prennent les transactions?
+      answer: Même si les actifs natifs sont échangés et les transactions sont complétées sur leur blockchains respectives, les heures de transaction sont indépendantes des heures de bloc. Block DX est très rapide, les transactions étant généralement effectuées dans les 5 à 15 secondes.
+      topic: general, trading # Do not translate
+    - question: Pourquoi Block DX n'est-il pas répertorié sur CoinMarketCap?
+      answer: Une demande a déjà été soumise pour que Block DX soit répertorié en tant qu'échange sur CoinMarketCap et est en attente d'inscription.
+      topic: general # Do not translate
+    - question: Est-ce que Block DX a un API?
+      answer: Oui! Block DX est 100% compatible avec les robots, consultez les [documents API de Blocknet]({{ site.exlink_api_xbridge }}) pour la documentation de configuration et d'utilisation. Il existe également un [bot de création de commandes]({{ site.exlink_makerbot }}) qui peut être utilisé pour publier automatiquement des commandes en fonction de sources de données de prix spécifiées.
+      topic: general, dev # Do not translate
+
+subscribe:
   # header: 
-  subheader: Subscribe to Our Newsletter
-  intro: Stay up-to-date on our latest features, updates, and news!
-  input: Enter email address
-  button: Subscribe
-blog1: 
-  header: Blog
-  subheader: Recent Articles
+  subheader: Abonnez-vous à notre newsletter
+  intro: Restez à jour sur nos dernières fonctionnalités, mises à jour et nouvelles!
+  input: Entrer votre adresse courriel
+  button: Abonnement
+
+blog1:
+  # header: Blog
+  subheader: Articles récents
   # intro: 
+  posts:
+    - url: https://blocknet.co/understanding-a-decentralized-exchange/ # Do not translate
+      title: Comprendre les échanges décentralisés
+      image: https://blockdx.com/assets/img/cover-understanding-decentralized-exchange.png # Do not translate
+      image_position: center center # Do not translate
+    - url: https://blocknet.co/exchange-hackings-security-and-freedom-why-would-traditional-exchanges-embrace-a-decentralized-exchange/ # Do not translate
+      title: Piratage d'échanges, sécurité et liberté
+      image: https://blockdx.com/assets/img/cover-exchange-hackings-security-freedom.png # Do not translate
+    - url: https://blocknet.co/the-evolution-of-the-decentralized-exchange-a-brief-history/ # Do not translate
+      title: L'évolution de l'échange décentralisé
+      image: https://blockdx.com/assets/img/cover-evolution-decentralized-exchange.png # Do not translate
+
 fees:
-  title: Trading Fees
-  # intro: 
+  meta_title: Frais
+  meta_description: Block DX a une structure de frais inférieure à celle des échanges traditionnels, y compris zéro frais pour les faiseurs de marché.
+  meta_keywords: block dx, fee, maker, taker, structure
+  title: Frais de transaction
+  intro: Block DX is cheaper than traditional exchanges since there's no maker fee, withdrawal fees, or limits.
   maker: Maker
-  maker_fees: There are no maker fees — zero, zip, zilch, nada.
+  maker_fees: Il n'y a pas de frais de Maker — zero, zip, zilch, nada.
   taker: Taker
-  taker_fees: There is a small 0.015 BLOCK fee when taking an existing order. If you do not have BLOCK, you can make an order to buy BLOCK without needing to pay a fee.
+  taker_fees: Il y a un petit supplément de 0,015 BLOC lorsque vous prenez une commande existante. Si vous n'avez pas BLOCK, vous pouvez passer une commande pour acheter des BLOCK sans avoir à payer de frais.
+
 listings:
-  meta_title: content title
-  meta_description: content desc
-  meta_keywords: content keywords
-  title: Listed Assets
-  intro: Securely trade over 115 native assets from your own wallets in a decentralized and trustless manner.
-  # intro: Block DX decentralized exchange enables you to securely trade over 115 native assets from your own wallet.
-  # intro: Block DX enables secure and decentralized trading of more than 115 native assets from your own wallet.
-  # intro: Securely trade over 115 native assets from your own wallet.
-  button: Listing Application
-  table_assets: Digital Asset
+  meta_title: Enregistrement
+  meta_description: Block DX vous permet d'échanger en toute sécurité des centaines d'actifs natifs à partir de vos propres portefeuilles de manière décentralisée et sans confiance.
+  meta_keywords: block dx, listings, assets, wallets, integrations, markets
+  title: Actifs supportés
+  intro: Échangez en toute sécurité plus de 115 actifs natifs de vos propres portefeuilles de manière décentralisée et sans confiance.
+  # intro: L'échange décentralisé Block DX vous permet d'échanger en toute sécurité plus de 115 actifs natifs à partir de votre propre portefeuille.
+  # intro: Block DX permet un trading sécurisé et décentralisé de plus de 115 actifs natifs à partir de votre propre portefeuille.
+  # intro: Échangez en toute sécurité plus de 115 actifs natifs depuis votre propre portefeuille.
+  button: Demande d'inscription
+  table_assets: Actifs Digitaux
   table_ticker: Ticker
-  table_wallets: Supported Wallet Versions
-  table_wallet_info: Block DX allows you to trade directly out of your wallet. Below is a list of supported wallets for each asset. This list is continuously updated.
+  table_wallets: Versions des portefeuilles supportés
+  table_wallet_info: Block DX vous permet de trader directement depuis votre portefeuille. Vous trouverez ci-dessous une liste des portefeuilles pris en charge pour chaque élément. Cette liste est constamment mise à jour.
+
 listing_application:
-  title: Listing Application
+  meta_title: Demande d'inscription
+  meta_description: Être coté sur Block DX est 100% gratuit et offre de nombreux avantages au-delà de la simple négociation sur l'échange.
+  meta_keywords: block dx, bockdx, listing, application, form, requirements, fee, process, integration
+  title: Demande d'inscription
   # intro: 
-  button: Application Form
-  benefits_header: Listing Benefits
-  benefits: A Block DX listing holds many benefits beyond just being traded on the exchange. Being listed means the asset has been integrated with the <a href="{{ site.link_docs }}">Blocknet Protocol</a>, which powers Block DX, and allows other services to be built utilizing the asset. This extends the demand, utility, and accessibility of the asset to the rest of the blockchain ecosystem.
-  process_header: Listing Process
-  process: Getting listed on Block DX is 100% free. If you would like to have a digital asset listed, please ask a member of that project to fill out the application form. After submission, the asset will be added to the queue for integration and compatibility testing.
-  requirements_header: Requirements
-  requirements: 'In order for for a blockchain to be compatible it must support JSON RPC and the following calls:'
+  button: Formulaire d'application
+  benefits_header: Avantages de l'inscription
+  benefits: Être listé sur Block DX présente de nombreux avantages au-delà du simple fait d'être négocié sur l'échange. Le fait d'être répertorié signifie que l'actif a été intégré au [protocole Blocknet]({{ site.exlink_docs }}), qui alimente Block DX et permet de créer d'autres services à l'aide de l'actif. Cela étend la demande, l'utilité et l'accessibilité de l'actif au reste de l'écosystème de la blockchain.
+  process_header: Processus d'inscription
+  process: Être répertorié sur Block DX est 100% gratuit. Si vous souhaitez faire répertorier un actif numérique, veuillez demander à un membre de ce projet de remplir le formulaire de candidature. Après la soumission, l'actif sera ajouté à la file d'attente pour les tests d'intégration et de compatibilité.
+  requirements_header: Prérequis
+  requirements: >-
+    Pour qu'une blockchain soit compatible, elle doit prendre en charge JSON RPC et les appels suivants:
+
 branding:
-  title: Media Kit
-  intro: The Block DX media kit includes <a href="/assets/files/blockdx-brand-guidelines.pdf">branding guidelines</a>, PNG/SVG/ESP file types, and RGB/CMYK/PMS versions of our branding.
-  button: Download Media Kit
+  meta_title: Image de Marque
+  meta_description: Le kit multimédia Block DX comprend des directives de marque, des types de fichiers PNG / SVG / ESP et des versions RVB / CMJN / PMS de notre marque.
+  meta_keywords: block dx, branding, media kit, guidelines, logo, icon
+  title: Ensemble Média
+  intro: Le kit multimédia Block DX comprend les [directives de marque](https://blockdx.com/assets/files/blockdx-brand-guidelines.pdf), les types de fichiers PNG / SVG / ESP et les versions RVB / CMJN / PMS de notre marque .
+  button: Télécharger l'ensemble Média
 
-
-
-
-
+e404:
+  title: Error
+  error: La page demandée n'a pas été trouvée.

@@ -9,11 +9,10 @@ permalink_zh: /列表/
 ---
 
 
-{% assign global = site.translations[site.lang].global %}
-{% assign baseurl = site.url | append: site.translations[site.lang].global.link_index %}
-{% assign listings = site.translations[site.lang].listings %}
+{% assign lang = site.translations[site.lang] %}
+{% assign baseurl = site.url | append: lang.global.link_index %}
 
-{% assign listing_application = baseurl | append: global.link_application %}
+{% assign listing_application = baseurl | append: lang.global.link_application %}
 
 {% comment %}
 <!--
@@ -29,9 +28,9 @@ Content notes:
 
 {% 
   include templates/page-header.html
-  title=listings.title
-  intro=listings.intro
-  button_text=listings.button
+  title=lang.listings.title
+  intro=lang.listings.intro
+  button_text=lang.listings.button
   button_link=listing_application
   class='bg-light'
 %}

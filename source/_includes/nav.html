@@ -1,8 +1,5 @@
-{% assign global = site.translations[site.lang].global %}
-{% assign baseurl = site.url | append: site.translations[site.lang].global.link_index %}
-{% assign nav = site.translations[site.lang].nav %}
-
-
+{% assign lang = site.translations[site.lang] %}
+{% assign baseurl = site.url | append: lang.global.link_index %}
 
 <nav class="nav-wrapper">
   <div id="navbar" class="navbar navbar-expand-lg dx-navbar scaling">
@@ -11,55 +8,58 @@
         <img style="height: 32px;" src="/assets/img/logo-dark-horz.svg"/>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-links" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i> {{ nav.menu }}
+        <i class="fas fa-bars"></i> {{ lang.nav.menu | liquify }}
       </button>
       <div class="collapse navbar-collapse" id="nav-links">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a href="{{ baseurl }}" class="nav-link">{{ nav.home }}</a></li>
-          <li class="nav-item "><a href="{{ baseurl | append: '#features' }}" class="nav-link">{{ nav.features }}</a></li>
-          <li class="nav-item "><a href="{{ baseurl | append: global.link_listings }}" class="nav-link">{{ nav.listings }}</a></li>
+          <li class="nav-item"><a href="{{ baseurl }}" class="nav-link">{{ lang.nav.home | liquify }}</a></li>
+          <li class="nav-item "><a href="{{ baseurl | append: '#features' }}" class="nav-link">{{ lang.nav.features | liquify }}</a></li>
+          <li class="nav-item "><a href="{{ baseurl | append: lang.global.link_listings }}" class="nav-link">{{ lang.nav.listings | liquify }}</a></li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="setupDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ nav.setup_menu }}
+              {{ lang.nav.setup_menu | liquify }}
             </a>
             <div class="dropdown-menu" aria-labelledby="setupDropdown">
               {% comment %}
-              <!-- <a class="dropdown-item" href="{{ baseurl | append: global.link_mac_setup }}">{{ nav.macos }}</a>
-              <a class="dropdown-item" href="{{ baseurl | append: global.link_windows_setup }}">{{ nav.windows }}</a>
-              <a class="dropdown-item" href="{{ baseurl | append: global.link_linux_setup }}">{{ nav.linux }}</a>
+              <!-- <a class="dropdown-item" href="{{ baseurl | append: lang.global.link_mac_setup }}">{{ lang.nav.macos | liquify }}</a>
+              <a class="dropdown-item" href="{{ baseurl | append: lang.global.link_windows_setup }}">{{ lang.nav.windows | liquify }}</a>
+              <a class="dropdown-item" href="{{ baseurl | append: lang.global.link_linux_setup }}">{{ lang.nav.linux | liquify }}</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{ baseurl | append: global.link_trading }}">{{ nav.trading }}</a>
-              <a class="dropdown-item" href="{{ baseurl | append: global.link_troubleshooting }}">{{ nav.troubleshooting }}</a> -->
+              <a class="dropdown-item" href="{{ baseurl | append: lang.global.link_trading }}">{{ lang.nav.trading | liquify }}</a>
+              <a class="dropdown-item" href="{{ baseurl | append: lang.global.link_troubleshooting }}">{{ lang.nav.troubleshooting | liquify }}</a> -->
               {% endcomment %}
-              <a class="dropdown-item" href="{{ site.exlink_docs_setup }}">{{ nav.setup }}</a>
-              <a class="dropdown-item" href="{{ site.exlink_docs_trading }}">{{ nav.trading }}</a>
+              <a class="dropdown-item" href="{{ site.exlink_docs_setup }}">{{ lang.nav.setup | liquify }}</a>
+              <a class="dropdown-item" href="{{ site.exlink_docs_trading }}">{{ lang.nav.trading | liquify }}</a>
             </div>
           </li>
-          <li class="nav-item "><a href="{{ baseurl | append: '#faq' }}" class="nav-link">{{ nav.faq }}</a></li>
+          <li class="nav-item "><a href="{{ baseurl | append: '#faq' }}" class="nav-link">{{ lang.nav.faq | liquify }}</a></li>
+          
           {% comment %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="setupDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-globe-americas"></i>
-                <!-- <i class="fas fa-language"></i>  -->
-                {{ global.lang }}
+                {% comment %}}
+                <!-- <i class="fas fa-globe-americas"></i> -->
+                {% endcomment %}
+                <i class="fas fa-language"></i> 
+                {{ lang.global.lang }}
               </a>
               <div class="dropdown-menu" aria-labelledby="setupDropdown">
                 <a class="dropdown-item" href="{{ site.url }}/">English</a>
-                <a class="dropdown-item" href="{{ site.url }}/zh/">中文</a>
-                <a class="dropdown-item" href="{{ site.url }}/ko/">한국어</a>
-                <a class="dropdown-item" href="{{ site.url }}/ru/">Pусский</a>
-                <a class="dropdown-item" href="{{ site.url }}/es/">Español</a>
-                <a class="dropdown-item" href="{{ site.url }}/ar/">عربى</a>
-                <a class="dropdown-item" href="{{ site.url }}/ja/">日本語</a>
-                <a class="dropdown-item" href="{{ site.url }}/de/">Deutsch</a>
+                <!-- <a class="dropdown-item" href="{{ site.url }}/zh/">中文</a> -->
+                <!-- <a class="dropdown-item" href="{{ site.url }}/ko/">한국어</a> -->
+                <!-- <a class="dropdown-item" href="{{ site.url }}/ru/">Pусский</a> -->
+                <!-- <a class="dropdown-item" href="{{ site.url }}/es/">Español</a> -->
+                <!-- <a class="dropdown-item" href="{{ site.url }}/ar/">عربى</a> -->
+                <!-- <a class="dropdown-item" href="{{ site.url }}/ja/">日本語</a> -->
+                <!-- <a class="dropdown-item" href="{{ site.url }}/de/">Deutsch</a> -->
                 <a class="dropdown-item" href="{{ site.url }}/fr/">Français</a>
-                <a class="dropdown-item" href="{{ site.url }}/it/">Italian</a>
+                <!-- <a class="dropdown-item" href="{{ site.url }}/it/">Italian</a> -->
               </div>
             </li>
           {% endcomment %}
 
-          <li class="nav-item cta"><a href="{{ baseurl | append: '#downloads' }}" class="nav-link"><span>{{ nav.downloads }}</span></a></li>
+          <li class="nav-item cta"><a href="{{ baseurl | append: '#downloads' }}" class="nav-link"><span>{{ lang.nav.downloads | liquify }}</span></a></li>
         </ul>
       </div>
     </div>

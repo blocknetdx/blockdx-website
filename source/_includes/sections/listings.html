@@ -1,5 +1,4 @@
-{% assign global = site.translations[site.lang].global %}
-{% assign listings = site.translations[site.lang].listings %}
+{% assign lang = site.translations[site.lang] %}
 
 <section class="section section-first bg-light">
   <div class="container"> 
@@ -9,10 +8,10 @@
           <table class="table shadow-sm">
             <thead class="thead-primary">
               <tr>
-                <th>{{ listings.table_assets }}</th>
-                <th>{{ listings.table_ticker }}</th>
-                <th>{{ listings.table_wallets }} 
-                  <i class="fas fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="{{ listings.table_wallet_info }}"></i></th>
+                <th>{{ lang.listings.table_assets | liquify }}</th>
+                <th>{{ lang.listings.table_ticker | liquify }}</th>
+                <th>{{ lang.listings.table_wallets | liquify }} 
+                  <i class="fas fa-question-circle tooltip-icon" data-toggle="tooltip" data-placement="top" title="{{ lang.listings.table_wallet_info | liquify }}"></i></th>
               </tr>
             </thead>
             <tbody>

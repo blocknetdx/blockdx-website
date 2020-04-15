@@ -9,14 +9,13 @@ permalink_zh: /品牌化/
 ---
 
 
-{% assign global = site.translations[site.lang].global %}
-{% assign branding = site.translations[site.lang].branding %}
+{% assign lang = site.translations[site.lang] %}
 
 {% 
   include templates/page-header.html
-  title=branding.title
-  intro=branding.intro
-  button_text=branding.button
+  title=lang.branding.title
+  intro=lang.branding.intro
+  button_text=lang.branding.button
   button_link="/assets/files/blockdx-media-kit.zip"
   class='bg-light'
 %}

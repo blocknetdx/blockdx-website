@@ -7,22 +7,19 @@ namespace: home
 permalink: /
 ---
 
-<!-- measured from bottom of laptop to bottom of W -->
-{% assign global = site.translations[site.lang].global %}
-{% assign baseurl = site.url | append: site.translations[site.lang].global.link_index %}
-{% assign index = site.translations[site.lang].index %}
 
-{% include tools/content-converter-test.html %}
+{% assign lang = site.translations[site.lang] %}
+{% assign baseurl = site.url | append: lang.global.link_index %}
 
 <header id="hero">
   <div class="container">
     <div class="row px-0 pt-xl-4 pt-lg-0 pt-md-2 pt-sm-0 pt-2">
       <div class="col-sm-12 col-lg-4 text-center align-self-center text-lg-left dx-animate">
-        <h1 class="mb-4 mx-auto">{{ index.header }}</h1>
-        <p class="mb-4 mx-auto">{{ index.subheader }}</p>
+        <h1 class="mb-4 mx-auto">{{ lang.index.header }}</h1>
+        <p class="mb-4 mx-auto">{{ lang.index.subheader }}</p>
         <div class="mb-5">
-          <a href="{{ baseurl | append: '#downloads' }}" class="btn btn-primary btn1 px-4 py-2 mt-2 mr-1">{{ index.button1 }}</a>
-          <a href="{{ baseurl | append: '#features' }}" class="btn btn-white btn2 px-4 py-2 mt-2">{{ index.button2 }}</a>
+          <a href="{{ baseurl | append: '#downloads' }}" class="btn btn-primary btn1 px-4 py-2 mt-2 mr-1">{{ lang.index.button1 }}</a>
+          <a href="{{ baseurl | append: '#features' }}" class="btn btn-white btn2 px-4 py-2 mt-2">{{ lang.index.button2 }}</a>
         </div>
       </div>
       <div class="col-sm-12 col-lg-8 align-self-center">
@@ -35,9 +32,6 @@ permalink: /
 {% include sections/features.html %}
 {% include sections/downloads.html %}
 {% include sections/stats.html %}
-{% comment %}
-  {% include sections/extra.html %}
-{% endcomment %}
 {% include sections/faq.html %}
 {% include sections/subscribe.html %}
 {% include sections/blog1.html %}

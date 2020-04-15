@@ -1,21 +1,22 @@
-{% assign global = site.translations[site.lang].global %}
-{% assign subscribe = site.translations[site.lang].subscribe %}
+{% assign lang = site.translations[site.lang] %}
 
 <section id="subscribe" class="section bg-dark">
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col text-center heading-section dx-animate">
-        <h2>{{ subscribe.subheader }}</h2>
-        <p>{{ subscribe.intro }}</p>
+        <h2>{{ lang.subscribe.subheader | liquify }}</h2>
+        <p>{{ lang.subscribe.intro | liquify }}</p>
 
         <div id="mc_embed_signup" class="subscribe-form mt-5">
           <form id="mc-embedded-subscribe-form" class="form-inline validate" action="https://blocknet.us16.list-manage.com/subscribe/post?u=5d0a376e982034a2ddd6edb98&amp;id=6ae2c503df" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
             <div class="container">
               <div class="input-group mx-auto">
-                <input id="mce-EMAIL" class="required email form-control" type="email" value="" name="EMAIL" placeholder="{{ subscribe.input }}" aria-label="{{ subscribe.input }}">
+                <input id="mce-EMAIL" class="required email form-control" type="email" value="" name="EMAIL" placeholder="{{ lang.subscribe.input | liquify }}" aria-label="{{ lang.subscribe.input | liquify }}">
                 <div class="input-group-append">
-                  <!-- <button id="mc-embedded-subscribe" class="btn btn-primary" type="submit" name="subscribe">{{ subscribe.button }}</button> -->
-                  <input id="mc-embedded-subscribe" class="btn btn-primary" type="submit" value="{{ subscribe.button }}" name="subscribe">
+                  {% comment %}
+                  <!-- <button id="mc-embedded-subscribe" class="btn btn-primary" type="submit" name="subscribe">{{ lang.subscribe.button | liquify }}</button> -->
+                  {% endcomment %}
+                  <input id="mc-embedded-subscribe" class="btn btn-primary" type="submit" value="{{ lang.subscribe.button | liquify }}" name="subscribe">
                 </div>
               </div>
             </div>

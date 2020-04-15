@@ -1,15 +1,17 @@
+{% assign lang = site.translations[site.lang] %}
+
 <header class="{% if include.class and include.class != '' %}{{ include.class }}{% endif %}">
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-md-7 text-center heading-section dx-animate">
         {% if include.title and include.title != '' %}
-          <h1 class="mb-3">{{ include.title }}</h1>
+          <h1 class="mb-3">{{ include.title | liquify }}</h1>
         {% endif %}
         {% if include.intro and include.intro != '' %}
-          <p class="mx-auto">{{ include.intro }}</p>
+          <div class="mx-auto">{{ include.intro | liquify | markdownify }}</div>
         {% endif %}
         {% if include.button_link and include.button_link != '' and include.button_text and include.button_text != '' %}
-          <a href="{{ include.button_link }}" class="btn btn-primary px-4 py-2 mt-2">{{ include.button_text }}</a>
+          <a href="{{ include.button_link | liquify }}" class="btn btn-primary px-4 py-2 mt-2">{{ include.button_text | liquify }}</a>
         {% endif %}
       </div>
     </div>

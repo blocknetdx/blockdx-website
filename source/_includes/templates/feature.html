@@ -1,6 +1,10 @@
+{% assign lang = site.translations[site.lang] %}
+
 {% comment %}
+  <!-- 
   format 1 = centered icon
-  format 2 = justfied left icon
+  format 2 = justfied left icon 
+  -->
 {% endcomment %}
 
 {% assign format = '2' %}
@@ -22,7 +26,7 @@
         </div>
         <div class="media-body p-2 mt-3">
           <h3 class="heading">{{ include.feature }}</h3>
-          <p>{{ include.description }}</p>
+          <p>{{ include.description | liquify | markdownify }}</p>
         </div>
       </div>
     </div>
@@ -36,7 +40,7 @@
         </div>
         <div class="media-body p-2 mt-3">
           <h3 class="heading">{{ include.feature }}</h3>
-          <p>{{ include.description }}</p>
+          {{ include.description | liquify | markdownify }}
         </div>
       </div>
     </div>
