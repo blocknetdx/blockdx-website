@@ -19,13 +19,10 @@ sass:
 # Plugins ignored if building with Github pages
 plugins: 
 - 'jekyll-sitemap'
-# - 'jekyll-language-plugin'
 - 'jekyll-multiple-languages-plugin'
 - 'liquify'
 
 # Localization settings
-# language_data: data.lang.%%
-# language_includes_dir: _i18n
 # The first lang is the default/root site
 # languages: ["en","zh","ko","es","ar","ru","it","de"]
 languages: ["en"]
