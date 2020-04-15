@@ -1,14 +1,13 @@
-{% assign global = site.translations[site.lang].global %}
-{% assign stats = site.translations[site.lang].stats %}
+{% assign lang = site.translations[site.lang] %}
 
 <section id="stats" class="stats bg-dark section">
   <div class="container">
 
     {% 
       include templates/section-header.html
-      header=stats.header
-      subheader=stats.subheader
-      p=stats.intro
+      header=lang.stats.header
+      subheader=lang.stats.subheader
+      p=lang.stats.intro
     %}
 
     {% comment %} <!-- Create manifest array containing manifest-latest.json data  --> {% endcomment %}
@@ -30,19 +29,19 @@
         <div class="row">
           <div class="col-md d-flex justify-content-center stats-wrap dx-animate text-center">
             <strong class="number" data-number="{{ assetCount }}">0</strong>
-            <span class="stat">{{ stats.assets }}</span>
+            <span class="stat">{{ lang.stats.assets | liquify }}</span>
           </div>
           <div class="col-md d-flex justify-content-center stats-wrap dx-animate text-center">
             <strong class="number" data-number="{{ combinations }}">0</strong>
-            <span class="stat">{{ stats.pairs }}</span>
+            <span class="stat">{{ lang.stats.pairs | liquify }}</span>
           </div>
           <div class="col-md d-flex justify-content-center stats-wrap dx-animate text-center">
-            <strong class="number" data-number="{{ stats.trades_val }}">0</strong><strong><em>+</em></strong>
-            <span class="stat">{{ stats.trades }}</span>
+            <strong class="number" data-number="{{ lang.stats.trades_val | liquify }}">0</strong><strong><em>+</em></strong>
+            <span class="stat">{{ lang.stats.trades | liquify }}</span>
           </div>
           <div class="col-md d-flex justify-content-center stats-wrap dx-animate text-center">
             <strong class="number" data-number="0">0</strong>
-            <span class="stat">{{ stats.middlemen }}</span>
+            <span class="stat">{{ lang.stats.middlemen | liquify }}</span>
           </div>
         </div>
       </div>

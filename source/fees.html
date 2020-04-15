@@ -5,16 +5,17 @@ keywords: fees.meta_keywords
 layout: default
 namespace: fees
 permalink: /fees/
+permalink_fr: /frais/
 permalink_zh: /费用/
 ---
 
 
-{% assign global = site.translations[site.lang].global %}
-{% assign fees = site.translations[site.lang].fees %}
+{% assign lang = site.translations[site.lang] %}
 
 {% 
   include templates/page-header.html
-  title=fees.title
+  title=lang.fees.title
+  intro=lang.fees.intro
   class='bg-light'
 %}
 
@@ -23,14 +24,14 @@ permalink_zh: /费用/
     <div class="row">
       <div class="col-md-6 mb-3 dx-animate">
         <div class="dx-card shadow-sm h-shadow h-scale">
-          <h2 class="heading pl-0">{{ fees.maker }}</h2>
-          <p>{{ fees.maker_fees }}</p>
+          <h2 class="heading pl-0">{{ lang.fees.maker | liquify }}</h2>
+          {{ lang.fees.maker_fees | liquify | markdownify }}
         </div>
       </div>
       <div class="col-md-6 mb-3 dx-animate">
         <div class="dx-card shadow-sm h-shadow h-scale">
-          <h2 class="heading pl-0">{{ fees.taker }}</h2>
-          <p>{{ fees.taker_fees }}</p>
+          <h2 class="heading pl-0">{{ lang.fees.taker | liquify }}</h2>
+          {{ lang.fees.taker_fees | liquify | markdownify }}
         </div>
       </div>
     </div>

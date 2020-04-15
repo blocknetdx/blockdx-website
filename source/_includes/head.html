@@ -1,18 +1,18 @@
-{% assign global = site.translations[site.lang].global %}
+{% assign lang = site.translations[site.lang] %}
 
-{% assign title = site.translations[site.lang].global.meta_title %}
+{% assign title = lang.global.meta_title %}
   {% if page.title %}
     {% capture page_title %}{% t page.title %} | {{ title }}{% endcapture %}
     {% assign title = page_title %}
   {% endif %}
 
-{% assign description = site.translations[site.lang].global.meta_description %}
+{% assign description = lang.global.meta_description %}
   {% if page.description %}
     {% capture page_description %}{% t page.description %}{% endcapture %}
     {% assign description = page_description %}
   {% endif %}
 
-{% assign keywords = site.translations[site.lang].global.meta_keywords %}
+{% assign keywords = lang.global.meta_keywords %}
   {% if page.keywords %}
     {% capture page_keywords %}{% t page.keywords %}{% endcapture %}
     {% assign keywords = page_keywords %}

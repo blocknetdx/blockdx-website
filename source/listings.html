@@ -9,11 +9,8 @@ permalink_zh: /列表/
 ---
 
 
-{% assign global = site.translations[site.lang].global %}
-{% assign baseurl = site.url | append: site.translations[site.lang].global.link_index %}
-{% assign listings = site.translations[site.lang].listings %}
-
-{% assign listing_application = baseurl | append: global.link_application %}
+{% assign lang = site.translations[site.lang] %}
+{% assign baseurl = site.url | append: lang.global.link_index %}
 
 {% comment %}
 <!--
@@ -29,10 +26,10 @@ Content notes:
 
 {% 
   include templates/page-header.html
-  title=listings.title
-  intro=listings.intro
-  button_text=listings.button
-  button_link=listing_application
+  title=lang.listings.title
+  intro=lang.listings.intro
+  button_text=lang.listings.button
+  button_link=lang.global.link_application
   class='bg-light'
 %}
 
@@ -44,10 +41,10 @@ Content notes:
           <table class="table shadow-sm">
             <thead class="thead-primary">
               <tr>
-                <th>{{ listings.table_assets }}</th>
-                <th>{{ listings.table_ticker }}</th>
-                <th>{{ listings.table_wallets }} 
-                  <i class="fas fa-question-circle tool tip-icon" data-toggle="tooltip" data-placement="top" title="{{ listings.table_wallet_info }}"></i></th>
+                <th>{{ lang.listings.table_assets | liquify  }}</th>
+                <th>{{ lang.listings.table_ticker | liquify  }}</th>
+                <th>{{ lang.listings.table_wallets | liquify  }} 
+                  <i class="fas fa-question-circle tool tip-icon" data-toggle="tooltip" data-placement="top" title="{{ lang.listings.table_wallet_info | liquify  }}"></i></th>
               </tr>
             </thead>
             <tbody id="dx-tbody">

@@ -9,14 +9,13 @@ permalink_zh: /上市申请/
 ---
 
 
-{% assign global = site.translations[site.lang].global %}
-{% assign listing_application = site.translations[site.lang].listing_application %}
+{% assign lang = site.translations[site.lang] %}
 
 {% 
   include templates/page-header.html
-  title=listing_application.title
-  intro=listing_application.intro
-  button_text=listing_application.button
+  title=lang.listing_application.title
+  intro=lang.listing_application.intro
+  button_text=lang.listing_application.button
   button_link=site.exlink_listing_application
   class='bg-light'
 %}
@@ -25,14 +24,14 @@ permalink_zh: /上市申请/
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-10 px-4 px-md-0 dx-animate">
-        <h2 class="h2">{{ listing_application.benefits_header }}</h2>
-        <p>{{ listing_application.benefits }}</p>
+        <h2 class="h2">{{ lang.listing_application.benefits_header }}</h2>
+        {{ lang.listing_application.benefits | liquify | markdownify }}
 
-        <h2 class="h2">{{ listing_application.process_header }}</h2>
-        <p>{{ listing_application.process }}</p>
+        <h2 class="h2">{{ lang.listing_application.process_header }}</h2>
+        {{ lang.listing_application.process | liquify | markdownify }}
 
-        <h2 class="h3">{{ listing_application.requirements_header }}</h2>
-        <p>{{ listing_application.requirements }}</p>
+        <h2 class="h3">{{ lang.listing_application.requirements_header }}</h2>
+        {{ lang.listing_application.requirements | liquify | markdownify }}
         <ul>
           <li>createrawtransaction</li>
           <li>decoderawtransaction</li>

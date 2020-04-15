@@ -1,3 +1,5 @@
+{% assign lang = site.translations[site.lang] %}
+
 {% if 
   include.postUrl and
   include.postUrl != '' and
@@ -8,7 +10,7 @@
 %}
   <div class="col-lg-4 col-md-10 dx-animate">
     <div class="blog-entry mb-4 h-shadow h-scale shadow-sm" {% if include.animationDelay and include.animationDelay != '' %}data-aos-delay="{{ include.animationDelay }}"{% endif %}>
-      <a href="{{ include.postUrl }}" class="blog-img" 
+      <a href="{{ include.postUrl | liquify }}" class="blog-img" 
         style="background-image: url('{{ include.postImg }}');
           {% if include.coverPos %}
             background-position: {{ include.coverPos }};

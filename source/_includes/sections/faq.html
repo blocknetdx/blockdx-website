@@ -1,13 +1,12 @@
-{% assign global = site.translations[site.lang].global %}
-{% assign faq = site.translations[site.lang].faq %}
+{% assign lang = site.translations[site.lang] %}
 
 <section id="faq" class="section bg-light">
   <div class="container">
 
     {% 
       include templates/section-header.html
-      header=faq.header
-      subheader=faq.subheader
+      header=lang.faq.header
+      subheader=lang.faq.subheader
       p=''
     %}
 
@@ -17,7 +16,7 @@
           <div class="col-lg-6 col-md-10">
 
             {% assign faq_section_limit = 14 %}
-            {% assign question_count = faq.questions | size %}
+            {% assign question_count = lang.faq.questions | size %}
             {% if faq_section_limit > question_count %}
               {% assign faq_section_limit = question_count %}
             {% endif %}
@@ -25,8 +24,8 @@
 
             {% for i in (0..half_limit) %}
               {% if i < half_limit %}
-                {% assign q = faq.questions[i].question %}
-                {% assign a = faq.questions[i].answer %}
+                {% assign q = lang.faq.questions[i].question %}
+                {% assign a = lang.faq.questions[i].answer %}
                 {% 
                   include templates/accordion.html
                   section='faq'
@@ -43,8 +42,8 @@
 
             {% for i in (half_limit..faq_section_limit) %}
               {% if i >= half_limit %}
-                {% assign q = faq.questions[i].question %}
-                {% assign a = faq.questions[i].answer %}
+                {% assign q = lang.faq.questions[i].question %}
+                {% assign a = lang.faq.questions[i].answer %}
                 {% 
                   include templates/accordion.html
                   section='faq'
