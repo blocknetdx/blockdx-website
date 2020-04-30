@@ -11,6 +11,7 @@ permalink_zh: /列表/
 
 {% assign lang = site.translations[site.lang] %}
 {% assign baseurl = site.url | append: lang.global.link_index %}
+{% assign listing_application = baseurl | append: lang.global.link_application %}
 
 {% comment %}
 <!--
@@ -29,7 +30,7 @@ Content notes:
   title=lang.listings.title
   intro=lang.listings.intro
   button_text=lang.listings.button
-  button_link=lang.global.link_application
+  button_link=listing_application
   class='bg-light'
 %}
 
@@ -41,10 +42,10 @@ Content notes:
           <table class="table shadow-sm">
             <thead class="thead-primary">
               <tr>
-                <th>{{ lang.listings.table_assets | liquify  }}</th>
-                <th>{{ lang.listings.table_ticker | liquify  }}</th>
-                <th>{{ lang.listings.table_wallets | liquify  }} 
-                  <i class="fas fa-question-circle tool tip-icon" data-toggle="tooltip" data-placement="top" title="{{ lang.listings.table_wallet_info | liquify  }}"></i></th>
+                <th>{{ lang.listings.table_assets | liquify }}</th>
+                <th>{{ lang.listings.table_ticker | liquify }}</th>
+                <th>{{ lang.listings.table_wallets | liquify }} 
+                  <i class="fas fa-question-circle tool tip-icon" data-toggle="tooltip" data-placement="top" title="{{ lang.listings.table_wallet_info | liquify }}"></i></th>
               </tr>
             </thead>
             <tbody id="dx-tbody">
