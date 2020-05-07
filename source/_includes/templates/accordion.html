@@ -1,6 +1,6 @@
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
-{% if 
+{%- if 
   include.section and
   include.section != '' and
   include.header and
@@ -9,7 +9,7 @@
   include.num != ''
   include.content and
   include.content != ''
-%}
+-%}
   <div class="card h-shadow h-scale">
     <div class="card-header">
       <a class="card-link" 
@@ -29,4 +29,4 @@
       </div>
     </div>
   </div>
-{% endif %}
+{%- endif -%}
