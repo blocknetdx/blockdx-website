@@ -171,16 +171,16 @@ faq:
       answer: Block DX is not currently compatible with Electrum, hardware wallets, lite wallets, or web wallets. The full node of the blockchains you want to trade must be downloaded and synced, along with the [Blocknet wallet]({{ site.exlink_wallet_download }}) (used to power the exchange process). However, a third party is developing the world's first decentralized lite multiwallet on the [Blocknet Protocol]({{ site.exlink_docs }}), which will allow Block DX to be used without downloading the blockchains of the assets being traded.
       topic: general, trading  # Do not translate
     - question: How can a project get listing on Block DX?
-      answer: There is no cost to be listed on Block DX. However, since Block DX utilizes atomic swaps, the asset's blockchain must meet certain compatibility and testing requirements. See [Listings]({{ lang.global.link_listings }}) for more information.
+      answer: There is no cost to be listed on Block DX. However, since Block DX utilizes atomic swaps, the asset's blockchain must meet certain compatibility and testing requirements. See [Listing Application]({{ lang.global.link_listing_application }}) for more information.
       topic: general, listings, dev # Do not translate
     - question: Can Block DX be used in the browser?
-      answer: At the moment Block DX is only available as a desktop application. However, a third party is developing the world's first decentralized lite multiwallet on the [Blocknet Protocol]({{ site.exlink_blocknet }}), which would render a browser-based exchange and app possible.
+      answer: At the moment Block DX is only available as a desktop application. However, a third party is developing the world's first decentralized lite multiwallet on the [Blocknet Protocol]({{ site.exlink_docs }}), which would render a browser-based exchange and app possible.
       topic: general, trading # Do not translate
     - question: How long do trades take?
       answer: Even though native assets are exchanged and trades are settled on their respective blockchain, the trade times are independent of block times. Block DX is very fast with trades typically being completed in 5-15 seconds.
       topic: general, trading # Do not translate
     - question: Why isn't Block DX listed on CoinMarketCap?
-      answer: An application has already been submitted for Block DX to be listed as an exchange on CoinMarketCap and we are waiting to be listed.
+      answer: An application has already been submitted for Block DX to be listed as an exchange on CoinMarketCap and are waiting to be listed.
       topic: general # Do not translate
     - question: Does Block DX have an API?
       answer: Yes! Block DX is 100% bot-friendly, see Blocknet's [API docs]({{ site.exlink_api_xbridge }}) for setup and usage documentation. There is also a [market making bot]({{ site.exlink_makerbot }}) that can be used to automatically post orders based off specified price data sources.

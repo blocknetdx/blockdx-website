@@ -12,7 +12,6 @@ global:
   link_listings: 'inscription/'
   link_application: 'formulaire-inscription/'
   link_fees: 'frais/'
-  link_fees: 'frais/'
   link_branding: 'image-de-marque/'
   link_trading: 'transiger/'
   link_troubleshooting: 'résolution-de-problèmes/'
@@ -172,10 +171,10 @@ faq:
       answer: Block DX n'est actuellement pas compatible avec Electrum, les portefeuilles matériels, les portefeuilles légers ou les portefeuilles Web. Le nœud complet des chaînes de blocs que vous souhaitez échanger doit être téléchargé et synchronisé, ainsi que le [portefeuille Blocknet]({{ site.exlink_wallet_download }}) (utilisé pour alimenter le processus d'échange). Cependant, un tiers développe le premier multiwallet léger décentralisé au monde sur le [protocole Blocknet]({{ site.exlink_docs }}), qui permettra d'utiliser Block DX sans télécharger les blockchains des actifs négociés.
       topic: general, trading  # Do not translate
     - question: Comment un projet peut-il être répertorié sur Block DX?
-      answer: Il n'y a aucun coût à inscrire sur Block DX. Cependant, puisque Block DX utilise des swaps atomiques, la chaîne de blocs de l'actif doit répondre à certaines exigences de compatibilité et de tests. Voir [Actifs listés]({{ lang.global.link_listings }}) pour plus d'informations.
+      answer: Il n'y a aucun coût à inscrire sur Block DX. Cependant, puisque Block DX utilise des swaps atomiques, la chaîne de blocs de l'actif doit répondre à certaines exigences de compatibilité et de tests. Voir [Demande d'inscription]({{ lang.global.link_listing_application }}) pour plus d'informations.
       topic: general, listings, dev # Do not translate
     - question: Block DX peut-il être utilisé dans un navigateur?
-      answer: Àctuellement, Block DX est uniquement disponible en tant qu'application bureautique. Cependant, un tiers développe le premier multiwallet léger décentralisé au monde sur le [protocole Blocknet]({{ site.exlink_blocknet }}), qui rendra possible un échange et une application utilisables dans un navigateur.
+      answer: Àctuellement, Block DX est uniquement disponible en tant qu'application bureautique. Cependant, un tiers développe le premier multiwallet léger décentralisé au monde sur le [protocole Blocknet]({{ site.exlink_docs }}), qui rendra possible un échange et une application utilisables dans un navigateur.
       topic: general, trading # Do not translate
     - question: Combien de temps prennent les transactions?
       answer: Même si les actifs natifs sont échangés et les transactions sont complétées sur leur blockchains respectives, les heures de transaction sont indépendantes des heures de bloc. Block DX est très rapide, les transactions étant généralement effectuées dans les 5 à 15 secondes.
