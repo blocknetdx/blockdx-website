@@ -1,0 +1,699 @@
+---
+title: orders.meta_title
+description: orders.meta_description
+keywords: orders.meta_keywords
+layout: default
+namespace: orders
+permalink: /orders/
+---
+
+
+{%- assign lang = site.translations[site.lang] -%}
+{%- assign baseurl = site.url | append: lang.global.link_index -%}
+
+{% 
+  include templates/page-header.html
+  title=lang.orders.title
+  intro=lang.orders.intro
+  class='bg-light'
+%}
+
+<section class="section bg-light pt-3 pb-1 dx-animate">
+  <div class="container">
+    <div class="dx-card shadow-sm h-shadow">
+      <div class="row">
+
+        <div class="col-md-4">
+          <label id="market-dropdown-label" for="market-dropdown">{{ lang.orders.select_market }}</label>
+          <select id="market-dropdown" class="custom-select">
+            <option value="BLOCK/LTC" selected="selected">BLOCK/LTC</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 text-md-center">
+          <button id="view-market" type="button" onclick="reloadTable(false)" class="btn btn-primary">{{ lang.orders.view_market }}</button>
+        </div>
+
+        <div class="col-md-4 text-md-center">
+          <button id="inverse-market" type="button" onclick="reloadTable(true)" class="btn btn-white">{{ lang.orders.view_inverse_market }}</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="order-asks" class="section bg-light pb-0 dx-animate">
+  <div class="container"> 
+
+    {% 
+      include templates/section-header.html
+      subheader=lang.orders.asks_subheader
+      button_text=lang.orders.asks_button
+      button_link='#order-bids'
+    %}
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table orders-table shadow-sm">
+            <thead class="thead-primary">
+              <tr>
+                <th>{{ lang.orders.table_size }} <span class="market-maker"></span></th>
+                <th>{{ lang.orders.table_price }} <span class="market-taker"></span></th>
+                <th>{{ lang.orders.table_price }} (BTC)<span class="btc-price"></span></th>
+                <th>{{ lang.orders.table_total }} <span class="market-taker"></span></th>
+              </tr>
+            </thead>
+            <tbody id="dx-tbody-asks">
+              <tr>
+                <td>{{ lang.orders.message_loading_orders }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="order-bids" class="section bg-light dx-animate">
+  <div class="container"> 
+
+    {% 
+      include templates/section-header.html
+      subheader=lang.orders.bids_subheader
+      button_text=lang.orders.bids_button
+      button_link='#order-asks'
+    %}
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table orders-table shadow-sm">
+            <thead class="thead-primary">
+              <tr>
+                <th>{{ lang.orders.table_size }} <span class="market-maker"></span></th>
+                <th>{{ lang.orders.table_price }} <span class="market-taker"></span></th>
+                <th>{{ lang.orders.table_price }} (BTC)<span class="btc-price"></span></th>
+                <th>{{ lang.orders.table_total }} <span class="market-taker"></span></th>
+              </tr>
+            </thead>
+            <tbody id="dx-tbody-bids">
+              <tr>
+                <td>{{ lang.orders.message_loading_orders }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script type="text/javascript">
+  var dev = false;  
+  var orderData = [];
+  var sampleOrderData = [
+      {
+        "id": "1b107f6c369b497ff116b307a76f7c58ec9ce140997d51e084cdff2dfb15db01",
+        "maker": "BTC",
+        "maker_size": "0.012580",
+        "taker": "BLOCK",
+        "taker_size": "97.521672",
+        "updated_at": "2020-05-05T19:23:02.885Z",
+        "created_at": "2020-05-05T19:23:02.777Z",
+        "status": "open"
+      },
+      {
+        "id": "854fbd455b6bc1243bedcdcac2c340584c1fea6eaf8c6f3bd26e4760dc56ad16",
+        "maker": "BTC",
+        "maker_size": "0.026127",
+        "taker": "BLOCK",
+        "taker_size": "202.534668",
+        "updated_at": "2020-05-05T19:18:44.235Z",
+        "created_at": "2020-05-05T19:18:44.125Z",
+        "status": "open"
+      },
+      {
+        "id": "de555e8f32c59ca1d7ae4c70b99555d40b8079bd6770c98ef443e9d5bef6ac26",
+        "maker": "BTC",
+        "maker_size": "0.019562",
+        "taker": "BLOCK",
+        "taker_size": "164.389812",
+        "updated_at": "2020-05-05T19:19:27.276Z",
+        "created_at": "2020-05-05T19:19:27.161Z",
+        "status": "open"
+      },
+      {
+        "id": "117e56c5296550163576055f328d5ae895fcbada358686b571fb08f4b0cfe21b",
+        "maker": "BLOCK",
+        "maker_size": "6.705126",
+        "taker": "BTC",
+        "taker_size": "0.001066",
+        "updated_at": "2020-05-05T19:20:26.818Z",
+        "created_at": "2020-05-05T19:20:26.718Z",
+        "status": "open"
+      },
+      {
+        "id": "f87a2502fc0acf5e473cd5b3ac4d44ed0f53ece72d0efa1ac9335db70c0eb25e",
+        "maker": "BLOCK",
+        "maker_size": "68.678709",
+        "taker": "BTC",
+        "taker_size": "0.011538",
+        "updated_at": "2020-05-05T19:22:05.375Z",
+        "created_at": "2020-05-05T19:22:05.267Z",
+        "status": "open"
+      },
+      {
+        "id": "ad7f6f82c83bea97ed9c9f577f1dc9590105f881f3b571efefbe4249df77a866",
+        "maker": "BLOCK",
+        "maker_size": "102.323520",
+        "taker": "BTC",
+        "taker_size": "0.014735",
+        "updated_at": "2020-05-05T19:21:40.989Z",
+        "created_at": "2020-05-05T19:17:38.052Z",
+        "status": "open"
+      },
+      {
+        "id": "7f0193b2546818b34c47bafbabc95d216439eab50abf1c8d220e4bd053654e06",
+        "maker": "LTC",
+        "maker_size": "8.489943",
+        "taker": "BLOCK",
+        "taker_size": "340.540868",
+        "updated_at": "2020-05-05T19:22:08.965Z",
+        "created_at": "2020-05-05T19:22:08.788Z",
+        "status": "open"
+      },
+      {
+        "id": "a66d108f652bd6299fc17e27819670895ed75aef661c7bebb7d97d646c34b917",
+        "maker": "LTC",
+        "maker_size": "0.425724",
+        "taker": "BLOCK",
+        "taker_size": "17.434348",
+        "updated_at": "2020-05-05T19:21:12.522Z",
+        "created_at": "2020-05-05T19:16:57.284Z",
+        "status": "open"
+      },
+      {
+        "id": "882bc4713514b3c439b3fe86fe717c03cd3c07f7673d3d93daca6bd56627331f",
+        "maker": "LTC",
+        "maker_size": "5.140648",
+        "taker": "BLOCK",
+        "taker_size": "206.373360",
+        "updated_at": "2020-05-05T19:17:21.190Z",
+        "created_at": "2020-05-05T19:17:20.851Z",
+        "status": "open"
+      },
+      {
+        "id": "02eccc3bf7f773519997e70893e53c2398584afc0cc113fbb6f4ad9b4d4a4e16",
+        "maker": "BLOCK",
+        "maker_size": "837.724873",
+        "taker": "LTC",
+        "taker_size": "22.728476",
+        "updated_at": "2020-05-05T19:23:11.429Z",
+        "created_at": "2020-05-05T19:23:11.330Z",
+        "status": "open"
+      },
+      {
+        "id": "9275481b73cf6f39c9f65d93ad079745d8395f166b95f8c1bc17c1dea796f220",
+        "maker": "BLOCK",
+        "maker_size": "435.182680",
+        "taker": "LTC",
+        "taker_size": "12.557785",
+        "updated_at": "2020-05-05T19:21:32.205Z",
+        "created_at": "2020-05-05T19:17:22.137Z",
+        "status": "open"
+      },
+      {
+        "id": "cebb1148419f076d6fa741f86ec50226ea0f683c38e057dbb467553c47098c34",
+        "maker": "BLOCK",
+        "maker_size": "14.555905",
+        "taker": "LTC",
+        "taker_size": "0.455201",
+        "updated_at": "2020-05-05T19:20:53.578Z",
+        "created_at": "2020-05-05T19:20:53.512Z",
+        "status": "open"
+      },
+      {
+        "id": "233717951d3e21eff8c532101dbb8b6544d2217f891aa827b10f82949abecf4a",
+        "maker": "BLOCK",
+        "maker_size": "15.078514",
+        "taker": "DASH",
+        "taker_size": "0.250000",
+        "updated_at": "2020-05-05T19:21:46.998Z",
+        "created_at": "2020-05-05T19:17:44.275Z",
+        "status": "open"
+      },
+      {
+        "id": "4687a6d58eea71cae6c862d393d6a9ff575770f40d347dea3ec1aaa819482378",
+        "maker": "BLOCK",
+        "maker_size": "15.386239",
+        "taker": "DASH",
+        "taker_size": "0.250000",
+        "updated_at": "2020-05-05T19:21:16.988Z",
+        "created_at": "2020-05-05T19:17:05.289Z",
+        "status": "open"
+      },
+      {
+        "id": "8b110cec76c0879ce4cadb84457715ae585da1d19809cb3f3b7d4f22e0ee16a4",
+        "maker": "BLOCK",
+        "maker_size": "15.714233",
+        "taker": "DASH",
+        "taker_size": "0.250000",
+        "updated_at": "2020-05-05T19:22:59.775Z",
+        "created_at": "2020-05-05T19:22:59.660Z",
+        "status": "open"
+      },
+      {
+        "id": "da234966ae47122ce38d5ba322fbb0d0034d73b8975924a52a8a2485579e3304",
+        "maker": "DASH",
+        "maker_size": "0.250000",
+        "taker": "BLOCK",
+        "taker_size": "17.190181",
+        "updated_at": "2020-05-05T19:17:16.911Z",
+        "created_at": "2020-05-05T19:16:54.686Z",
+        "status": "open"
+      },
+      {
+        "id": "01b0c832204f4a0ea7207c1e6e87f136d075a3f434f4057edb7d3fc2a5425a15",
+        "maker": "DASH",
+        "maker_size": "0.250000",
+        "taker": "BLOCK",
+        "taker_size": "17.188885",
+        "updated_at": "2020-05-05T19:17:28.592Z",
+        "created_at": "2020-05-05T19:17:28.439Z",
+        "status": "open"
+      },
+      {
+        "id": "b7decfd349614f0320e6d0d15489d10b7af25b6cc4e3920a6e8a40ea21c29150",
+        "maker": "DASH",
+        "maker_size": "0.250000",
+        "taker": "BLOCK",
+        "taker_size": "17.174696",
+        "updated_at": "2020-05-05T19:20:24.787Z",
+        "created_at": "2020-05-05T19:20:24.672Z",
+        "status": "open"
+      },
+      {
+        "id": "b5ebbd6d5481dafe28cf864b4f87a0f89d1b151b91a09ad0497eba23c0598ceb",
+        "maker": "XZC",
+        "maker_size": "1.901066",
+        "taker": "NIX",
+        "taker_size": "146.000000",
+        "updated_at": "2020-05-05T19:22:41.614Z",
+        "created_at": "2020-05-05T18:02:03.581Z",
+        "status": "open"
+      }
+    ];
+  var cgIndex = [];
+  var marketList = [];
+  var marketOrders = {};
+  var targetMarket = "";
+  var bids = [];
+  var asks = [];
+  var assetTicker = "";
+  var loadingOrdersMsg = "{{ lang.orders.message_loading_orders }}";
+  var noOrdersMsg = "{{ lang.orders.message_no_orders }}";
+  var loadingErrMsg = "{{ lang.orders.message_loading_error }}";
+  var loadingErrAlert = "{{ lang.orders.alert_loading_error }}";
+
+
+  if (dev) {
+    getCGIndexAjax().then(processOrders);
+  } else {
+    getOrdersAjax().then(getCGIndexAjax).then(processOrders);
+  }
+
+  function getOrdersAjax() {
+    var promise = new Promise(function(resolve, reject){
+      if (dev) { console.log("getOrdersAjax"); }
+      var xhr = new XMLHttpRequest();
+      var status = true;
+      xhr.timeout = 2000;  
+      xhr.addEventListener("timeout", function(e) {
+        console.log("getOrdersAjax timeout"); 
+        alert(loadingErrAlert);
+      });
+      var url = "https://data.blocknet.co/api/v2.0/dxgetorders";
+      xhr.open('GET', url);
+      xhr.send();
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200){
+            if (dev) { console.log("getOrdersAjax success"); }
+            var response = JSON.parse(this.responseText);
+            orderData = response;
+            resolve(response);
+          } else {
+            console.log("Failed to load orders");
+            var ordersTableErr = "<tr><td>" + loadingErrMsg + "</td><td></td><td></td><td></td><tr>";
+            document.getElementById("dx-tbody-asks").innerHTML = ordersTableErr;
+            document.getElementById("dx-tbody-bids").innerHTML = ordersTableErr;
+            alert(loadingErrAlert);
+          }
+        }
+      }
+    });
+    return promise;
+  }
+
+  function getCGIndexAjax() {
+    var promise = new Promise(function(resolve, reject){
+      cgIndex = JSON.parse( localStorage.getItem('cgIndex') );
+      if (cgIndex === undefined || cgIndex === null || cgIndex.length == 0) {
+        if (dev) { console.log("cgIndex - ajax"); }
+        var xhr = new XMLHttpRequest();
+        var status = true;
+        xhr.timeout = 2000;  
+        xhr.addEventListener("timeout", function(e) {
+          console.log("cgIndex timeout");
+          alert(loadingErrAlert);
+        });
+        var url = "https://api.coingecko.com/api/v3/coins/list";
+        xhr.open('GET', url);
+        xhr.send();
+        xhr.onreadystatechange = function(){
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200){
+              if (dev) { console.log("cgIndex success"); }
+              var response = JSON.parse(this.responseText);
+              cgIndex = response;
+              localStorage.setItem('cgIndex', JSON.stringify(cgIndex));
+              resolve(cgIndex);
+            } else {
+              console.log("Failed to load CG index");
+            }
+          }
+        }
+      } else {
+        if (dev) { console.log("cgIndex - localStorage"); }
+        resolve(cgIndex);
+      }
+    });
+    return promise;
+  }
+
+  function processOrders() {
+    var orders;
+    if (dev) {
+      orders = sampleOrderData;
+      console.log("processOrders");
+    } else {
+      orders = ordeData;
+    }   
+
+    for(var order in orders) {
+      var id = orders[order]["id"];
+      var maker = orders[order]["maker"];
+      var taker = orders[order]["taker"];
+      var market = maker + "/" + taker ;
+      var size = orders[order]["maker_size"];
+      var total = orders[order]["taker_size"];
+      // round price to 6 decimals
+      var price = Math.round( Number(orders[order]["taker_size"]) / Number(orders[order]["maker_size"]) * 1000000 ) / 1000000;
+      // make all numbers 6 decimals
+      price = price.toString().split(".");
+      var priceBase = price[0];
+      var priceDec = "000000";
+      if (price[1] !== undefined ) {
+        priceDec = (price[1] + "000000").slice(0,6);
+      }
+      price = priceBase + "." + priceDec;
+      // make an array of maker/taker pairs for the market selection dropdown
+      if ( !marketList.includes(market) ) {
+        marketList.push(market);
+        marketOrders[market] = [{ "size": size, "price": price, "total": total }];
+      } else {
+        marketOrders[market].push({ "size": size, "price": price, "total": total });
+      }
+    }
+
+    // populate the dropdown with markets
+    var marketDropdown = document.getElementById("market-dropdown");
+    for (var market in marketList) {
+      if (marketList[market] !== "BLOCK/LTC") {
+        var option = document.createElement("option");
+        option.text = marketList[market];
+        option.value = marketList[market];
+        marketDropdown.add(option);
+      }
+    }
+    reloadTable(false);
+  }
+
+  {%- comment -%}
+    // block/ltc market
+    //   asks/sells (red)
+    //   size = block
+    //   price = block/ltc
+    //   total = ltc
+    //   --
+    //   bids/buys (green, ltc/block inversed)
+    //   size = ltc
+    //   price = ltc/block
+    //   total = block
+
+    // ltc/block market
+    //   asks/sells (red)
+    //   size = ltc
+    //   price = ltc/block
+    //   total = block
+    //   --
+    //   bids/buys (green, block/ltc inversed)
+    //   size = block
+    //   price = block/ltc
+    //   total = ltc
+  {%- endcomment -%}
+
+  function reloadTable(inverse) {
+    if (dev) { console.log("reloadTable"); }
+    prepareMarketData(inverse).then(getBTCPriceAjax).then(updateTable)
+  }
+
+  function getMarket() {
+    if (dev) { console.log("getMarket"); }
+    var dropdown = document.getElementById("market-dropdown");
+    var market = dropdown.options[dropdown.selectedIndex].value;
+    return market;
+  }
+
+  function prepareMarketData(inverse) {
+    var promise = new Promise(function(resolve, reject){
+      if (dev) { console.log("prepareMarketData"); }
+      var currentMarket;
+      var inverseMarket;
+      asks = [];
+      bids = [];
+
+      if (inverse) {
+        // reverse markets to show inverse
+        inverseMarket = getMarket();
+        currentMarket = inverseMarket.split("/").reverse().join("/");
+        // add inverse market to dropdown if not there already
+        var marketDropdown = document.getElementById("market-dropdown");
+        if ( !marketList.includes(currentMarket) ) {
+          marketList.push(currentMarket);
+          var option = document.createElement("option");
+          option.text = currentMarket;
+          option.value = currentMarket;
+          marketDropdown.add(option);
+        }
+        // update dropdown option
+        marketDropdown.value = currentMarket;
+      } else {
+        // set target markets
+        currentMarket = getMarket();
+        inverseMarket = currentMarket.split("/").reverse().join("/");
+      }
+      targetMarket = currentMarket;
+
+      // update table body with loading message
+      var ordersTableLoading = "<tr><td>" + loadingOrdersMsg + "</td><td></td><td></td><td></td><tr>";
+      document.getElementById("dx-tbody-asks").innerHTML = ordersTableLoading;
+      document.getElementById("dx-tbody-bids").innerHTML = ordersTableLoading;
+
+      // sort ask orders by ascending price
+      asks = marketOrders[currentMarket];
+      if (asks !== undefined) {
+        asks.sort(function(a, b) {
+          var priceA = Number(a.price);
+          var priceB = Number(b.price);
+          if (priceA < priceB) return -1;
+          if (priceA > priceB) return 1;
+          return 0;
+        });
+      }
+
+      var bidsRaw = marketOrders[inverseMarket];
+      if (bidsRaw !== undefined) {
+        // inverse bids for current market
+        for (bid in bidsRaw) {
+          var size = bidsRaw[bid]["total"];
+          var total = bidsRaw[bid]["size"];
+          // var price = Math.round( 1/Number(bids[bid]["price"]) * 1000000 ) / 1000000;
+          var price = Math.round( Number(total) / Number(size) * 1000000 ) / 1000000;
+          // var priceBTC = "n/a";
+          bids.push({ "size": size, "price": price, "total": total });
+        }
+        // sort bid orders by descending price
+        bids.sort(function(a, b) {
+          var priceA = Number(a.price);
+          var priceB = Number(b.price);
+          if (priceA < priceB) return 1;
+          if (priceA > priceB) return -1;
+          return 0;
+        });
+      }
+
+      // updateTable();
+      if (dev) {
+        console.log("============LOADING============");
+        console.log("---MARKETS---");
+        console.log(marketList);
+        console.log("---ALL ORDERS---");
+        console.log(marketOrders);
+        console.log("---CURRENT MARKET---");
+        console.log(currentMarket);
+        console.log("---ASKS---");
+        console.log(asks);
+        console.log("---BIDS---");
+        console.log(bids);
+        console.log("============DONE============");
+      }
+      resolve();
+    });
+    return promise;
+  }
+
+  function getBTCPriceAjax() {
+    var promise = new Promise(function(resolve, reject){
+      if (dev) { console.log("getBTCPriceAjax"); }
+      assetTicker = targetMarket.split("/")[1];;
+      if (dev) { console.log("assetTicker: " + assetTicker); }
+      if (assetTicker !== "BTC") {
+        var assetID;
+        // lookup asset id based off ticker
+        for (asset in cgIndex) {
+          if (cgIndex[asset]["symbol"].toLowerCase() === assetTicker.toLowerCase()) {
+            assetID = cgIndex[asset]["id"];
+          }
+        }
+        if (dev) { console.log("assetID: " + assetID); }
+        if (assetID === undefined) {
+          resolve(undefined);
+        }
+        // get asset price in btc
+        var xhr = new XMLHttpRequest();
+        var status = true;
+        xhr.timeout = 2000;  
+        xhr.addEventListener("timeout", function(e) {
+          console.log("getBTCPriceAjax timeout");
+          resolve(undefined);
+        });
+        var url = "https://api.coingecko.com/api/v3/simple/price?ids=" + assetID + "&vs_currencies=btc";
+        xhr.open('GET', url);
+        xhr.send();
+        xhr.onreadystatechange = function(){
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200){
+              // example response = {"litecoin":{"btc":0.0047943}}
+              var response = JSON.parse(this.responseText);
+              if (dev) { console.log(response); }
+              var priceBTC = response[Object.keys(response)[0]]["btc"];
+              if (dev) { console.log(assetTicker + " price: " + priceBTC); }
+              resolve(priceBTC);
+            } else {
+              console.log("Failed to load BTC pricing");
+              resolve(undefined);
+            }
+          }
+        }
+      } else {
+        resolve(1);
+      }
+    });
+    return promise;
+  }
+
+  function updateTable(priceBTC) {
+    if (dev) { 
+      console.log("updateTable");
+      console.log("priceBTC: " + priceBTC);
+    }
+    var marketMaker = targetMarket.split("/")[0];
+    var marketTaker = targetMarket.split("/")[1];
+    var askTable = "";
+    var bidTable = "";
+    var askHeader = "";
+    var bidHeader = "";
+    var noOrdersTable = "<tr><td>" + noOrdersMsg + "</td><td></td><td></td><tr>";
+    // generate html table markup with orders
+    if (asks !== undefined) {
+      if (priceBTC === undefined) {
+        for (ask in asks) {
+          askTable += "<tr><td>" + asks[ask]["size"] + "</td><td>" + asks[ask]["price"] + "</td><td>n/a</td><td>" + asks[ask]["total"] + "</td><tr>";
+        }
+      } else {
+        priceBTC = Number(priceBTC);
+        for (ask in asks) {
+          // calculate btc price and round price to 6 decimals
+          btcPrice = Math.round( Number(asks[ask]["price"])*priceBTC * 1000000 ) / 1000000;
+          // make all numbers 6 decimals
+          btcPrice = btcPrice.toString().split(".");
+          var priceBase = btcPrice[0];
+          var priceDec = "000000";
+          if (btcPrice[1] !== undefined ) {
+            priceDec = (btcPrice[1] + "000000").slice(0,6);
+          }
+          btcPrice = priceBase + "." + priceDec;
+          askTable += "<tr><td>" + asks[ask]["size"] + "</td><td>" + asks[ask]["price"] + "</td><td>" + btcPrice + "</td><td>" + asks[ask]["total"] + "</td><tr>";
+        }
+      }
+    } else {
+      askTable = noOrdersTable;
+    }
+    if (bids !== undefined) {
+      if (priceBTC === undefined) {
+        for (ask in asks) {
+          bidTable += "<tr><td>" + bids[bid]["size"] + "</td><td>" + bids[bid]["price"] + "</td><td>n/a</td><td>" + bids[bid]["total"] + "</td><tr>";
+        }
+      } else {
+        priceBTC = Number(priceBTC);
+        for (bid in bids) {
+          // calculate btc price and round price to 6 decimals
+          btcPrice = Math.round( Number(bids[bid]["price"])*priceBTC * 1000000 ) / 1000000;
+          // make all numbers 6 decimals
+          btcPrice = btcPrice.toString().split(".");
+          var priceBase = btcPrice[0];
+          var priceDec = "000000";
+          if (btcPrice[1] !== undefined ) {
+            priceDec = (btcPrice[1] + "000000").slice(0,6);
+          }
+          btcPrice = priceBase + "." + priceDec;
+          bidTable += "<tr><td>" + bids[bid]["size"] + "</td><td>" + bids[bid]["price"] + "</td><td>" + btcPrice + "</td><td>" + bids[bid]["total"] + "</td><tr>";
+        }
+      }
+    } else {
+      bidTable = noOrdersTable;
+    }
+    // update table body with orders
+    document.getElementById("dx-tbody-asks").innerHTML = askTable;
+    document.getElementById("dx-tbody-bids").innerHTML = bidTable;
+    // update table headers with units
+    document.querySelectorAll('.market-maker').forEach((element, index, array) => {
+        element.innerHTML = " (" + marketMaker + ")";
+    })
+    document.querySelectorAll('.market-taker').forEach((element, index, array) => {
+        element.innerHTML = " (" + marketTaker + ")";
+    })
+    console.log("Orders table loaded");
+  }
+</script>
+

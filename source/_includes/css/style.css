@@ -142,7 +142,6 @@ GENERAL
   }
 
 
-
 {% comment %}/*==================================================================================
 =================================================================================================
 NAVBAR
@@ -364,6 +363,8 @@ HEADINGS & SECTIONS
     color: #333;
     font-size: 1.25rem;
     line-height: 1.5;
+    margin-left: auto;
+    margin-right: auto;
   }
   @media(max-width: 991.98px) {
     header p {
@@ -969,50 +970,84 @@ FOOTER
 
 {% comment %}/*==================================================================================
 =================================================================================================
-TABLE - LISTINGS
+TABLE
 =================================================================================================
 ===============================================================================*/{% endcomment %}
-  .table {
-    
+  .table .thead-primary tr th,
+  .table tbody tr td {
+    padding: 15px 45px;
+    border: 1px solid transparent !important;
+  }
+  @media(max-width: 575.98px) {
+    .table .thead-primary tr th,
+    .table tbody tr td {
+      padding: 15px 20px;
+    }
   }
   .table tbody {
     background: #fff;
-  }
-  .table th {
-    font-weight: 500;
   }
   .table .thead-primary {
     background: #051937 !important;
   }
   .table .thead-primary tr th {
-      /*padding: 30px 10px;*/
-      /*font-size: 1.1rem;*/
-    padding: 20px 45px;
     padding-bottom: 18px;
+    font-weight: 500;
     color: #fff !important;
-    border: 1px solid transparent!important;
-  }
-  @media(max-width: 575.98px) {
-    .table .thead-primary tr th {
-      padding: 20px 25px;
-      padding-bottom: 18px;
-    }
   }
   .table tbody tr td {
-      /*padding: 20px 10px !important;*/
-    padding: 15px 45px;
     color: #3a4348;
     border: 1px solid transparent!important;
-    border-bottom: 1px solid #e4e7e9!important;
   }
-  @media(max-width: 575.98px) {
-    .table tbody tr td {
-      padding: 20px 25px;
-    }
-  }
-  .table tr td:last-child {
+
+
+
+{% comment %}/*==================================================================================
+=================================================================================================
+LISTINGS
+=================================================================================================
+===============================================================================*/{% endcomment %}
+  #listings-table tr td:last-child {
     min-width: 325px;
   }
+
+
+{% comment %}/*==================================================================================
+=================================================================================================
+ORDERS
+=================================================================================================
+===============================================================================*/{% endcomment %}
+  #order-asks,
+  #order-bids {
+    padding: 5em 0;
+  }
+  #order-bids thead th {
+    color: #00F4C5 !important;
+  }
+  #order-asks thead th {
+    color: #FF7F71 !important;
+  }
+  .orders-table tr {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .orders-table td {
+    /*font-family: monospace;*/
+  }
+  #market-dropdown-label {
+    margin-top: 12px;
+  }
+  #view-market,
+  #inverse-market {
+    margin-top: 32px;
+  }
+  @media(max-width: 767.98px) {
+    #view-market,
+    #inverse-market {
+      margin-top: 15px;
+    }
+  }
+
 
 
 {% comment %}/*==================================================================================
