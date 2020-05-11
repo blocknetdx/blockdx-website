@@ -27,6 +27,7 @@ nav:
   features: Features
   listings: Listings
   setup_menu: Setup
+  orders: Orders
   macos: MacOS
   windows: Windows
   linux: Linux
@@ -53,8 +54,9 @@ footer:
   trading_header: Exchange
   listings: Listings
   application: Listing Application
-  orders: Orders
+  orders: Open Orders
   fees: Fees
+  stats: Stats
   branding: Branding
   developers_header: Developers
   api: API
@@ -266,6 +268,27 @@ branding:
   title: Media Kit
   intro: The Block DX media kit includes [branding guidelines](https://blockdx.com/assets/files/blockdx-brand-guidelines.pdf), PNG/SVG/ESP file types, and RGB/CMYK/PMS versions of our branding.
   button: Download Media Kit
+
+orders:
+  meta_title: Open Orders
+  meta_description: View all active markets and open orders on Block DX.
+  meta_keywords: block dx, orders, open, order book, markets, active
+  title: Open Orders
+  intro: Select a market to view all open orders on Block DX.
+  select_market: Select An Active Market
+  view_market: View Market
+  view_inverse_market: View Inverse Market
+  asks_subheader: Asks
+  asks_button: View Bids
+  bids_subheader: Bids
+  bids_button: View Asks
+  table_price: Price
+  table_size: Size
+  table_total: Total
+  message_loading_orders: Loading orders...
+  message_no_orders: There are no open orders
+  message_loading_error: Error loading orders
+  alert_loading_error: Error loading orders, please try refreshing the page  
 
 e404:
   title: Error

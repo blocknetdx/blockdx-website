@@ -142,7 +142,6 @@ GENERAL
   }
 
 
-
 {% comment %}/*==================================================================================
 =================================================================================================
 NAVBAR
@@ -364,6 +363,8 @@ HEADINGS & SECTIONS
     color: #333;
     font-size: 1.25rem;
     line-height: 1.5;
+    margin-left: auto;
+    margin-right: auto;
   }
   @media(max-width: 991.98px) {
     header p {
@@ -969,7 +970,7 @@ FOOTER
 
 {% comment %}/*==================================================================================
 =================================================================================================
-TABLE - LISTINGS
+TABLE
 =================================================================================================
 ===============================================================================*/{% endcomment %}
   .table {
@@ -999,7 +1000,6 @@ TABLE - LISTINGS
     }
   }
   .table tbody tr td {
-      /*padding: 20px 10px !important;*/
     padding: 15px 45px;
     color: #3a4348;
     border: 1px solid transparent!important;
@@ -1010,9 +1010,81 @@ TABLE - LISTINGS
       padding: 20px 25px;
     }
   }
-  .table tr td:last-child {
+
+
+{% comment %}/*==================================================================================
+=================================================================================================
+LISTINGS
+=================================================================================================
+===============================================================================*/{% endcomment %}
+  #listings-table tr td:last-child {
     min-width: 325px;
   }
+
+
+{% comment %}/*==================================================================================
+=================================================================================================
+ORDERS
+=================================================================================================
+===============================================================================*/{% endcomment %}
+  #order-asks,
+  #order-bids {
+    padding: 5em 0;
+  }
+  #order-bids thead th {
+    color: #00F4C5 !important;
+  }
+  #order-asks thead th {
+    color: #FF7F71 !important;
+  }
+  .orders-table {
+    max-height: 700px;
+    overflow: auto;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+  }
+  @media(max-width: 767.98px) {
+    .orders-table {
+      max-height: 550px;
+    }
+  }
+  @media(max-width: 575.98px) {
+    .orders-table {
+      max-height: 450px;
+    }
+  }
+  .orders-table thead {
+    flex: 0 0 auto;
+  }
+  .orders-table tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow: auto;
+  }
+  .orders-table tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    text-align: right;
+  }
+  .orders-table td {
+    /*font-family: monospace;*/
+  }
+  #maker-dropdown-label {
+    margin-top: 12px;
+  }
+  #view-market,
+  #inverse-market {
+    margin-top: 32px;
+  }
+  @media(max-width: 767.98px) {
+    #view-market,
+    #inverse-market {
+      margin-top: 15px;
+    }
+  }
+
 
 
 {% comment %}/*==================================================================================

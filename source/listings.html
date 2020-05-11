@@ -39,7 +39,7 @@ Content notes:
     <div class="row">
       <div class="col-md-12 dx-animate">
         <div class="table-responsive">
-          <table class="table shadow-sm">
+          <table id="listings-table" class="table shadow-sm">
             <thead class="thead-primary">
               <tr>
                 <th>{{ lang.listings.table_assets | liquify }}</th>
@@ -148,9 +148,13 @@ Content notes:
       xhr.open('GET', url);
       xhr.send();
       xhr.onreadystatechange = function(){
-        if (xhr.readyState === 4 && xhr.status === 200){
-          var response = json ? JSON.parse(this.responseText) : this.responseText
-          resolve(response);
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200){
+            var response = json ? JSON.parse(this.responseText) : this.responseText
+            resolve(response);
+          } else {
+            console.log("Failed to load manifest");
+          }
         }
       }
     });
@@ -203,7 +207,7 @@ Content notes:
       table += row;
     }
     document.getElementById("dx-tbody").innerHTML = table;
-    console.log("Dynamically updated listings");
+    console.log("Listings table updated");
   }
 </script>
 
