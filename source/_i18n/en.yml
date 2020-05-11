@@ -189,7 +189,7 @@ faq:
       answer: Even though native assets are exchanged and trades are settled on their respective blockchain, the trade times are independent of block times. Block DX is very fast with trades typically being completed in 5-15 seconds.
       topic: general, trading # Do not translate
     - question: Why isn't Block DX listed on CoinMarketCap?
-      answer: An application has already been submitted for Block DX to be listed as an exchange on CoinMarketCap and are awaiting listing.
+      answer: An application has already been submitted for Block DX to be listed as an exchange on CoinMarketCap and we are waiting to be listed.
       topic: general # Do not translate
     - question: Does Block DX have an API?
       answer: Yes! Block DX is 100% bot-friendly, see Blocknet's [API docs]({{ site.exlink_api_xbridge }}) for setup and usage documentation. There is also a [market making bot]({{ site.exlink_makerbot }}) that can be used to automatically post orders based off specified price data sources.
@@ -257,7 +257,7 @@ listing_application:
   process: Getting listed on Block DX is 100% free. If you would like to have a digital asset listed, please ask a member of that project to fill out the application form. After submission, the asset will be added to the queue for integration and compatibility testing.
   requirements_header: Requirements
   requirements: >-
-    In order for for a blockchain to be compatible it must support JSON RPC, CLTV atomic swaps, and the following calls:
+    In order for a blockchain to be compatible it must support JSON RPC, CLTV atomic swaps, and the following calls:
 
 branding:
   meta_title: Branding
