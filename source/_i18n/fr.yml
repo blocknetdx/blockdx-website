@@ -66,13 +66,11 @@ footer:
 
 index:
   header: L'échange le plus sécurisé et décentralisé
-  # subheader: Block DX offre des échanges inter-chaînes complètement décentralisés et sans confiance via des swaps atomiques.
   subheader: Block DX offre des échanges totalement décentralisés et sans confiance via des échanges atomiques inter-chaînes.
   button1: Commencer à transiger
   button2: En apprendre davantage
 
 features:
-  # header: Features
   subheader: Pourquoi Block DX?
   intro: Beaucoup d'échanges prétendent être *décentralisés* tout en cachant les détails de composants centralisés. Block DX est le seul échange dont tous les composants sont décentralisés. __*Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.*__
   items:
@@ -123,9 +121,7 @@ features:
       description: Block DX est propulsé par le protocole Blocknet. Tous les services utilisant le protocole Blocknet ont un carnet de commandes partagé et contribuent au même pool de liquidité y compris Block DX.
 
 downloads:
-  # header: Downloads
   subheader: Commencer
-  # intro: 
   macos: MacOS
   windows: Windows
   linux: Linux
@@ -137,22 +133,15 @@ downloads:
   version: Dernière version
 
 stats:
-  # header:  
   subheader: Statistiques
-  # intro: 
   assets: Actifs
-  # assets_val:  # dynamic
   pairs: Paires transigeables
-  # pairs_val:  # dynamic
   trades: Échanges sans confiance
   trades_val: '35000'
   middlemen: Intermédiaire
-  # middlemen_val:  # static (0)
 
 faq:
-  # header: FAQ
   subheader: Questions fréquemment posées
-  # intro: 
   questions:
     - question: Quelles sont les différences entre Block DX, Blocknet, and BLOCK?
       answer: Block DX est une application d'échange décentralisée. L'échange est alimentée par [Blocknet]({{ site.exlink_docs }}), un protocole d'interopérabilité de la chaîne de blocs qui permet la communication, l'interaction et les échanges entre différentes chaînes de blocs publiques et privées. [BLOCK]({{ site.exlink_docs_blockchain }}) est le jeton utilisé pour payer les frais des services sur le réseau de Blocknet, y compris l'échange décentralisée, les données oracle décentralisées hors chaîne, réseau SPV décentralisé et microservices décentralisés.
@@ -199,16 +188,13 @@ faq:
       topic: general, dev # Do not translate
 
 subscribe:
-  # header: 
   subheader: Abonnez-vous à notre newsletter
   intro: Restez à jour sur nos dernières fonctionnalités, mises à jour et nouvelles!
   input: Entrer votre adresse courriel
   button: Abonnement
 
 blog1:
-  # header: Blog
   subheader: Articles récents
-  # intro: 
   posts:
     - url: https://blocknet.co/understanding-a-decentralized-exchange/ # Do not translate
       title: Comprendre les échanges décentralisés
@@ -252,7 +238,6 @@ listing_application:
   meta_description: Être coté sur Block DX est 100% gratuit et offre de nombreux avantages au-delà de la simple négociation sur l'échange.
   meta_keywords: block dx, bockdx, listing, application, form, requirements, fee, process, integration
   title: Demande d'inscription
-  # intro: 
   button: Formulaire d'application
   benefits_header: Avantages de l'inscription
   benefits: Être listé sur Block DX présente de nombreux avantages au-delà du simple fait d'être négocié sur l'échange. Le fait d'être répertorié signifie que l'actif a été intégré au [protocole Blocknet]({{ site.exlink_docs }}), qui alimente Block DX et permet de créer d'autres services à l'aide de l'actif. Cela étend la demande, l'utilité et l'accessibilité de l'actif au reste de l'écosystème de la blockchain.

@@ -65,13 +65,11 @@ footer:
 
 index:
   header: The Most Secure & Decentralized Exchange
-  # subheader: Block DX offers completely decentralized and trustless cross-chain trading via atomic swaps.
   subheader: Block DX offers completely decentralized and trustless trading via cross-chain atomic swaps.
   button1: Start trading
   button2: Learn more
 
 features:
-  # header: Features
   subheader: Why Block DX
   intro: Many exchanges *claim* to be decentralized while hiding the details of centralized components. Block DX is the only exchange that decentralizes every component. __*Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.*__
   items:
@@ -122,9 +120,7 @@ features:
       description: Block DX is powered by the Blocknet Protocol. All services using the Blocknet Protocol have a shared order book and contribute to the same liquidity pool, including Block DX. This creates a network effect for liquidity.
 
 downloads:
-  # header: Downloads
   subheader: Get Started
-  # intro: 
   macos: MacOS
   windows: Windows
   linux: Linux
@@ -136,20 +132,15 @@ downloads:
   version: Latest version
 
 stats:
-  # header:  
   subheader: Stats
-  # intro: 
   assets: Assets
   pairs: Trading Pairs
   trades: Trustless Trades
   trades_val: '35000'
   middlemen: Middlemen
-  # middlemen_val:  # static (0)
 
 faq:
-  # header: FAQ
   subheader: Frequently Asked Questions
-  # intro: 
   questions:
     - question: What is the difference between Block DX, Blocknet, and BLOCK?
       answer: Block DX is a decentralized exchange dApp. The exchange is powered by [Blocknet]({{ site.exlink_docs }}), a blockchain interoperability protocol project that enables communication, interaction, and exchange between different public and private blockchains. [BLOCK]({{ site.exlink_docs_blockchain }}) is the token used to pay fees for the services on Blocknet's network, including decentralized exchange, decentralized off-chain oracle data, decentralized SPV network, and decentralized microservices.
@@ -196,16 +187,13 @@ faq:
       topic: general, dev # Do not translate
 
 subscribe:
-  # header: 
   subheader: Subscribe to Our Newsletter
   intro: Stay up-to-date on our latest features, updates, and news!
   input: Enter email address
   button: Subscribe
 
 blog1:
-  # header: Blog
   subheader: Recent Articles
-  # intro: 
   posts:
     - url: https://blocknet.co/understanding-a-decentralized-exchange/ # Do not translate
       title: Understanding a Decentralized Exchange
@@ -249,7 +237,6 @@ listing_application:
   meta_description: Getting listed on Block DX is 100% free and holds many benefits beyond just being traded on the exchange.
   meta_keywords: block dx, bockdx, listing, application, form, requirements, fee, process, integration
   title: Listing Application
-  # intro: 
   button: Application Form
   benefits_header: Listing Benefits
   benefits: A Block DX listing holds many benefits beyond just being traded on the exchange. Being listed means the asset has been integrated with the [Blocknet Protocol]({{ site.exlink_docs }}), which powers Block DX, and allows other services to be built utilizing the asset. This extends the demand, utility, and accessibility of the asset to the rest of the blockchain ecosystem.
