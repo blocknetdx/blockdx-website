@@ -2,67 +2,67 @@ global:
   lang: Français
   locale: fr_ca
   meta_title: Block DX
-  meta_description: Block DX is the fastest, most secure, most reliable, and most decentralized exchange (DEX), utilizing cross-chain atomic swaps powered by the Blocknet Protocol.
-  meta_keywords: block dx, decentralized, exchange, dex, atomic swap, trustless, cross-chain, blockchain, blocknet, protocol
+  meta_description: Block DX est l'échange DEX le plus rapide, le plus sûr, le plus fiable et le plus décentralisé, utilisant des échanges atomiques inter-chaînes alimentés par le protocole Blocknet.
+  meta_keywords: block dx, decentralisé, échange, dex, échange atomique, sans confiance, cross-chain, blockchain, blocknet, protocole
   link_index: '/fr/'
   link_features: '#features' # Do not translate
-  link_mac_setup: 'mac-setup/'
-  link_windows_setup: 'windows-setup/'
-  link_linux_setup: 'linux-setup/'
-  link_listings: 'listings/'
-  link_application: 'listing-application/'
-  link_fees: 'fees/'
+  link_mac_setup: 'installation-mac/'
+  link_windows_setup: 'intallation-windows/'
+  link_linux_setup: 'installation-linux/'
+  link_listings: 'inscription/'
+  link_application: 'formulaire-inscription/'
   link_fees: 'frais/'
-  link_branding: 'branding/'
-  link_trading: 'trading/'
-  link_troubleshooting: 'troubleshooting/'
-  link_how: 'how-it-works/'
-  link_orders: 'orders/'
-  link_market_making: 'market-making/'
-  link_whitelabel: 'whitelabel/'
-  link_nodes: 'nodes/'
+  link_fees: 'frais/'
+  link_branding: 'image-de-marque/'
+  link_trading: 'transiger/'
+  link_troubleshooting: 'résolution-de-problèmes/'
+  link_how: 'comment-ca-marche/'
+  link_orders: 'ordres/'
+  link_market_making: 'tenue-de-marché/'
+  link_whitelabel: 'marque-blanche/'
+  link_nodes: 'noeuds/'
 
 nav:
   menu: Menu
-  home: Home
-  features: Features
-  listings: Listings
-  setup_menu: Setup
+  home: Accueil
+  features: Caractéristiques
+  listings: Inscriptions
+  setup_menu: Installation
   macos: MacOS
   windows: Windows
   linux: Linux
-  setup: Setup Guide
-  trading: Trading Guide
-  troubleshooting: Troubleshooting
+  setup: Guide d'Installation
+  trading: Guide de Trading
+  troubleshooting: Résolution de problèmes
   faq: FAQ
-  downloads: Downloads
+  downloads: Téléchargements
 
 footer:
-  tagline: Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.
-  powered_by: Powered by the Blocknet Protocol
-  start_header: Get Started
-  downloads: Downloads
-  setup: Setup Guide
-  trading: Trading Guide
-  troubleshooting: Troubleshooting
-  learn_header: Learn
-  features: Features
-  comparisons: Comparisons
-  how: How It Works
+  tagline: Décentralisé. Sans confiance. Sécurisé. Privé. Ouvert. Non censuré. Inarrêtable.
+  powered_by: Propulsé par le Protocole Blocknet
+  start_header: Démarrer
+  downloads: Téléchargements
+  setup: Guide d'Installation
+  trading: Guide de Trading
+  troubleshooting: Résolution de problèmes
+  learn_header: Formation
+  features: Caractéristique
+  comparisons: Comparaisons
+  how: Comment ça marche
   faq: FAQ
   blog: Blog
-  trading_header: Exchange
-  listings: Listings
-  application: Listing Application
-  orders: Orders
-  fees: Fees
-  branding: Branding
-  developers_header: Developers
+  trading_header: Échange
+  listings: Inscriptions
+  application: Formulaire d'Inscription
+  orders: Ordres
+  fees: Frais
+  branding: Image de Marque
+  developers_header: Developpeurs
   api: API
-  market_making: Market Making
-  nodes: Exchange Nodes
-  whitelabel: Whitelabel DEX
-  contribute: Contribute
+  market_making: Tenue de Marché
+  nodes: Noeuds d'Échange
+  whitelabel: Marque Blanche DEX
+  contribute: Contribuer
 
 index:
   header: L'échange le plus sécurisé et décentralisé
@@ -74,7 +74,7 @@ index:
 features:
   # header: Features
   subheader: Pourquoi Block DX?
-  intro: Beaucoup d'échanges *prétendent* être décentralisés tout en cachant les détails de composants centralisés. Block DX est le seul échange dont tous les composants sont décentralisés. __*Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.*__
+  intro: Beaucoup d'échanges prétendent être *décentralisés* tout en cachant les détails de composants centralisés. Block DX est le seul échange dont tous les composants sont décentralisés. __*Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.*__
   items:
     - feature: Carnets de commandes décentralisés
       icon: <i class="fas fa-network-wired"></i> # Do not translate
@@ -223,13 +223,13 @@ blog1:
 
 fees:
   meta_title: Frais
-  meta_description: Block DX a une structure de frais inférieure à celle des échanges traditionnels, y compris zéro frais pour les faiseurs de marché.
+  meta_description: Block DX a une structure de frais inférieure à celle des échanges traditionnels, y compris zéro frais pour les teneurs de marché.
   meta_keywords: block dx, fee, maker, taker, structure
   title: Frais de transaction
-  intro: Block DX is cheaper than traditional exchanges since there's no maker fee, withdrawal fees, or limits.
-  maker: Maker
-  maker_fees: Il n'y a pas de frais de Maker — zero, zip, zilch, nada.
-  taker: Taker
+  intro: Block DX est moins cher que les échanges traditionnels car il n'y a pas de frais d'Initiateur (Maker), de frais de retrait ou de limites.
+  maker: Initiateur
+  maker_fees: Il n'y a pas de frais d'Initiateur — zero, zip, zilch, nada.
+  taker: Preneur
   taker_fees: Il y a un petit supplément de 0,015 BLOC lorsque vous prenez une commande existante. Si vous n'avez pas BLOCK, vous pouvez passer une commande pour acheter des BLOCK sans avoir à payer de frais.
 
 listings:
