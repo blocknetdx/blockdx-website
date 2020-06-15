@@ -1071,7 +1071,8 @@ ORDERS
   .orders-table td {
     /*font-family: monospace;*/
   }
-  #maker-dropdown-label {
+  #maker-dropdown-label,
+  #market-dropdown-label {
     margin-top: 12px;
   }
   #view-market,
@@ -1082,6 +1083,86 @@ ORDERS
     #view-market,
     #inverse-market {
       margin-top: 15px;
+    }
+  }
+
+
+
+{% comment %}/*==================================================================================
+=================================================================================================
+HISTORY
+=================================================================================================
+===============================================================================*/{% endcomment %}
+  #history,
+  #trade-stats {
+    padding: 5em 0;
+  }
+  #history table {
+    max-height: 700px;
+    overflow: auto;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+  }
+  @media(max-width: 767.98px) {
+    #history table {
+      max-height: 550px;
+    }
+  }
+  @media(max-width: 575.98px) {
+    #history table {
+      max-height: 450px;
+    }
+  }
+  #history table thead {
+    flex: 0 0 auto;
+  }
+  #history table tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow: auto;
+  }
+  #history table tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    text-align: right;
+  }
+  #history table td {
+    /*font-family: monospace;*/
+    padding: 15px 30px;
+  }
+  #maker-dropdown-label,
+  #market-dropdown-label {
+    margin-top: 12px;
+  }
+  #view-market,
+  #inverse-market {
+    margin-top: 32px;
+  }
+  @media(max-width: 767.98px) {
+    #view-market,
+    #inverse-market {
+      margin-top: 15px;
+    }
+  }
+  #history table .buy {
+    color: #00F4C5 !important;
+  }
+  #history table .sell {
+    color: #FF7F71 !important;
+  }
+  #trade-stats iframe {
+    max-height: 700px;
+  }
+  @media(max-width: 767.98px) {
+    #trade-stats iframe {
+      max-height: 550px;
+    }
+  }
+  @media(max-width: 575.98px) {
+    #trade-stats iframe {
+      max-height: 450px;
     }
   }
 
