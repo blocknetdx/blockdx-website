@@ -1052,6 +1052,56 @@ ORDERS
 
 {% comment %}/*==================================================================================
 =================================================================================================
+HISTORY
+=================================================================================================
+===============================================================================*/{% endcomment %}
+  #history,
+  #trade-stats {
+    padding: 5em 0;
+  }
+  #market-dropdown-label {
+    margin-top: 12px;
+  }
+  #view-market,
+  #inverse-market {
+    margin-top: 32px;
+  }
+  @media(max-width: 767.98px) {
+    #view-market,
+    #inverse-market {
+      margin-top: 15px;
+    }
+  }
+  #history table .buy {
+    color: #00F4C5 !important;
+    min-width: 45px;
+  }
+  #history table .sell {
+    color: #FF7F71 !important;
+    min-width: 45px;
+  }
+  #history table tr {
+    text-align: right;
+    white-space: nowrap;
+  }
+  #trade-stats iframe {
+    max-height: 700px;
+  }
+  @media(max-width: 767.98px) {
+    #trade-stats iframe {
+      max-height: 550px;
+    }
+  }
+  @media(max-width: 575.98px) {
+    #trade-stats iframe {
+      max-height: 450px;
+    }
+  }
+
+
+
+{% comment %}/*==================================================================================
+=================================================================================================
 STATS
 =================================================================================================
 ===============================================================================*/{% endcomment %}

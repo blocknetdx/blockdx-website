@@ -406,11 +406,11 @@ permalink: /orders/
       orders = sampleOrderData;
       console.log("processOrders");
     } else {
-      orders = ordeData;
+      orders = orderData;
     }   
 
     for(var order in orders) {
-      var id = orders[order]["id"];
+      // var id = orders[order]["id"];
       var maker = orders[order]["maker"];
       var taker = orders[order]["taker"];
       var market = maker + "/" + taker ;
@@ -539,7 +539,6 @@ permalink: /orders/
           var total = bidsRaw[bid]["size"];
           // var price = Math.round( 1/Number(bids[bid]["price"]) * 1000000 ) / 1000000;
           var price = Math.round( Number(total) / Number(size) * 1000000 ) / 1000000;
-          // var priceBTC = "n/a";
           bids.push({ "size": size, "price": price, "total": total });
         }
         // sort bid orders by descending price
