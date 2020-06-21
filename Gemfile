@@ -26,7 +26,8 @@ group :jekyll_plugins do
   gem "jekyll-last-modified-at", "~> 1.1.0"
   # gem "jekyll-language-plugin", "~> 1.3.5"
   gem "jekyll-multiple-languages-plugin", "~> 1.6.0"
-  gem "html-proofer", "~> 3.13.0"
+  gem "html-proofer", "~> 3.15.0"
+  gem "liquify", "~> 0.2.7"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

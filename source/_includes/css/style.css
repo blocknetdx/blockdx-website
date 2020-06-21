@@ -519,6 +519,10 @@ HERO
 FEATURES
 =================================================================================================
 ===============================================================================*/{% endcomment %}
+  #features .heading-section p strong {
+    display: block;
+    margin-top:0.5rem!important;
+  }
   .feature {
       /*margin-bottom: 40px;*/
     padding: 15px;

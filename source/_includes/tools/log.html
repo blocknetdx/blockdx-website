@@ -1,27 +1,30 @@
 {% comment %}
+  <!--   
   Inspect data with set outputType method.
 
   Start: JEKYLL_ENV=dev bundle exec jekyll serve
-  Usage: {% include test.html key='optional description' val='value to inspect' %}
+  Usage: {% include log.html key='optional description' val='value to log' %}
 
   Could be useful to expand if needed: 
-  https://stackoverflow.com/a/53693728/4462930
+  https://stackoverflow.com/a/53693728/4462930 
+  -->
 {% endcomment %}
 
 
-
-{% assign outputType = "log" %}
-
-
-{% if include.key %}
-  {% assign key = include.key | append: ': ' %}
-{% else %}
-  {% assign key = '' %}
-{% endif %}
-{% assign val = include.val %}
-
-
 {% if jekyll.environment == "dev" %}
+
+  <!-- Assign log type: log, alert, or page -->
+  {% assign outputType = "log" %}
+
+  <!-- Assign key and val variables -->
+  {% if include.key %}
+    {% assign key = include.key | append: ': ' %}
+  {% else %}
+    {% assign key = '' %}
+  {% endif %}
+  {% assign val = include.val %}
+
+  <!-- Outputs log -->
   {% case outputType %}
     {% when 'log' %}
       <script>console.log("{{ key }}{{ val }}");</script>
@@ -32,4 +35,5 @@
     {% else %}
       {{ key }}{{ content }}
   {% endcase %}
+
 {% endif %}

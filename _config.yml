@@ -19,12 +19,10 @@ sass:
 # Plugins ignored if building with Github pages
 plugins: 
 - 'jekyll-sitemap'
-# - 'jekyll-language-plugin'
 - 'jekyll-multiple-languages-plugin'
+- 'liquify'
 
 # Localization settings
-# language_data: data.lang.%%
-# language_includes_dir: _i18n
 # The first lang is the default/root site
 # languages: ["en","zh","ko","es","ar","ru","it","de"]
 languages: ["en"]
@@ -34,11 +32,11 @@ languages: ["en"]
 # Example: 'Block DX requires Blocknet wallet v{{ site.min_wallet_version }} or greater.'
 
 # Version Updates
-blockdx_version: '1.5.0'
-min_wallet_version: '3.14.0'
-exlink_mac_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.5.0/BLOCK-DX-1.5.0-mac.dmg'
-exlink_win_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.5.0/BLOCK-DX-1.5.0-win.exe'
-exlink_linux_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.5.0/BLOCK-DX-1.5.0-linux.AppImage'
+blockdx_version: '1.6.0'
+min_wallet_version: '4.1'
+exlink_mac_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.6.0/BLOCK-DX-1.6.0-mac.dmg'
+exlink_win_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.6.0/BLOCK-DX-1.6.0-win.exe'
+exlink_linux_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.6.0/BLOCK-DX-1.6.0-linux.AppImage'
 exlink_all_downloads: 'https://github.com/blocknetdx/block-dx/releases'
 exlink_wallet_download: 'https://github.com/blocknetdx/blocknet/releases/latest'
 

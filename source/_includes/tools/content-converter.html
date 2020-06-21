@@ -32,9 +32,11 @@
 
 -->
 <!-- Use for debugging -->
-{% include tools/test.html key='Original content' val=include.content %}
+{% include tools/log.html key='Original content' val=include.content %}
 {% endcomment %}
 
+{% assign global = site.translations[site.lang].global %}
+{% assign lang = site.translations[site.lang] %}
 
 
 {% comment %} <!-- Variable to rebuild the tag-replaced content --> {% endcomment %}
@@ -42,7 +44,6 @@
 
 {% comment %} <!-- Check if content contains a site variable --> {% endcomment %}
 {% if include.content contains '{{' and include.content contains '}}' %}
-
 
   {% comment %} <!-- Splits the content into format: [x, tagx, tagx] --> {% endcomment %}
   {% assign splitContent1 = include.content | split: '{{' %}
@@ -54,6 +55,7 @@
     {% if segment == splitContent1.first %}
       {% assign finalContent = finalContent | append: splitContent1.first %}
 
+
     {% comment %} <!-- For everything else after the first segment --> {% endcomment %}
     {% else %}
 
@@ -61,35 +63,61 @@
       {% assign splitContent2 = segment | split: '}}' %}
 
       {% comment %} <!-- Convert ' site.tag_name ' to 'tag_name' --> {% endcomment %}
-      {% capture tempVariable %}{{ splitContent2.first | strip }}{% endcapture %}
-      {% comment %}{% include test.html key='tempVariable' val=tempVariable %}{% endcomment %}
+      {% comment %}{% include tools/log.html key='liquidVariable' val=liquidVariable %}{% endcomment %}
 
-      {% comment %} <!-- If site tag exists, swap in the variable and adds it back --> {% endcomment %}
-      {% if site[siteVariable] %}
-        {% assign finalContent = finalContent | append: site[siteVariable] %}
+      {% assign liquidVariable = splitContent2.first | split: '.' %}
+      {% assign v1 = liquidVariable[0] | strip %}
+      {% assign v2 = liquidVariable[1] | strip %}
+      {% assign v3 = liquidVariable[2] | strip %}
+      {% assign v4 = liquidVariable[3] | strip %}
 
-      {% comment %} <!-- If data tag exists, swap in the variable and adds it back --> {% endcomment %}
-      {% else %}
-        {% assign dataVariable = siteVariable | replace: 'data.', '' %}
-        {% comment %}{% include test.html key='dataVariable' val=dataVariable %}{% endcomment %}
-        {% if site.data[dataVariable] %}
-          {% assign finalContent = finalContent | append: site.data[dataVariable] %}
+        {% comment %} <!-- Log the variable splits --> {% endcomment %}
+        {% comment %}
+          {% include tools/log.html key='Original variable' val=liquidVariable %}
 
-        {% comment %} <!-- If not found, recreate original string and add back --> {% endcomment %}
+          {% include tools/log.html key='Split 1' val=v1 %}
+          {% include tools/log.html key='Split 2' val=v2 %}
+          {% include tools/log.html key='Split 3' val=v3 %}
+          {% include tools/log.html key='Split 4' val=v4 %}
+        {% endcomment %}
+
+
+      {% if liquidVariable.size == 1 %}
+        {% if v1 != 'site' %}
+          {% assign finalContent = finalContent | append: lang[v1] %}
+        {% endif %}
+      {% elsif liquidVariable.size == 2 %}
+        {% if v1 == 'site' %}
+          {% assign finalContent = finalContent | append: site[v2] %}
         {% else %}
-          {% assign originalVariable = '{{ ' | append: splitContent2.first | append: ' }}' %}
-          {% assign finalContent = finalContent | append: originalVariable %}
+          {% assign finalContent = finalContent | append: lang[v1][v2] %}
+        {% endif %}
+      {% elsif liquidVariable.size == 3 %}
+        {% if v1 == 'site' %}
+          {% assign finalContent = finalContent | append: site[v2][v3] %}
+        {% else %}
+          {% assign finalContent = finalContent | append: lang[v1][v2][v3] %}
+        {% endif %}
+      {% elsif liquidVariable.size == 4 %}
+        {% if v1 == 'site' %}
+          {% assign finalContent = finalContent | append: site[v2][v3][v4] %}
+        {% else %}
+          {% assign finalContent = finalContent | append: lang[v1][v2][v3][v4] %}
         {% endif %}
       {% endif %}
+
 
       {% comment %} <!-- Check if there's more content after the tag before adding back --> {% endcomment %}
       {% if splitContent2.size > 1 %}
         {% assign finalContent = finalContent | append: splitContent2.last %}
       {% endif %}
+
     {% endif %}
   {% endfor %}
 
-  {% comment %} <!-- Returns content with tags replaced with site variable values --> {% endcomment %}
-  {{ finalContent }}
-
+{% else %}
+  {% assign finalContent = include.content %}
 {% endif %}
+
+{% comment %} <!-- Returns content with tags replaced with site variable values --> {% endcomment %}
+{{ finalContent | markdownify }}
