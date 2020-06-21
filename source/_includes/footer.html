@@ -42,6 +42,7 @@
             {%- endcomment -%}
             <li><a href="{{ baseurl | append: '#faq' }}" class="py-2 d-block">{{ lang.footer.faq | liquify }}</a></li>
             <li><a href="{{ baseurl | append: '#blog' }}" class="py-2 d-block">{{ lang.footer.blog | liquify }}</a></li>
+            <li><a href="{{ baseurl | append: lang.global.link_branding }}" class="py-2 d-block">{{ lang.footer.branding | liquify }}</a></li>
           </ul>
         </div>
       </div>
@@ -51,11 +52,9 @@
           <ul class="list-unstyled">
             <li><a href="{{ baseurl | append: lang.global.link_listings }}" class="py-2 d-block">{{ lang.footer.listings | liquify }}</a></li>
             <li><a href="{{ baseurl | append: lang.global.link_application }}" class="py-2 d-block">{{ lang.footer.application | liquify }}</a></li>
-            {%- comment -%}
-            <!-- <li><a href="{{ baseurl | append: lang.global.link_orders }}" class="py-2 d-block">{{ lang.footer.orders | liquify }}</a></li> -->
-            {%- endcomment -%}
+            <li><a href="{{ baseurl | append: lang.global.link_orders }}" class="py-2 d-block">{{ lang.footer.orders | liquify }}</a></li>
             <li><a href="{{ baseurl | append: lang.global.link_fees }}" class="py-2 d-block">{{ lang.footer.fees | liquify }}</a></li>
-            <li><a href="{{ baseurl | append: lang.global.link_branding }}" class="py-2 d-block">{{ lang.footer.branding | liquify }}</a></li>
+            <li><a href="https://twitter.com/dxstats" class="py-2 d-block">{{ lang.footer.stats | liquify }}</a></li>
           </ul>
         </div>
       </div>
