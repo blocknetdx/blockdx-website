@@ -300,7 +300,7 @@ history:
   meta_keywords: block dx, trade, history, stats
   title: Trade History
   button: View Trade Stats
-  intro: Select a market to recent trades on Block DX.
+  intro: Select a market to view trades on Block DX in the last 24hrs.
   select_market: Select An Active Market
   all_markets_option: All Markets
   view_market: View Market

@@ -1,0 +1,3460 @@
+---
+title: history.meta_title
+description: history.meta_description
+keywords: history.meta_keywords
+layout: default
+namespace: history
+permalink: /trade-history/
+---
+
+
+{% assign lang = site.translations[site.lang] %}
+{% assign baseurl = site.url | append: lang.global.link_index %}
+
+{% 
+  include templates/page-header.html
+  title=lang.history.title
+  intro=lang.history.intro
+  button_text=''
+  button_link='#stats'
+  class='bg-light'
+%}
+
+<section class="section bg-light pt-3 pb-1 dx-animate">
+  <div class="container">
+    <div class="dx-card shadow-sm h-shadow">
+      <div class="row">
+
+        <div class="col-md-4">
+          <label id="maker-dropdown-label" for="market-dropdown">{{ lang.history.select_market }}</label>
+          <select id="market-dropdown" class="custom-select">
+            <option value="all" selected="selected">{{ lang.history.all_markets_option }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 text-md-center">
+          <button id="view-market" type="button" onclick="reloadTable(false)" class="btn btn-primary">{{ lang.history.view_market }}</button>
+        </div>
+
+        <div class="col-md-4 text-md-center">
+          <button id="inverse-market" type="button" onclick="reloadTable(true)" class="btn btn-white">{{ lang.history.view_inverse_market }}</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="history" class="section bg-light pb-0 dx-animate">
+  <div class="container"> 
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table shadow-sm">
+            <thead class="thead-primary">
+              <tr>
+                <th>{{ lang.history.table_type }} <span class="trade-type"></span></th>
+                <th>{{ lang.history.table_size }} <span class="market-maker"></span></th>
+                <th>{{ lang.history.table_price }} <span class="market-price"></span></th>
+                <th>{{ lang.history.table_total }} <span class="market-taker"></span></th>
+                <th>{{ lang.history.table_time }} <span class="trade-time"></span></th>
+              </tr>
+            </thead>
+            <tbody id="dx-tbody-hist">
+                <td>{{ lang.history.message_loading_orders }}</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trade-stats" class="section bg-light dx-animate">
+  <div class="container"> 
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+        <a class="twitter-timeline" data-height="800" href="https://twitter.com/DxStats">View daily trade stats.</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<script type="text/javascript">
+  var dev = true;  
+  var historyData = [];
+  var sampleHistoryData = [
+      {
+        "timestamp": 1591983995,
+        "fee_txid": "163b1f3530581015d29bc3c4d8630ea688700934cbae9af648d93faa6a1fa096",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "13dc031ec6844b92230a18652f4806f86ca2a1b490c0676d73d6f328993159f7",
+        "taker": "BLOCK",
+        "taker_size": 17.58581800,
+        "maker": "LTC",
+        "maker_size": 0.46604600
+      },
+      {
+        "timestamp": 1591983995,
+        "fee_txid": "6fd9dab1864afbcd4e85533b897ca2a9ef89b2e645d079dc02db24db836b0b6f",
+        "nodepubkey": "BVJSKZG1YTseYGacMu8nRBqFCwhB4HYecw",
+        "id": "2ac7d7f819797e3f019a8a0ef554fa2825dc1052aa33b6aa80dfff74c054567e",
+        "taker": "BLOCK",
+        "taker_size": 100.00000000,
+        "maker": "LTC",
+        "maker_size": 2.70000000
+      },
+      {
+        "timestamp": 1591966622,
+        "fee_txid": "81c3f391bfcf28808d03f3c56136ffdd6fbbb1aa9898db869535c9eea2bf67c6",
+        "nodepubkey": "Bqshd156VexPDKELxido2S2pDvqrRzSCi4",
+        "id": "caca1304fbeea171b29a49ca0a3d13443b5e102cf4fdc5853891fbf7d2adf4cd",
+        "taker": "BLOCK",
+        "taker_size": 10.00000000,
+        "maker": "BTC",
+        "maker_size": 0.00131000
+      },
+      {
+        "timestamp": 1591919307,
+        "fee_txid": "89b58525d886894ce71b72e051842642b7f5b055afb8a1859ace3808a3b608ac",
+        "nodepubkey": "BrtXo7Gk4sFUfiWzb1oUropNRDyogTof3g",
+        "id": "5da294f77e9799e8f8394f2e8b149e7eb5aa3c6c7885dba10a4795159eeb5edd",
+        "taker": "BLOCK",
+        "taker_size": 17.06059700,
+        "maker": "LTC",
+        "maker_size": 0.46102300
+      },
+      {
+        "timestamp": 1591919242,
+        "fee_txid": "de78f860eaee193b74dd3da03651fad8d417f58a359ac187948f30ae1da8c9b7",
+        "nodepubkey": "BYM4whkeYiW7H7Srt1Ah2ivyWaQbVPYjds",
+        "id": "686de541309d5e2cf09ca98dba2cf72622ec92ea1cbbf72e617f1abc0d294b2a",
+        "taker": "BLOCK",
+        "taker_size": 12.24595900,
+        "maker": "LTC",
+        "maker_size": 0.32971400
+      },
+      {
+        "timestamp": 1591915751,
+        "fee_txid": "987f96ec962df6fd3c4577d2122548076730007ea22ec021b5f8b0171888547d",
+        "nodepubkey": "BVJSKZG1YTseYGacMu8nRBqFCwhB4HYecw",
+        "id": "9d1d1b306da7cb3e1c2f977899edbf8018d44ef1a5c7b83b3c43b50d5dee3a8c",
+        "taker": "BLOCK",
+        "taker_size": 100.00000000,
+        "maker": "LTC",
+        "maker_size": 2.70000000
+      },
+      {
+        "timestamp": 1591914580,
+        "fee_txid": "5d53941b98ae1edce87a759ef8be33b3000046ef96eed0d279f4205b90d7f410",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "a91dfc6f6c18c670092fb50f9f8071881d6ecd9747c19922f528fd6507d62823",
+        "taker": "BLOCK",
+        "taker_size": 9.44513900,
+        "maker": "LTC",
+        "maker_size": 0.25361600
+      },
+      {
+        "timestamp": 1591914580,
+        "fee_txid": "23b406c0247e4599c1cd63dda56fbcda473da51fd4cb731ba26c8d2ec1c9c5d8",
+        "nodepubkey": "Bqshd156VexPDKELxido2S2pDvqrRzSCi4",
+        "id": "e4a233526274dc2b1681a7fb7d2c35c12afff021e203b6341a651133610f5e27",
+        "taker": "BLOCK",
+        "taker_size": 12.86469900,
+        "maker": "LTC",
+        "maker_size": 0.34543700
+      },
+      {
+        "timestamp": 1591914580,
+        "fee_txid": "f3af4280d9cc8ecbb02570a9aa63375133a10bfcdf1d8bafac2ce46b4e505a2c",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "9afff3f54c69c42e09a056af803c01f032b91b68cb759635f01c47fc8e45e978",
+        "taker": "BLOCK",
+        "taker_size": 13.83534300,
+        "maker": "LTC",
+        "maker_size": 0.37027000
+      },
+      {
+        "timestamp": 1591904677,
+        "fee_txid": "89dd751233941a3d4626b7c71e5be955d7000b5f26d067af06ff2020dbaf6ae5",
+        "nodepubkey": "BpYtRB3Shu9UUmsph238XYLkzBzuxX3kdf",
+        "id": "f9c47dba81b0112413b66b92ec2d009508e3c5fdc1e536de173cb78898b908f5",
+        "taker": "LTC",
+        "taker_size": 5.39980000,
+        "maker": "BLOCK",
+        "maker_size": 200.00000000
+      },
+      {
+        "timestamp": 1591901793,
+        "fee_txid": "f96930417d7184d6ce326224fb1426bb4ae066513ec4e1475a5347bb80ae1bd1",
+        "nodepubkey": "BiJrmp15ziRo9b929YBAMz7xnB7neWpyVP",
+        "id": "ddf043724409385dfa5c7fbb89e620286833da78150bde30840330d6e9f4d2d9",
+        "taker": "LTC",
+        "taker_size": 0.27497700,
+        "maker": "BLOCK",
+        "maker_size": 9.81222000
+      },
+      {
+        "timestamp": 1591901628,
+        "fee_txid": "60ff195a58ef99b16d6527499d521fd258d33af0f5dbc9ccf0b2c596392b9bec",
+        "nodepubkey": "BqwfQ4ww8vmDBZf26cArQCf7rquy3e9RDm",
+        "id": "649331bcdbffa852dcdeb96172ca97dc898345904b1ea323749e160fdd53bc8c",
+        "taker": "BLOCK",
+        "taker_size": 500.00000000,
+        "maker": "LTC",
+        "maker_size": 13.75000000
+      },
+      {
+        "timestamp": 1591889946,
+        "fee_txid": "5228c2a9da796b08ed4a3a997da83fa7acf726896dca366857ceb94a20e4d602",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "8d3e92ea066e16f69b4a350112cfe81aa6c4fb6be44f19608696b30ee9a59414",
+        "taker": "BLOCK",
+        "taker_size": 100.00000000,
+        "maker": "LTC",
+        "maker_size": 2.75000000
+      },
+      {
+        "timestamp": 1591872224,
+        "fee_txid": "30bcb8f4052e6ae77b2ea79e327cded4a8507c2b34da6fadbea26197db389281",
+        "nodepubkey": "BngBQC4Qd6Byk5oMqUXSEtx9kr9uffD6jt",
+        "id": "cab390c9c69e1b80e0171cc50cd2578c0a9d428c25e04fda854cf3cad095f633",
+        "taker": "BLOCK",
+        "taker_size": 9.49988200,
+        "maker": "LTC",
+        "maker_size": 0.25406100
+      },
+      {
+        "timestamp": 1591872224,
+        "fee_txid": "9c812e63a8239614290c0381e785b204555ee48aa7161fe0ec9b7c0685472896",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "13400841df4837679c765ddbe40327bd7929b9ea4b09d180b581c3d9ccce8d33",
+        "taker": "BLOCK",
+        "taker_size": 6.69901000,
+        "maker": "LTC",
+        "maker_size": 0.17915600
+      },
+      {
+        "timestamp": 1591863753,
+        "fee_txid": "cc1c5e805e263c04cfa0eb835f63403445b0c319a6c15e2e14c189a01868b3a2",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "95e11dd69ed466d93ad3c84cbea8b92fca3ff0a82d615422ae9559563f98dd3a",
+        "taker": "BLOCK",
+        "taker_size": 3.26118100,
+        "maker": "LTC",
+        "maker_size": 0.08743000
+      },
+      {
+        "timestamp": 1591863753,
+        "fee_txid": "fe601e176fecd50dda8275a016d46cadd37cdb01bb949834b4125da28fa200ed",
+        "nodepubkey": "BiJrmp15ziRo9b929YBAMz7xnB7neWpyVP",
+        "id": "a6ae4b9adbe561b36177fba69a974260c8ae6a843a4facebbca37c74eb153f6c",
+        "taker": "BLOCK",
+        "taker_size": 5.14725400,
+        "maker": "LTC",
+        "maker_size": 0.13752900
+      },
+      {
+        "timestamp": 1591863186,
+        "fee_txid": "bc347e4754b9344bc2584cfdf025042abf1ccc5de6c3d8d9aeb150c78e3d2499",
+        "nodepubkey": "BVMy4NMZLtT2UzX2rzEVqwTeqAhBoeXxmU",
+        "id": "d663909af19b5b359cf24f1d0edb40dddff2d6aea0eaac8cc9a14d7b4ef6de1a",
+        "taker": "BLOCK",
+        "taker_size": 9.39050700,
+        "maker": "LTC",
+        "maker_size": 0.25175300
+      },
+      {
+        "timestamp": 1591863186,
+        "fee_txid": "9048134295abe7d4969ab2ec99541f5e293a2fdd59e18f33c051091b741060a2",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "ab8d567ba88582308477e7b7a599cd2447dedbd1218bdcaf10ec3cb11333928d",
+        "taker": "BLOCK",
+        "taker_size": 12.08770400,
+        "maker": "LTC",
+        "maker_size": 0.32406300
+      },
+      {
+        "timestamp": 1591827423,
+        "fee_txid": "574b055d44414a461d01852aa524ce6ed87158e8e00967ea91d2642fb5300508",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "b481fbbaa72bd443b6ad9324b1fafe24ae7183473798c1db4545608ac092fd6d",
+        "taker": "BLOCK",
+        "taker_size": 500.00000000,
+        "maker": "LTC",
+        "maker_size": 13.75000000
+      },
+      {
+        "timestamp": 1591820080,
+        "fee_txid": "f588964a20b0d654c6e2aedb8bf040a3a0e4780b2a14e0f3ddc6fd2cbbc1f4f4",
+        "nodepubkey": "BeAS1djaiUnQghFA6iCYDAx4eTCXvHhQ2c",
+        "id": "cc462cd4e214bda6a3093b70a606a1a871cd04f831816365b104a872095745b3",
+        "taker": "BLOCK",
+        "taker_size": 9.42844200,
+        "maker": "BTC",
+        "maker_size": 0.00116900
+      },
+      {
+        "timestamp": 1591744767,
+        "fee_txid": "5765b80eacf6d7e9f66c028d1fa2ea930ac4b11d2e301f7f10cb77fe5853cbc6",
+        "nodepubkey": "BUgwDVV8yroaMorvUwKR1ETv7RkjAWczEV",
+        "id": "e5d794c3d4627ee58df184cb4e7a24d18b28307e93c8dcf96ef44faf8e23d4ee",
+        "taker": "LTC",
+        "taker_size": 0.30120000,
+        "maker": "BLOCK",
+        "maker_size": 12.00000000
+      },
+      {
+        "timestamp": 1591720426,
+        "fee_txid": "38012fbb4cb2a733ec6e80b400d00bdac32154400b3869ff089748a96ca56e14",
+        "nodepubkey": "BVJSKZG1YTseYGacMu8nRBqFCwhB4HYecw",
+        "id": "569728a6a477141c0ff7052ab08b31589b10e4b0365164861596a177a7a316f0",
+        "taker": "BLOCK",
+        "taker_size": 200.00000000,
+        "maker": "LTC",
+        "maker_size": 5.50000000
+      },
+      {
+        "timestamp": 1591720371,
+        "fee_txid": "28e62815f56adb0f6aa1d67344699a95ab6c5d71e58ac4bceb12110b74262aca",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "501fb5bd1973e8e980f4be86903605a7ffe0991d589db4878c9f642fbd5bc17f",
+        "taker": "BLOCK",
+        "taker_size": 100.00000000,
+        "maker": "LTC",
+        "maker_size": 2.75000000
+      },
+      {
+        "timestamp": 1591719745,
+        "fee_txid": "cf0828d4a84c59d59f89797149143f97b3db49054a4f3bb56bcbb47af62e6240",
+        "nodepubkey": "BUgwDVV8yroaMorvUwKR1ETv7RkjAWczEV",
+        "id": "38452fc12058e3f63669b6b4557b56cf246ccb49cab67e02a18e4762d4423dc3",
+        "taker": "BLOCK",
+        "taker_size": 100.00000000,
+        "maker": "LTC",
+        "maker_size": 2.75000000
+      },
+      {
+        "timestamp": 1591704699,
+        "fee_txid": "f368844f9b45995ea5e7c0d250ae4c0eb662dabf5778619a3b37fae08448504f",
+        "nodepubkey": "BiisiCoVcWW34TGrzBVry5wG8edEH8RjC2",
+        "id": "98245f22ef8a14cde26b4b2b3db88e6f729180a880b34c7858a01b493a37967e",
+        "taker": "BLOCK",
+        "taker_size": 1600.00000000,
+        "maker": "LTC",
+        "maker_size": 43.68000000
+      },
+      {
+        "timestamp": 1591704361,
+        "fee_txid": "becade58f8191706f2965119cc5469a10a401dff07a1d8af5e0a26042c8572a3",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "ae46be11b0eed7fc5d3cd4140d615f1bf3db9f7974565d8fb041d15d2ebc8132",
+        "taker": "BTC",
+        "taker_size": 0.01848700,
+        "maker": "BLOCK",
+        "maker_size": 137.96559200
+      },
+      {
+        "timestamp": 1591702650,
+        "fee_txid": "0d6f64ddfd5ba7dc8920f027ff85b6a6f27b46061e9ed7d21dd5fd3aaee1d4e2",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "880db11dd4d616d1e9d843954a987113a5e8478b75446abfb33fde2efc6c62a6",
+        "taker": "BTC",
+        "taker_size": 0.02949100,
+        "maker": "BLOCK",
+        "maker_size": 220.08082500
+      },
+      {
+        "timestamp": 1591696119,
+        "fee_txid": "60c75f454bd7566d98fbd24e93849f3fc033ef8e90c6cdae626a5fdf924ebdcf",
+        "nodepubkey": "BiJrmp15ziRo9b929YBAMz7xnB7neWpyVP",
+        "id": "2b2502d56cbd2707ae63d0447b0ad0e75091f91479b178e51551629a793f9952",
+        "taker": "BLOCK",
+        "taker_size": 162.56387100,
+        "maker": "LTC",
+        "maker_size": 4.31831100
+      },
+      {
+        "timestamp": 1591695568,
+        "fee_txid": "5c3dddceddff69e526fba1430a065dcdb1048f0218aac599cc174cd332f13f7b",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "65c71a91aab0b5f44106ff99b435b81a865268ab5a0ace4e80624cbc57fb5c5d",
+        "taker": "LTC",
+        "taker_size": 0.54200000,
+        "maker": "BLOCK",
+        "maker_size": 20.00000000
+      },
+      {
+        "timestamp": 1591695518,
+        "fee_txid": "d04d5ae1b48ad79981d0a018d7754d14a24933e2afb305cc0c88f360dfb86662",
+        "nodepubkey": "BngBQC4Qd6Byk5oMqUXSEtx9kr9uffD6jt",
+        "id": "922fcc90881c12a0d1bea5ea15c32695015e70a1728da1a3ed67aa9371a19fb5",
+        "taker": "LTC",
+        "taker_size": 0.54200000,
+        "maker": "BLOCK",
+        "maker_size": 20.00000000
+      },
+      {
+        "timestamp": 1591694620,
+        "fee_txid": "d07aaac5b8289e88e1c69819b06b22377cbd8e28e6a8bf4bf5df4d19d16e389d",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "7136a001d52e049d7b0717c4d1f6adec740800802a41ae88cb2a9f49a5dd796b",
+        "taker": "BLOCK",
+        "taker_size": 2.25125000,
+        "maker": "LTC",
+        "maker_size": 0.06190900
+      },
+      {
+        "timestamp": 1591610474,
+        "fee_txid": "c665789f7b061300edc34b4430443516908bedca5da84515fcd07164b292db5a",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "b9c9e38cb9fca33f04146004a48ad4d1e71d8e86190e163d24b6edf7d3acceba",
+        "taker": "BLOCK",
+        "taker_size": 17.41040000,
+        "maker": "LTC",
+        "maker_size": 0.47658000
+      },
+      {
+        "timestamp": 1591610182,
+        "fee_txid": "c3b741e1015402a18d45363a0ef5d945cbf1ed8963241d07c98cbadf4e88413a",
+        "nodepubkey": "BUgwDVV8yroaMorvUwKR1ETv7RkjAWczEV",
+        "id": "8557e9d407b36e948f6376bc796d20afa18ae8e96cc12faceecabac6ef014d4c",
+        "taker": "BLOCK",
+        "taker_size": 12.22624300,
+        "maker": "LTC",
+        "maker_size": 0.33466800
+      },
+      {
+        "timestamp": 1591607115,
+        "fee_txid": "9e779d42cfb365e21f05efb6f843afdd20e02b71b4d1cdf06333257cdec5847d",
+        "nodepubkey": "BUgwDVV8yroaMorvUwKR1ETv7RkjAWczEV",
+        "id": "ebbf7650b43d1ab5cfd47d5977fb27cd559c31fd9d41d067e3bed5a928f959aa",
+        "taker": "BLOCK",
+        "taker_size": 3.56222100,
+        "maker": "LTC",
+        "maker_size": 0.09792700
+      },
+      {
+        "timestamp": 1591607115,
+        "fee_txid": "ad7eb3c002e111788b944ca9280be89f0c994cee610677eb7981a1fb74a5e29a",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "3f7fef43a4809dbbdb7f1cacfac665a21da69f78b90cfae0f79df85dc4b0763e",
+        "taker": "BLOCK",
+        "taker_size": 7.64143600,
+        "maker": "LTC",
+        "maker_size": 0.20923100
+      },
+      {
+        "timestamp": 1591593442,
+        "fee_txid": "0dfd5acca73be2d5bf2806946672f2e10fb1786a1985bc8954e94949777c5c1c",
+        "nodepubkey": "BZDpBm5DwYSZhKs4R2jUmEA3wc7DbkaTvG",
+        "id": "eeca5c499a6cb50eeda6697f1f7a1eaf7aea25d515fc8d6e8cd03aa7d3d3033e",
+        "taker": "LTC",
+        "taker_size": 13.97800000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1591573161,
+        "fee_txid": "de8b831c8fb495e2fba949d4c9ebc3ba7eceb7aec1edda1113ec3dc0aed0fa6a",
+        "nodepubkey": "BiJrmp15ziRo9b929YBAMz7xnB7neWpyVP",
+        "id": "92406777dd9f6432622be731037cca4ac416b1575c45f313bccec3ce483cbbec",
+        "taker": "BLOCK",
+        "taker_size": 9.22439800,
+        "maker": "LTC",
+        "maker_size": 0.25615700
+      },
+      {
+        "timestamp": 1591572975,
+        "fee_txid": "8551e6eba739bd9845f43b999e0ef39fde5db7ed7e9f5b7ad6d30a257dc4a226",
+        "nodepubkey": "BiJrmp15ziRo9b929YBAMz7xnB7neWpyVP",
+        "id": "de3163a07f8e732ba916e58276846a1ad33bfb38720280b659fdc75e169d74d8",
+        "taker": "BLOCK",
+        "taker_size": 2.22875000,
+        "maker": "LTC",
+        "maker_size": 0.06229400
+      },
+      {
+        "timestamp": 1591561069,
+        "fee_txid": "ac86d8f4c31d5dc39b59f7d60a8f239e522a9c5d5132fd4d6f18f91bf7371bfd",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "8a9d795f7c96d57813d11ee36a3382d2b743e4bebd73421b7d5ca56f953ff502",
+        "taker": "BLOCK",
+        "taker_size": 9.08510600,
+        "maker": "LTC",
+        "maker_size": 0.25103700
+      },
+      {
+        "timestamp": 1591561069,
+        "fee_txid": "18287a63c4a54b9d72f9f4040a2180f663aa44eeac31ac97816fa456207df4d3",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "9753d9b7fd8ddbb50212af173c522ae6133b948b4df6e6f04e7d8c8e6cde7cae",
+        "taker": "BLOCK",
+        "taker_size": 12.62825600,
+        "maker": "LTC",
+        "maker_size": 0.34894100
+      },
+      {
+        "timestamp": 1591557785,
+        "fee_txid": "dc7c1d343899937492f4f446888faa358812fe70c70ca7516e29e4f092392004",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "9c4e76e0f76bf509b577221a198ef35fe11b5cf34884ef1c05d1a9c791400b66",
+        "taker": "LTC",
+        "taker_size": 0.02821000,
+        "maker": "BLOCK",
+        "maker_size": 1.00000000
+      },
+      {
+        "timestamp": 1591511505,
+        "fee_txid": "d267156df117ca43bc243d480404fc6e651c1adf44d30604ebd86bff5f9f676d",
+        "nodepubkey": "BVMy4NMZLtT2UzX2rzEVqwTeqAhBoeXxmU",
+        "id": "edf830c3328517bb692a18847f69b7f51f3d6dce9ad23e07b8a64c18bf270365",
+        "taker": "BLOCK",
+        "taker_size": 12.05763900,
+        "maker": "LTC",
+        "maker_size": 0.32787800
+      },
+      {
+        "timestamp": 1591511505,
+        "fee_txid": "306791c2d0b6fdbf8d5379b5324f855717cec5546060f93474f5df3e7ec80aa2",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "9214aee074cbcc45ef61dfa8778d6b650265d67cf7fac4d0cffb9712e5a6daaf",
+        "taker": "BLOCK",
+        "taker_size": 12.02175700,
+        "maker": "LTC",
+        "maker_size": 0.32843500
+      },
+      {
+        "timestamp": 1591476670,
+        "fee_txid": "3653a2455cfdbe9fb25dc897dd1a30bbb5799d150d443e020f46e0dc7dc2158c",
+        "nodepubkey": "BqwfQ4ww8vmDBZf26cArQCf7rquy3e9RDm",
+        "id": "c4c2437c2eb26c0a53e30456c00323d08f48e29a072a6c3ef991c6c20622b4a3",
+        "taker": "BLOCK",
+        "taker_size": 6.69249800,
+        "maker": "LTC",
+        "maker_size": 0.18235800
+      },
+      {
+        "timestamp": 1591476670,
+        "fee_txid": "5c64d6eed6191355267a3a5296f67cfaa3639be61e7996bd3e08b224439a741f",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "d4896484bc610f484b4a998c2464e441186ef852ece1e573ccc665772ff356d3",
+        "taker": "BLOCK",
+        "taker_size": 16.48817100,
+        "maker": "LTC",
+        "maker_size": 0.44850200
+      },
+      {
+        "timestamp": 1591475260,
+        "fee_txid": "43e0e83bb3191ddfbd6c6b8fcffbbd8da84d3940b064b0d01b2769caebf8b5d9",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "90cbb70e0f36fbebb873ac62f934b100823c6c5ea7259bce3e31a5d2de962740",
+        "taker": "BLOCK",
+        "taker_size": 14.93682000,
+        "maker": "LTC",
+        "maker_size": 0.40923400
+      },
+      {
+        "timestamp": 1591474277,
+        "fee_txid": "becc4a241bd3394c99d1adaaa7a5df24d7d79efefc550400542497bd106b3464",
+        "nodepubkey": "BqyzZoDyZTT6Ahtmq9uG5XCJGhj1moha6T",
+        "id": "fc33b9185fa7862caa839b4b88265962d0d49c20ea0b704b5b6baf3079dcb6cf",
+        "taker": "BLOCK",
+        "taker_size": 19.00000000,
+        "maker": "LTC",
+        "maker_size": 0.52250000
+      },
+      {
+        "timestamp": 1591445092,
+        "fee_txid": "75c629fb781503a05a8fc60c8eeb3df37d3b373757f1b33943f040eaebdbbfa2",
+        "nodepubkey": "BgfhG3M9CTFby4VZz59Xza5SxDWFvUhcUe",
+        "id": "7a87b40a101e6637777c0fae852e8b73875352c6d457b0bd16d815e3ec17ad14",
+        "taker": "BLOCK",
+        "taker_size": 8.33011000,
+        "maker": "LTC",
+        "maker_size": 0.22285900
+      },
+      {
+        "timestamp": 1591435620,
+        "fee_txid": "68cd6319acef8e3b105fbac273189628d82c9e129a88aeeb13ad1e48c0e2222a",
+        "nodepubkey": "Bk9by8cfYYxx8n6FvPSgUzZLm31rDFmNqK",
+        "id": "efb3f90912b6bbf77cd6fa722565c962445989a33d3068083a8ad832cb6c0630",
+        "taker": "BLOCK",
+        "taker_size": 9.57589100,
+        "maker": "LTC",
+        "maker_size": 0.25536400
+      },
+      {
+        "timestamp": 1591435280,
+        "fee_txid": "d22b1e0ebc7abb85e6b92c9d2408cbcb6bc2623610e04f3431e82d10db779363",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "a92fa5eb790906a10d3a4a630398e2310b0296de7bc7fa8448c849947b29aee5",
+        "taker": "BLOCK",
+        "taker_size": 5.25502300,
+        "maker": "LTC",
+        "maker_size": 0.14022900
+      },
+      {
+        "timestamp": 1591435280,
+        "fee_txid": "b79a61710c6edb40d766acf1a12696bab77673db1b14295c865c4a9a8c4f2c7c",
+        "nodepubkey": "BngBQC4Qd6Byk5oMqUXSEtx9kr9uffD6jt",
+        "id": "b8c970929388f1d310de9017569e74b23e551a14d667378066d86b5303e1aab2",
+        "taker": "BLOCK",
+        "taker_size": 8.50052900,
+        "maker": "LTC",
+        "maker_size": 0.22624500
+      },
+      {
+        "timestamp": 1591435280,
+        "fee_txid": "90ceda636fba48fca9ea4d4676e4f3ec6afe18fc1644987fcff4e802462e1dd7",
+        "nodepubkey": "BiisiCoVcWW34TGrzBVry5wG8edEH8RjC2",
+        "id": "0aaa90ec0d36eaabe9e883a3ae343b9936097cce5f96bbb0e1e4fa08a12178fd",
+        "taker": "BLOCK",
+        "taker_size": 7.76624700,
+        "maker": "LTC",
+        "maker_size": 0.20745900
+      },
+      {
+        "timestamp": 1591435280,
+        "fee_txid": "dec8ffd87dfd23c6300a1c8d885a3618be92d1acee4b4add03ac8da20c0fff1c",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "600ab7536b86fa6f9c8da0dbb68429d7a30646385c88cea8434e73e27349ff3f",
+        "taker": "BLOCK",
+        "taker_size": 11.74903000,
+        "maker": "LTC",
+        "maker_size": 0.31385200
+      },
+      {
+        "timestamp": 1591435280,
+        "fee_txid": "c869fee8b2a9385d8c48c21d6011ac7650befacc60f19332caa0ff4a98dc50ad",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "3e887974c7d2836115c87cc5b38367e2a55aa9acf3e419ec61ea0584b700caf9",
+        "taker": "BLOCK",
+        "taker_size": 13.70153400,
+        "maker": "LTC",
+        "maker_size": 0.36732800
+      },
+      {
+        "timestamp": 1591418073,
+        "fee_txid": "e7d074b4ec754d8bea322c3885d5400e97565c8655e242113941c3c03a698bc9",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "3cf157ae8aa39d986dc51cfdf2c483386d77eef78289143ed0ca92a37df851a8",
+        "taker": "BLOCK",
+        "taker_size": 7.43253200,
+        "maker": "LTC",
+        "maker_size": 0.19918600
+      },
+      {
+        "timestamp": 1591418073,
+        "fee_txid": "06a0ee53764380faa0e962e37e947dedca1d3d9d9b38860971c539bd7bda4be3",
+        "nodepubkey": "BXBJP9GxQChMLtuqvwVYxusA3QNhBUbiWd",
+        "id": "f6e333a31ecc5a8157362a49ebbac4abd6d74305a72f624216b1909c76420f76",
+        "taker": "BLOCK",
+        "taker_size": 16.22511300,
+        "maker": "LTC",
+        "maker_size": 0.43324700
+      },
+      {
+        "timestamp": 1591418073,
+        "fee_txid": "11a1d925d952482429a90188bb7a6253a28216151be2df85d6d57329338e18dc",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "450b0ef17ea4976765e57db077385c4539e5f549dce6273a4f2f9eef01d8106e",
+        "taker": "BLOCK",
+        "taker_size": 180.97565900,
+        "maker": "LTC",
+        "maker_size": 4.83028600
+      },
+      {
+        "timestamp": 1591413679,
+        "fee_txid": "f581e1f31463ecca90fa0bcd49d9f9651c0f87fc7f484d708c68cc6bf0634611",
+        "nodepubkey": "BqbV2R6UuBFNwsWyL5mWXJMnLTMHsMeo1n",
+        "id": "efa4bc3d5bc27c92274ab806b1762532f80fcfb5932d0632013c6b1fe58a9d09",
+        "taker": "LTC",
+        "taker_size": 0.42372100,
+        "maker": "BLOCK",
+        "maker_size": 15.15662600
+      },
+      {
+        "timestamp": 1591413498,
+        "fee_txid": "7a378ccfd7e47427dc57a1bf5ddf3d2cb4602cc3233b43773801e6510a7ca236",
+        "nodepubkey": "Bqshd156VexPDKELxido2S2pDvqrRzSCi4",
+        "id": "fe675b2595c8c38a23a79fc9b74d465bff39ef7896e3911ecce145abd8467ace",
+        "taker": "LTC",
+        "taker_size": 0.27000000,
+        "maker": "BLOCK",
+        "maker_size": 10.00000000
+      },
+      {
+        "timestamp": 1591413498,
+        "fee_txid": "feb2675fdb371f6536b94125263ef69e0bad9737d72a37f18e24ab4737b872b8",
+        "nodepubkey": "Bhd1uxZy9LKMjTuLBWJMnzQYvJRbknNCM5",
+        "id": "b63f410a548a8c7a5554891457aebbfb47bee6963d97eb2d0fbea5f9d7051ad2",
+        "taker": "LTC",
+        "taker_size": 3.84769500,
+        "maker": "BLOCK",
+        "maker_size": 137.45651800
+      },
+      {
+        "timestamp": 1591413498,
+        "fee_txid": "09cd38f84a05e441bb6cdfd29bbc7a351de7cd0ddf5570332fb0c393f1728aba",
+        "nodepubkey": "BeAS1djaiUnQghFA6iCYDAx4eTCXvHhQ2c",
+        "id": "c8921d1e9e5f4886d904fe7542b70541d391bbf8acc0d0249577f0207397a90d",
+        "taker": "LTC",
+        "taker_size": 2.86224300,
+        "maker": "BLOCK",
+        "maker_size": 101.46240700
+      },
+      {
+        "timestamp": 1591404071,
+        "fee_txid": "67ae95952d161074e3248dd323458bb3bb002197cb5fbee6c135c55c27db6d68",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "4a56384a4183ab0328ce09f4abc423cbb289f040fe7de0519b55a86fb9aac16c",
+        "taker": "BLOCK",
+        "taker_size": 4.50000000,
+        "maker": "LTC",
+        "maker_size": 0.12328700
+      },
+      {
+        "timestamp": 1591356953,
+        "fee_txid": "1834b10eb557584f18542ae6c6754a5d078b9b9242e7806291a7c697c15696b8",
+        "nodepubkey": "BfMkEpJy3EAQit4rs9j38MkRTJT9LBWedg",
+        "id": "e64358282524ebb33cccb84b8f2ba7abb322bd926fa15851df78907077467926",
+        "taker": "BLOCK",
+        "taker_size": 8.10238500,
+        "maker": "LTC",
+        "maker_size": 0.21169800
+      },
+      {
+        "timestamp": 1591356953,
+        "fee_txid": "4b7c1e2820fbb56e72cd4288e7f03676493ec5ad6f4f93427afb9a72f6687c22",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "73c068ea3ad11afa51a1a564dd0b8f55378dd3d282d01bb8234fd51cf8ca2287",
+        "taker": "BLOCK",
+        "taker_size": 15.01268900,
+        "maker": "LTC",
+        "maker_size": 0.39298300
+      },
+      {
+        "timestamp": 1591356953,
+        "fee_txid": "c3b96a4303dae7c36446f19170922a655e483e2016a8b16c805c2556e4403f24",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "859de2ac418027e393fe37f9dcc361f7f6ba67ee5e5243a9d47fca745ffe3729",
+        "taker": "BLOCK",
+        "taker_size": 11.90915900,
+        "maker": "LTC",
+        "maker_size": 0.31005800
+      },
+      {
+        "timestamp": 1591303298,
+        "fee_txid": "6667a23b15ebe74c083f581a47defdb6f6d7bc9a46d264ae6ff84660e9fe1896",
+        "nodepubkey": "BUtNr6NxErZTCmeCZKZhdQP9xYCpDQVjAp",
+        "id": "3bf87a90d3975f7a8f026203c6150134c155fd112ce5eb2fa3f0c4bb32bddb0f",
+        "taker": "BLOCK",
+        "taker_size": 1.00000000,
+        "maker": "LTC",
+        "maker_size": 0.02819000
+      },
+      {
+        "timestamp": 1591277882,
+        "fee_txid": "6d3fc0592eee1cd54cac0b18d00ae4db2b2a4a36375f2dcc94ec871def36efa2",
+        "nodepubkey": "BeAS1djaiUnQghFA6iCYDAx4eTCXvHhQ2c",
+        "id": "ae0daea6a44f530acacb1ed32301ebebd6e7999e4fc7114e0c68939bb0855b0b",
+        "taker": "BLOCK",
+        "taker_size": 244.14490700,
+        "maker": "BTC",
+        "maker_size": 0.02905300
+      },
+      {
+        "timestamp": 1591234323,
+        "fee_txid": "9f910199b4c47e73d17b0fc4beb7d47d1db20a8fb254b6b09ede467543ba850d",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "995028b60bc7532dea578dcb2c23337d207c164d262b27e1bb0d2dfc2aa93f09",
+        "taker": "BLOCK",
+        "taker_size": 7.38302900,
+        "maker": "LTC",
+        "maker_size": 0.18930200
+      },
+      {
+        "timestamp": 1591234294,
+        "fee_txid": "74915d5f9716a0a2bc45e007428dfb90d3f11cf99387707eeb3086b915e57b05",
+        "nodepubkey": "Bqi1XCEFQsaCCTt79PVpZ6Rs5DJ5DwnPvf",
+        "id": "40ecf56f27cb8be311c603b8fe2d19cecc5db60b608bc738080502a854409191",
+        "taker": "BLOCK",
+        "taker_size": 5.77929800,
+        "maker": "LTC",
+        "maker_size": 0.14986300
+      },
+      {
+        "timestamp": 1591230562,
+        "fee_txid": "80f595e8643a055d0c2ecb5da1df721810f9b42942393375dd354cfed5ba16a9",
+        "nodepubkey": "BgfhG3M9CTFby4VZz59Xza5SxDWFvUhcUe",
+        "id": "df005f4260bad4970b4612fc64e9d9f91d6ccd5ca3174ba798f72526b58ffe6e",
+        "taker": "BLOCK",
+        "taker_size": 15.03106800,
+        "maker": "LTC",
+        "maker_size": 0.40168800
+      },
+      {
+        "timestamp": 1591215939,
+        "fee_txid": "1b0f36ce286c150427ec4f3d51fcc06a97ce97b616d742b7789505ff556c807d",
+        "nodepubkey": "BeAS1djaiUnQghFA6iCYDAx4eTCXvHhQ2c",
+        "id": "3450ce6a378d8f6dff6dd4b045c1cafaf8be4f56d029287900f423fd1ab5f2cc",
+        "taker": "LTC",
+        "taker_size": 13.61700000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1591178894,
+        "fee_txid": "82d31cba7df150840f47f422694946f706e6e916a9da2d9629b5907ed9b0add5",
+        "nodepubkey": "BaDgEyFK2AXMabduggDHf7GbN1aDjFKehf",
+        "id": "2de6814f8a1aa362af46684977045184d8e24b49e065e3bc13d66059e0ce2261",
+        "taker": "LTC",
+        "taker_size": 1.30000000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1591177851,
+        "fee_txid": "26772cda2fa7492b31b5a2e97a50a09160642be81b681529cf8b8d3abcb231f7",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "64084b0bb23731123a771e9d72a5651f58fae4ed51bdeda76a398cef6cb945d4",
+        "taker": "LTC",
+        "taker_size": 1.30500000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1591177726,
+        "fee_txid": "bb503e16182991d0c6108d82a83f2b684a5201a97eda0f42a09a0588048f326c",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "a637bd1ae7e3a2a427afa97066984f9b93eb58b1491f4017218f3caf41c2844e",
+        "taker": "LTC",
+        "taker_size": 1.30500000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1591177644,
+        "fee_txid": "6f4247632a54359ee1ae8db36b68b47866d8c1b4c3ca9463122ae2f3e46dfa0c",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "79c676460bb4b32d25635d6496df29f3df3e960109030cca90bb0144ab90007d",
+        "taker": "LTC",
+        "taker_size": 1.30500000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1591176974,
+        "fee_txid": "d36522864d7834ef62551d49167a2f59798168056dff0fce53c639959882cd50",
+        "nodepubkey": "Bk9by8cfYYxx8n6FvPSgUzZLm31rDFmNqK",
+        "id": "6128c5792353df9836dec67e2b7b006309be985b0d1eaefb3b24fa4a1ae3afad",
+        "taker": "BLOCK",
+        "taker_size": 18.74612100,
+        "maker": "LTC",
+        "maker_size": 0.48704400
+      },
+      {
+        "timestamp": 1591176736,
+        "fee_txid": "88348a266c0f3809983d8d7f4caa8ed644f009eb8af2f2c0a68aedcebe90b96e",
+        "nodepubkey": "BXBJP9GxQChMLtuqvwVYxusA3QNhBUbiWd",
+        "id": "6510ebd9260b9d286625f9d6675d2f9fccb1ce06d7ad30cc490fc0f0578ca4dd",
+        "taker": "BLOCK",
+        "taker_size": 8.92799700,
+        "maker": "LTC",
+        "maker_size": 0.23219100
+      },
+      {
+        "timestamp": 1591176736,
+        "fee_txid": "0c940be740dda42c4ddc3024d085d803b85ac0fc72d8c8b84b6adeba7c97d8f1",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "125463b1c911f7236b2cf2fc3f308068abf9d752eb2479a365d22efb4930de53",
+        "taker": "BLOCK",
+        "taker_size": 6.77981200,
+        "maker": "LTC",
+        "maker_size": 0.17632300
+      },
+      {
+        "timestamp": 1591176540,
+        "fee_txid": "e857b4abfa244bbcb42d5385a398c6e74fb0e5c3633d2fa9cbb59222124ca52d",
+        "nodepubkey": "Bk9by8cfYYxx8n6FvPSgUzZLm31rDFmNqK",
+        "id": "031bd8612bdbfe096fe8eba8d52dc95f203a3dc734449afe2f881323c026e244",
+        "taker": "BLOCK",
+        "taker_size": 14.75853400,
+        "maker": "LTC",
+        "maker_size": 0.38444100
+      },
+      {
+        "timestamp": 1591176489,
+        "fee_txid": "b17249c6201843ff289d3e1d11c489fd1034da83d6cde760660d8ab0ab9b14ae",
+        "nodepubkey": "BaDgEyFK2AXMabduggDHf7GbN1aDjFKehf",
+        "id": "e24724ca878c944b0e3a27739cadc14415fbb02a8dc74cc566f671bdb45ee806",
+        "taker": "BLOCK",
+        "taker_size": 1.00000000,
+        "maker": "LTC",
+        "maker_size": 0.02680000
+      },
+      {
+        "timestamp": 1591176489,
+        "fee_txid": "b1976e20b940b9c0d55d0081b4f9ee9f8e62bc71d8add7c92a1017a0b24d8eec",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "0880e51bcf7bc4dd415f13db16840a90058df098e9ee830ee8f937bd6b8b06b9",
+        "taker": "BLOCK",
+        "taker_size": 1.00000000,
+        "maker": "LTC",
+        "maker_size": 0.02680000
+      },
+      {
+        "timestamp": 1591176489,
+        "fee_txid": "7aeb5205b3860ec2cb1e5d2e1723895e385a6941cae07fc0bed109112afe5ff9",
+        "nodepubkey": "Bqi1XCEFQsaCCTt79PVpZ6Rs5DJ5DwnPvf",
+        "id": "047beddf9767f9c783f15e09b058528db8ff3d73024e7ac8c1dbff8a3a7467bc",
+        "taker": "BLOCK",
+        "taker_size": 4.25766800,
+        "maker": "LTC",
+        "maker_size": 0.11100100
+      },
+      {
+        "timestamp": 1591176489,
+        "fee_txid": "f91343aa0e48576ee5663c5e27dd28120b3caa3a781cf630f3738b73f7e4a58b",
+        "nodepubkey": "BVMy4NMZLtT2UzX2rzEVqwTeqAhBoeXxmU",
+        "id": "3ffffb51a0fcb90bc283e87fac718d8095f450191da23df284a119b539e5c731",
+        "taker": "BLOCK",
+        "taker_size": 48.23594700,
+        "maker": "LTC",
+        "maker_size": 1.25379600
+      },
+      {
+        "timestamp": 1591175263,
+        "fee_txid": "7406013b666332626eb7ab41cc9ab40dbe47716380407fe88b984f650fa61a58",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "ca6f92b75ec720822c34ff46953e85d6ecfaade5651b08d5a5d06b7c2f291517",
+        "taker": "BLOCK",
+        "taker_size": 191.82733900,
+        "maker": "LTC",
+        "maker_size": 4.98976500
+      },
+      {
+        "timestamp": 1591150133,
+        "fee_txid": "aef8d286f0429d34c01810c796d242599c88bd08077f358f5130148fd2240855",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "970a537c8b551087a6dc0eead0cba12ef21801fb606a151817dafa9dd9a2ce53",
+        "taker": "LTC",
+        "taker_size": 13.37000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1591150133,
+        "fee_txid": "4ad61bff042bd80e5b3b47fa7b86bb7f83c2186dfe277422a2f2d24b27bd905c",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "44a8d82001b76d096142eaad79e4bfc157c0632604b1825613e6aadf21a43243",
+        "taker": "LTC",
+        "taker_size": 13.37000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1591146435,
+        "fee_txid": "7f37ddc564718965ced21bce56a61ab95c6b42a7209996fb284d7c5a37c8bf2d",
+        "nodepubkey": "BUtNr6NxErZTCmeCZKZhdQP9xYCpDQVjAp",
+        "id": "bf05e2ae1795c8723eef660e73c7a98dac83a663f2f9ec643316b7efa3ba6512",
+        "taker": "BLOCK",
+        "taker_size": 2.61419400,
+        "maker": "LTC",
+        "maker_size": 0.06820300
+      },
+      {
+        "timestamp": 1591146435,
+        "fee_txid": "9624c29d77742390767b29b386b44ed78be0a4f0a96179a11e467007d997c3ff",
+        "nodepubkey": "BVMy4NMZLtT2UzX2rzEVqwTeqAhBoeXxmU",
+        "id": "7f27dd4a5ba90ced44b2b22928f08765b90eab3fc170a65a1f2751a736b1a3be",
+        "taker": "BLOCK",
+        "taker_size": 5.82867600,
+        "maker": "LTC",
+        "maker_size": 0.15194600
+      },
+      {
+        "timestamp": 1591146435,
+        "fee_txid": "7ed31a76a2c356cfef7cdf2149e67d4a26ec2c6607ca18795dc4fda70eda5f38",
+        "nodepubkey": "BYM4whkeYiW7H7Srt1Ah2ivyWaQbVPYjds",
+        "id": "3e469c8e99e50a1bb595a9f01cfb137931f41c85a859a276cc563d43878514fa",
+        "taker": "BLOCK",
+        "taker_size": 13.39446400,
+        "maker": "LTC",
+        "maker_size": 0.34913000
+      },
+      {
+        "timestamp": 1591146435,
+        "fee_txid": "c86c34c712ad28fdad32125c2a95af646706573ed7edb866b8fa049beffc9bdd",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "d542757aca329c0c2c78ca9e6a4635f6769ab19fb9c06fe8a45d6530e1f65388",
+        "taker": "BLOCK",
+        "taker_size": 10.90623300,
+        "maker": "LTC",
+        "maker_size": 0.28441200
+      },
+      {
+        "timestamp": 1591146435,
+        "fee_txid": "1cf22b50c64dd9f8a324553b1d088556f7d9b4f46c3a8fa3c75e2828ec905be6",
+        "nodepubkey": "BVMy4NMZLtT2UzX2rzEVqwTeqAhBoeXxmU",
+        "id": "14e9a010971852f65b345cd0586a5499a23ecf8ce28d40a296a1559ed55bc369",
+        "taker": "BLOCK",
+        "taker_size": 14.78204900,
+        "maker": "LTC",
+        "maker_size": 0.38443900
+      },
+      {
+        "timestamp": 1591146435,
+        "fee_txid": "30faae58a396abf46e150009b429dc016faa6cc1d4120946000d9020a00f2e07",
+        "nodepubkey": "BfMkEpJy3EAQit4rs9j38MkRTJT9LBWedg",
+        "id": "55a139d45f40cbe0942ec5fb69c2eae46f50dfb023edfea28b442ce5f748ac14",
+        "taker": "BLOCK",
+        "taker_size": 123.96082000,
+        "maker": "LTC",
+        "maker_size": 3.22153600
+      },
+      {
+        "timestamp": 1591146435,
+        "fee_txid": "7c6a549c5a323b2819f7ca6cbddc99f6a1efa0b1742678088398a59505abc722",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "9362dd563be791cc69c64d2ccf2c4f1623ee0fde05445b0983a3db00037b2a83",
+        "taker": "BLOCK",
+        "taker_size": 206.60047100,
+        "maker": "LTC",
+        "maker_size": 5.36287200
+      },
+      {
+        "timestamp": 1591134733,
+        "fee_txid": "5cce83ae9e43885296bf9e6b2e373c4a89d406e03972276212a96b33cb41b1ac",
+        "nodepubkey": "BfMkEpJy3EAQit4rs9j38MkRTJT9LBWedg",
+        "id": "c61271cd8cfde35906fb6e57481aaa94ef3c6b71f26a2c20e06badf2a4ab1267",
+        "taker": "BLOCK",
+        "taker_size": 12.18206300,
+        "maker": "LTC",
+        "maker_size": 0.31716100
+      },
+      {
+        "timestamp": 1591133788,
+        "fee_txid": "35e19610f77a8a5dc09db9f106b3b1ef2ab412fea69f9bea307e6928b600df01",
+        "nodepubkey": "BqyzZoDyZTT6Ahtmq9uG5XCJGhj1moha6T",
+        "id": "bb3fa6bab2acac39ce01c2d04dae929f90d7c9ad7b0437f06a7ae21e92de4cb1",
+        "taker": "BLOCK",
+        "taker_size": 5.49758400,
+        "maker": "LTC",
+        "maker_size": 0.14331100
+      },
+      {
+        "timestamp": 1591078667,
+        "fee_txid": "7227de3d8d26c39b425cf12a1b027fad4f88bd0fec36c013d27740ffce34c290",
+        "nodepubkey": "BqbV2R6UuBFNwsWyL5mWXJMnLTMHsMeo1n",
+        "id": "844ab5248c4921f65a9d9997c510a70c5cc85d83c77fb080330c6b28d205b24b",
+        "taker": "BLOCK",
+        "taker_size": 9.73253100,
+        "maker": "LTC",
+        "maker_size": 0.25578300
+      },
+      {
+        "timestamp": 1591070010,
+        "fee_txid": "a20509f7696b8e337a6f4555d21240abf6e9b379217741f75a0139ba57114be2",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "6c48c0b6b2622eea5b4d73f0e55bd84ae9f1421493319bd0ec56bd95afd68dc4",
+        "taker": "BLOCK",
+        "taker_size": 131.27663900,
+        "maker": "LTC",
+        "maker_size": 3.46057600
+      },
+      {
+        "timestamp": 1591067481,
+        "fee_txid": "a41826b1f251e20cfb521958f9a45a05780d4aafe650e773440bb1c5cdaf385e",
+        "nodepubkey": "BZpi216pnWmjifxyHiL3xdgWWY1xoXH8ho",
+        "id": "2cc6a2f75158f8dd4e750750e811bfef3af580eb1c1803402c4a9d9a4ccebcac",
+        "taker": "BLOCK",
+        "taker_size": 158.25144300,
+        "maker": "LTC",
+        "maker_size": 4.16707100
+      },
+      {
+        "timestamp": 1591061585,
+        "fee_txid": "0e2e6e25f32fed94bc5018540267f7c47f205db8c0c9ded565f18443bfd5518f",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "b6dd175d3d0065c22af7a639244c4bb38f76e9d7b644741f984fb0a7661ad807",
+        "taker": "BLOCK",
+        "taker_size": 361.72097700,
+        "maker": "LTC",
+        "maker_size": 9.60999900
+      },
+      {
+        "timestamp": 1591056396,
+        "fee_txid": "f9d0b630e8716e8e423d7392a27cc102b6334e84668b51137bb9d9f470459984",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "fdd817798200d4504497d87677e921ff14c9792e6bc657f00c81f27e688976c7",
+        "taker": "BLOCK",
+        "taker_size": 7.95208600,
+        "maker": "LTC",
+        "maker_size": 0.21393200
+      },
+      {
+        "timestamp": 1591055945,
+        "fee_txid": "a6a1b1479c71478868efdeadcfaa8e7a0d1ae979dd82ab19a8b6579131d61d87",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "bfdb48b6c67aac31ae2c4f6161e31a62001f74e6058e945fe2c5a4cbeaa2d2e4",
+        "taker": "BLOCK",
+        "taker_size": 5.59630200,
+        "maker": "LTC",
+        "maker_size": 0.15046100
+      },
+      {
+        "timestamp": 1591055945,
+        "fee_txid": "e24806ebb0e2f39a32988381f92b2859cf0773390fe917e2ce94a70808897454",
+        "nodepubkey": "BYM4whkeYiW7H7Srt1Ah2ivyWaQbVPYjds",
+        "id": "e50d6b18fcec5e4597ab08629826fcd0a8268a17d0d917ad0c45ebe7911672cd",
+        "taker": "BLOCK",
+        "taker_size": 13.26868300,
+        "maker": "LTC",
+        "maker_size": 0.35642400
+      },
+      {
+        "timestamp": 1591055428,
+        "fee_txid": "60ec35185608ff3f9c611fbc63c855b2bc4e23ac7866665ddff4256d6eb1269b",
+        "nodepubkey": "BUtNr6NxErZTCmeCZKZhdQP9xYCpDQVjAp",
+        "id": "7b54bfdde36e90235a13984b7cd6bfffd64c55640a44f452f6e5927d6ca62d72",
+        "taker": "BLOCK",
+        "taker_size": 11.45230600,
+        "maker": "LTC",
+        "maker_size": 0.30838100
+      },
+      {
+        "timestamp": 1591054049,
+        "fee_txid": "0428af1ae6559f6545df43bc4cb5d4ffab77fa27f5cc8fe96de14fa17ea7f468",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "767a0977f5ef7726ac5983e009b2c76674c9383822d6fc48d859bbf52ba75fde",
+        "taker": "BLOCK",
+        "taker_size": 7.89546100,
+        "maker": "LTC",
+        "maker_size": 0.20855000
+      },
+      {
+        "timestamp": 1591054049,
+        "fee_txid": "45a7bbb56b0b803bb26f15059c543edb97acd5e24aa0e9862a77b9f0273a377c",
+        "nodepubkey": "BqbV2R6UuBFNwsWyL5mWXJMnLTMHsMeo1n",
+        "id": "7018ebb4bc4fdd9baae4264bdb4736b0d41379e82301fcdc059317ad6abd20d1",
+        "taker": "BLOCK",
+        "taker_size": 14.66188300,
+        "maker": "LTC",
+        "maker_size": 0.38967300
+      },
+      {
+        "timestamp": 1591053464,
+        "fee_txid": "ead32650fabeb454bd578385d9ef7a312e3135ab332fb8debb4bbed9760ee434",
+        "nodepubkey": "BVMy4NMZLtT2UzX2rzEVqwTeqAhBoeXxmU",
+        "id": "3a926629cca1999deb105303ddb7d222766dbc014c8c74d7cbf9232d15d9e325",
+        "taker": "BLOCK",
+        "taker_size": 11.67306600,
+        "maker": "LTC",
+        "maker_size": 0.31557200
+      },
+      {
+        "timestamp": 1591051265,
+        "fee_txid": "0c31fe23ea2d1c12184437795b9694f925919b1dede122e6cee4d07fc8887102",
+        "nodepubkey": "BXBJP9GxQChMLtuqvwVYxusA3QNhBUbiWd",
+        "id": "322562b0e77d52f4add8ca84cd4f40f359a5f776723dcb0a97d13893df4e37d2",
+        "taker": "BLOCK",
+        "taker_size": 18.86467700,
+        "maker": "LTC",
+        "maker_size": 0.48958400
+      },
+      {
+        "timestamp": 1591046283,
+        "fee_txid": "4ac115d75f955e56ea25c3fd6ba3ac12e2465834e65f919782c7b0362c79b641",
+        "nodepubkey": "BXBJP9GxQChMLtuqvwVYxusA3QNhBUbiWd",
+        "id": "69e4a5546c6135d7ec88932a16460ea5a44c6e5333ef6013bac2fec4a85a68a2",
+        "taker": "BLOCK",
+        "taker_size": 12.25124400,
+        "maker": "LTC",
+        "maker_size": 0.31724300
+      },
+      {
+        "timestamp": 1591046283,
+        "fee_txid": "a39c6c38bd08e08b5fc44c597eb8128277df102680d59b9c3226728fda266f0b",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "5dc265c3370f618e6c21205f07b12bf6f5be2c23837166b960bb19343f15ed32",
+        "taker": "BLOCK",
+        "taker_size": 62.01165000,
+        "maker": "LTC",
+        "maker_size": 1.60295200
+      },
+      {
+        "timestamp": 1591045602,
+        "fee_txid": "2f9a1f7ce8d6a299b71d81e123f6fe999c2ea304696f1a65e209718d5d2e61c9",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "a58a7957e3516fd4862ada4abea5d81db0499193bd186ad6703d2dca1aafff56",
+        "taker": "BLOCK",
+        "taker_size": 282.96512700,
+        "maker": "LTC",
+        "maker_size": 7.31769700
+      },
+      {
+        "timestamp": 1591045386,
+        "fee_txid": "d8666e2406f0494c532de54d40fc1c59179210c085959959775f85449a04263f",
+        "nodepubkey": "BgfhG3M9CTFby4VZz59Xza5SxDWFvUhcUe",
+        "id": "dc72aa39a4b0fe5c13c1d594176650cb2846c83d0f5a7087dc36452ce69946f7",
+        "taker": "BLOCK",
+        "taker_size": 13.37339000,
+        "maker": "LTC",
+        "maker_size": 0.34744800
+      },
+      {
+        "timestamp": 1591045386,
+        "fee_txid": "1a317ef9deef8370512a3460ec6be733684212c4b1cc189602627ef82c639e55",
+        "nodepubkey": "BaDgEyFK2AXMabduggDHf7GbN1aDjFKehf",
+        "id": "ff8e63eb88fa64f5b90f28e9f8a08ff1f6ebab0fc27a9549cfe4726f003fb9a0",
+        "taker": "BLOCK",
+        "taker_size": 13.83199400,
+        "maker": "LTC",
+        "maker_size": 0.35948900
+      },
+      {
+        "timestamp": 1591045386,
+        "fee_txid": "3d3945e4ac468aa622e0e92a1294e292b4c63bf28cddb78e3c14c7ef0eae0f7f",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "9125343d46eef32308110b185e086dcbf17192383046858127b6abf734f6ceee",
+        "taker": "BLOCK",
+        "taker_size": 76.55908000,
+        "maker": "LTC",
+        "maker_size": 1.98006300
+      },
+      {
+        "timestamp": 1591030687,
+        "fee_txid": "2c75a1494b3516e7c850b1b21b870301ac9687e15f8934c4ef6ce133a287f244",
+        "nodepubkey": "BaDgEyFK2AXMabduggDHf7GbN1aDjFKehf",
+        "id": "5bd61d5578b822885b955abcd5dea96d98149de151ebfe5892981e7ba5bc184b",
+        "taker": "LTC",
+        "taker_size": 16.00000000,
+        "maker": "BLOCK",
+        "maker_size": 612.99000000
+      },
+      {
+        "timestamp": 1591030687,
+        "fee_txid": "f3841fefc227a0c6b9423b678e534bc5fe99df5f89bd9f37521eae55aa16e259",
+        "nodepubkey": "BZpi216pnWmjifxyHiL3xdgWWY1xoXH8ho",
+        "id": "898da35fe78b1117306ee8c7c80e1aec71798c68a9bac317e3bd047056d29f62",
+        "taker": "LTC",
+        "taker_size": 13.08000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1591010013,
+        "fee_txid": "70c1ac23132befee7810fc2bd9550441ed0ac8e10c8ab45634fc133d5e0a6d9e",
+        "nodepubkey": "BoTuQa8idDuLeFgNkYuwgiJL9BXviBbhTW",
+        "id": "275d53e088ddb2c44ad6800670fc55aa0523150c226b1531a2a1ee6ca3fc46d3",
+        "taker": "BLOCK",
+        "taker_size": 10.24999400,
+        "maker": "LTC",
+        "maker_size": 0.27086600
+      },
+      {
+        "timestamp": 1591010013,
+        "fee_txid": "536ca67d86db0b1398689eb40a30c07e5d29cc6b34ad4fffee4ea1df3e401812",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "df3932f5a6cc2525a8bd6c7402d97b9915ce58bf63cd2c46cc7b524390a43532",
+        "taker": "BLOCK",
+        "taker_size": 11.53252200,
+        "maker": "LTC",
+        "maker_size": 0.30568400
+      },
+      {
+        "timestamp": 1591003144,
+        "fee_txid": "3602c668d5eee969d246eaab491bee360eee6d1d9f3f3f69ae9d4856973e5c8d",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "a479181cc7966dffb4dcc7e7abc963fa13434169a808acabc186885d7ea4a9fa",
+        "taker": "BLOCK",
+        "taker_size": 83.49409200,
+        "maker": "LTC",
+        "maker_size": 2.21335400
+      },
+      {
+        "timestamp": 1590993204,
+        "fee_txid": "d90c93e20fcd13bad3d3eed3c9025546e26b0778be5aa8f458baee8680b3745b",
+        "nodepubkey": "Bm5xuSjVzw9X1Psnyy1zbZFk6JS4ky3X4S",
+        "id": "0ecce5d38a196bc0d9dc5cf2360ebda264fd505ad0105025ac42202287913f28",
+        "taker": "LTC",
+        "taker_size": 13.52800000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590989404,
+        "fee_txid": "febaa95d4522340cce9ccd4ae34046f654ac9d738ff36bdc33f56b461d1f3abf",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "a980405c304f837ca778b816d2f863340980a408d1e45a2bbd5c80601647bf7b",
+        "taker": "LTC",
+        "taker_size": 13.52800000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590987301,
+        "fee_txid": "de990ced9eca4774c08c4ad91fc944e07e0862a48b8844a58701ea349c7a73d9",
+        "nodepubkey": "BZDpBm5DwYSZhKs4R2jUmEA3wc7DbkaTvG",
+        "id": "7f5dd8827fd4ff3ca1b4f02516472cab9f59a8911bd4c8ce7f74e1e656178f75",
+        "taker": "BLOCK",
+        "taker_size": 8.99296700,
+        "maker": "LTC",
+        "maker_size": 0.24125500
+      },
+      {
+        "timestamp": 1590987301,
+        "fee_txid": "21f9c74f02adc40b5dd2d5eb236844f2860fb4de6e49f864abbca27e708f7b48",
+        "nodepubkey": "BVJSKZG1YTseYGacMu8nRBqFCwhB4HYecw",
+        "id": "b6840e07c90f03c48231ae8fe875f9ccf8423065af5e756984abb830a6086343",
+        "taker": "BLOCK",
+        "taker_size": 266.79334700,
+        "maker": "LTC",
+        "maker_size": 7.13561600
+      },
+      {
+        "timestamp": 1590987301,
+        "fee_txid": "9f7090f783e7a6fd20541f78b145e8544963804d5b6eb56a6bd59075b1272585",
+        "nodepubkey": "Bhd1uxZy9LKMjTuLBWJMnzQYvJRbknNCM5",
+        "id": "8b41d7a36ed8dda51ab01d0f33ef88b7a8d1cb88ce6b1f0727b3f5f5ef848401",
+        "taker": "LTC",
+        "taker_size": 13.52800000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590986631,
+        "fee_txid": "13580653e305a384097e8d26c764efb0a1456ee30d9903d4c809d2754947cd07",
+        "nodepubkey": "Bm5xuSjVzw9X1Psnyy1zbZFk6JS4ky3X4S",
+        "id": "55025c98354cfc31fa975cf2eafb184e1babae21d2ed0798422a92d57ee4a0f6",
+        "taker": "BLOCK",
+        "taker_size": 289.96515800,
+        "maker": "LTC",
+        "maker_size": 7.67709800
+      },
+      {
+        "timestamp": 1590986084,
+        "fee_txid": "ede6b4b11eae522254fae2178d9c3f204966123f512584014768ac4f0cfaf7bf",
+        "nodepubkey": "BpYtRB3Shu9UUmsph238XYLkzBzuxX3kdf",
+        "id": "d750921fcfc299a89f6807be417180607ce81a5c094769c0192e7b7f41fc4c97",
+        "taker": "BLOCK",
+        "taker_size": 17.02392900,
+        "maker": "LTC",
+        "maker_size": 0.45114000
+      },
+      {
+        "timestamp": 1590985879,
+        "fee_txid": "301cdbf0f883086f1f4e109cade3fdbdea3095ebba3bf310b32b539a8efc131f",
+        "nodepubkey": "Bm5xuSjVzw9X1Psnyy1zbZFk6JS4ky3X4S",
+        "id": "eb27fd47ae1cfdc7853dbf90c4709e8ea9dacbe6fb176fd7d7971baf9caa7b87",
+        "taker": "BLOCK",
+        "taker_size": 8.97529500,
+        "maker": "LTC",
+        "maker_size": 0.23823200
+      },
+      {
+        "timestamp": 1590954563,
+        "fee_txid": "37d642f2673bd20af9303aed64ee6f11732057c94e4e6aa6555af81e2233186b",
+        "nodepubkey": "Bhd1uxZy9LKMjTuLBWJMnzQYvJRbknNCM5",
+        "id": "a9295e987e41a026a9dd5258bef533c8548c9f69059a3bf092a79550adb88f40",
+        "taker": "BLOCK",
+        "taker_size": 1.00000000,
+        "maker": "LTC",
+        "maker_size": 0.02928000
+      },
+      {
+        "timestamp": 1590954563,
+        "fee_txid": "7ff22d51fae661fe4d1b230c27a88fdf433834d987ac6a70da5556fdfc6cc1dc",
+        "nodepubkey": "Bm5xuSjVzw9X1Psnyy1zbZFk6JS4ky3X4S",
+        "id": "5cb4f3247264dccfcb10d4b31d4d9e8cca9705b8c51097db7e4cff49f1c0a80d",
+        "taker": "BLOCK",
+        "taker_size": 1.00000000,
+        "maker": "LTC",
+        "maker_size": 0.02907000
+      },
+      {
+        "timestamp": 1590894762,
+        "fee_txid": "cdefb0951f4621ea59265b500b189ff3a8ce4b716e8b29c0f7a98618e005e4c9",
+        "nodepubkey": "BeAS1djaiUnQghFA6iCYDAx4eTCXvHhQ2c",
+        "id": "bd3e77e5b81e15999e076e1a80187db39eea0a3a74a193738c7769e467e7cddc",
+        "taker": "BLOCK",
+        "taker_size": 3.14295300,
+        "maker": "LTC",
+        "maker_size": 0.07981000
+      },
+      {
+        "timestamp": 1590894565,
+        "fee_txid": "e6dfef8927ee2af6fc399f84661d6d2a06ee7831bdb9a8f32e55c9b801637a9c",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "ddf3f0adff81a22de39bec0537f76fb01540480e4b06f7eae89244a519fcbafc",
+        "taker": "BLOCK",
+        "taker_size": 3.96933700,
+        "maker": "LTC",
+        "maker_size": 0.10083400
+      },
+      {
+        "timestamp": 1590894448,
+        "fee_txid": "26275ab4c86be60904dc1c253573e7442fca473776b801a330609b70c741b778",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "60ee669ee542abedd01826d434f4fac0787433a148d21f13111320d9d98c9eb7",
+        "taker": "BLOCK",
+        "taker_size": 11.12473900,
+        "maker": "LTC",
+        "maker_size": 0.28258100
+      },
+      {
+        "timestamp": 1590894070,
+        "fee_txid": "05c3994de62fb2a272550539a3f4600468ba4f2382a3d869f4c0de9076483fc6",
+        "nodepubkey": "BVJSKZG1YTseYGacMu8nRBqFCwhB4HYecw",
+        "id": "98b132da9fea4857207fde3ddb30621e90070b045b4cf8a34ce278869a9c12e6",
+        "taker": "BLOCK",
+        "taker_size": 7.29911500,
+        "maker": "LTC",
+        "maker_size": 0.18518500
+      },
+      {
+        "timestamp": 1590893885,
+        "fee_txid": "3166633dae59e20c8ce90a6b0424c3c4cd7aabe0b9ad45146167d8e0e67199ad",
+        "nodepubkey": "BZDpBm5DwYSZhKs4R2jUmEA3wc7DbkaTvG",
+        "id": "5629f7100dad31b7a09a0e6268a2abb4b1cbefba47a9f7d0d03befac7547990c",
+        "taker": "BLOCK",
+        "taker_size": 19.49971100,
+        "maker": "LTC",
+        "maker_size": 0.49496300
+      },
+      {
+        "timestamp": 1590892691,
+        "fee_txid": "3452be449472e4af371fd105d1afa7302bde2c8abb9fb1812c261d9730368da6",
+        "nodepubkey": "BqwfQ4ww8vmDBZf26cArQCf7rquy3e9RDm",
+        "id": "d16a2026ae6b416d1afcb388398d5697c643ff6289eebb78f7e5889f55f50d23",
+        "taker": "BLOCK",
+        "taker_size": 4.98133300,
+        "maker": "LTC",
+        "maker_size": 0.12664400
+      },
+      {
+        "timestamp": 1590882005,
+        "fee_txid": "c910b892dff0309de27713db3ee76b230435a22322126d5955162002074a58ee",
+        "nodepubkey": "BYM4whkeYiW7H7Srt1Ah2ivyWaQbVPYjds",
+        "id": "45441a414d95807b9b1e2f2913d308af822a2eae54749f062cd1a196ce3b538d",
+        "taker": "BLOCK",
+        "taker_size": 18.31937400,
+        "maker": "LTC",
+        "maker_size": 0.46442200
+      },
+      {
+        "timestamp": 1590881862,
+        "fee_txid": "403234a44cca5bc72d1b797c9ba0a24dde110a20d89c4d56e86b1bc910c60e5d",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "37fad88d2645a3bf1584a0f9702fe6de96bf01f83437afe3d8359c662eb627f4",
+        "taker": "BLOCK",
+        "taker_size": 6.88216100,
+        "maker": "LTC",
+        "maker_size": 0.17492300
+      },
+      {
+        "timestamp": 1590881523,
+        "fee_txid": "3dd53db2e1796b1085be643874fdfca92004a88fa884e5e4a55f6ab1dbf49cd7",
+        "nodepubkey": "BoTuQa8idDuLeFgNkYuwgiJL9BXviBbhTW",
+        "id": "ceed34a41158e0b559c00c6ddc898ee2814c8e427bf238947118a3418357caa4",
+        "taker": "BLOCK",
+        "taker_size": 6.21497300,
+        "maker": "LTC",
+        "maker_size": 0.15890600
+      },
+      {
+        "timestamp": 1590881523,
+        "fee_txid": "627c24a79fa4f84cd20be9c06a847a4cd3f81a2aeb9d93f066d527960842e40a",
+        "nodepubkey": "BgfhG3M9CTFby4VZz59Xza5SxDWFvUhcUe",
+        "id": "941e2e06b19e199ebdf17ed3335658416ba39208f0a35c2f8477e364f6ba7e80",
+        "taker": "BLOCK",
+        "taker_size": 11.19191400,
+        "maker": "LTC",
+        "maker_size": 0.28559300
+      },
+      {
+        "timestamp": 1590869948,
+        "fee_txid": "68c6923f2a99861a8ca6507db9a0edf7c51c5dc38ed79fafa4e9864563aecc9b",
+        "nodepubkey": "BaDgEyFK2AXMabduggDHf7GbN1aDjFKehf",
+        "id": "e3639081c23a20966f50b312572a78c6ad2c75309cb3aae62f5a21932ef67bd2",
+        "taker": "BLOCK",
+        "taker_size": 19.23607300,
+        "maker": "LTC",
+        "maker_size": 0.49090500
+      },
+      {
+        "timestamp": 1590865347,
+        "fee_txid": "62613e8640ab32994e704ccf7539247774ac52fd215ae8df83ce89171065de26",
+        "nodepubkey": "BeAS1djaiUnQghFA6iCYDAx4eTCXvHhQ2c",
+        "id": "d06f5e6514b3cec56a44c2aef4e40b94edb16e798a6d5f2a4d4e9d549563e4ca",
+        "taker": "LTC",
+        "taker_size": 12.88000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590861371,
+        "fee_txid": "2d128460223696ffa0a89721944d76871b1fcb78c7d56e95ddc987add5edafe8",
+        "nodepubkey": "BqwfQ4ww8vmDBZf26cArQCf7rquy3e9RDm",
+        "id": "cbc88a073659745a291e1d1d7780ae606f81ab5a3f718c3dfea49e2eaa044e49",
+        "taker": "LTC",
+        "taker_size": 12.88000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590861172,
+        "fee_txid": "25866ad3a265eaadfef3832495d0bcd402623932c6c0090e804bb51e70523230",
+        "nodepubkey": "BVMy4NMZLtT2UzX2rzEVqwTeqAhBoeXxmU",
+        "id": "5a648fa9387acb15e22573a03a0b1c48edea3f6ac5d6a93549462f19bf818e52",
+        "taker": "LTC",
+        "taker_size": 12.88000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590851562,
+        "fee_txid": "0a04b27055f35665dc06c79e605912f98b5f0541d6a953c19a06e60478ceed5b",
+        "nodepubkey": "BXBJP9GxQChMLtuqvwVYxusA3QNhBUbiWd",
+        "id": "bbd143910a84ed04979879ab78f529c9c75908d422124894b6ae99c2122b28d5",
+        "taker": "BLOCK",
+        "taker_size": 8.07208900,
+        "maker": "LTC",
+        "maker_size": 0.20759300
+      },
+      {
+        "timestamp": 1590836161,
+        "fee_txid": "77c8fd01bc08e723ea3c389c04f9fdc74971fa9384e526ccbfecd34d0e963f44",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "53196c5643bbb0656c1b32a9dc7c10fd4c3dea91aa44434ce57da199886b9b4c",
+        "taker": "LTC",
+        "taker_size": 2.60990000,
+        "maker": "BLOCK",
+        "maker_size": 100.00000000
+      },
+      {
+        "timestamp": 1590830845,
+        "fee_txid": "1056e6bea79b74ced679de341a493c3556d4248350581cfbc82d88267979d165",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "372145721562cb7d9c330d13694cd2fefeb21376a2840d43008833e3da83250a",
+        "taker": "BLOCK",
+        "taker_size": 7.06503500,
+        "maker": "LTC",
+        "maker_size": 0.18510800
+      },
+      {
+        "timestamp": 1590822024,
+        "fee_txid": "99c34ed28675b9ede05999400c32eb700e703a06f57095ccaa0ac880657cf838",
+        "nodepubkey": "BgfhG3M9CTFby4VZz59Xza5SxDWFvUhcUe",
+        "id": "8d8383977840bc3a75c41a5d92866d6e38ee2ce2b299aac804b5fdadc484d28d",
+        "taker": "BLOCK",
+        "taker_size": 6.18286100,
+        "maker": "LTC",
+        "maker_size": 0.16033000
+      },
+      {
+        "timestamp": 1590822024,
+        "fee_txid": "909850c621098b469aea3bfa2b25de0814d695bcec4313c88c169cd3634c50f6",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "d8cd62be8b256e861dfd8bccf46a5defbf7253954120afc5ae153e723ffd844a",
+        "taker": "BLOCK",
+        "taker_size": 8.96599200,
+        "maker": "LTC",
+        "maker_size": 0.23253800
+      },
+      {
+        "timestamp": 1590821447,
+        "fee_txid": "75295071b9dc023c3fe5177ca2afdeb8507b6611e50cfdb4e2216adf0af299aa",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "f5d54b536b05d1dd6920583c3f026ac63c1290a2b032b1779faefa7edcd6d99b",
+        "taker": "BLOCK",
+        "taker_size": 4.10553700,
+        "maker": "LTC",
+        "maker_size": 0.10617000
+      },
+      {
+        "timestamp": 1590819290,
+        "fee_txid": "b2eca745f6f891a5b4b688306c88b7d35d03841bdd9823452136c5b91ea8b773",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "8ffa08f2da685023973c34794d7d73321cc54773f49b9dd784c7b2276d490382",
+        "taker": "BLOCK",
+        "taker_size": 15.47276100,
+        "maker": "LTC",
+        "maker_size": 0.40207500
+      },
+      {
+        "timestamp": 1590814664,
+        "fee_txid": "f7e8fd3908683a74c37b483c78944f556bec03b3192a94092d958c8c5375fb47",
+        "nodepubkey": "BaDgEyFK2AXMabduggDHf7GbN1aDjFKehf",
+        "id": "7f4addc10f20654083287f59e9b459d324fa814c2b46c89e7c1117e5fc8f40c9",
+        "taker": "BLOCK",
+        "taker_size": 12.84027200,
+        "maker": "LTC",
+        "maker_size": 0.33529400
+      },
+      {
+        "timestamp": 1590809878,
+        "fee_txid": "ad0ede47f585c74cd0f6a19a86801bb12fb4ecce766b938246159cbcca1ab8d4",
+        "nodepubkey": "BZDpBm5DwYSZhKs4R2jUmEA3wc7DbkaTvG",
+        "id": "4887e248e1015db6f831d28c84b037b4c37eb5ab16f9d3397a0728641cff5147",
+        "taker": "BLOCK",
+        "taker_size": 12.45415300,
+        "maker": "LTC",
+        "maker_size": 0.32914200
+      },
+      {
+        "timestamp": 1590809878,
+        "fee_txid": "5e5d817df0540a8c91daa82124502ec1fc30390e76afc6e25851df8d20bac7a2",
+        "nodepubkey": "BngBQC4Qd6Byk5oMqUXSEtx9kr9uffD6jt",
+        "id": "0b2e34ed83b6f97dd34f9395a76980782ee1fbe84aee50348cb94b116612a0eb",
+        "taker": "BLOCK",
+        "taker_size": 11.53809100,
+        "maker": "LTC",
+        "maker_size": 0.30467400
+      },
+      {
+        "timestamp": 1590804275,
+        "fee_txid": "e4c88b045ddd624baa3ab710ed1299ead9e131260a5c8ba288ab0f636af8ae59",
+        "nodepubkey": "BZpi216pnWmjifxyHiL3xdgWWY1xoXH8ho",
+        "id": "7ce15975ec030f017d2f1388e4834319766b6c1c574f6ec41ffcf3fbcc84d076",
+        "taker": "BLOCK",
+        "taker_size": 16.78129600,
+        "maker": "LTC",
+        "maker_size": 0.43667900
+      },
+      {
+        "timestamp": 1590804275,
+        "fee_txid": "744e060656f485284b8af51fd8c547f4c51490cffc810ec154da4456bab298d1",
+        "nodepubkey": "BZpi216pnWmjifxyHiL3xdgWWY1xoXH8ho",
+        "id": "b71677d3514aef009e7b446de62948d7a870a1e7d520ccf718df230d1d89fb93",
+        "taker": "BLOCK",
+        "taker_size": 10.35986800,
+        "maker": "LTC",
+        "maker_size": 0.27765500
+      },
+      {
+        "timestamp": 1590801753,
+        "fee_txid": "5f1c0c375d8702fb970f35053e0a492c2d0356b61186cc36ab087bdd37c3d41a",
+        "nodepubkey": "BoTuQa8idDuLeFgNkYuwgiJL9BXviBbhTW",
+        "id": "0dc60336be5e9dbe207f3f22e1a630472d86d9b9975204dd4b8777d071b403a0",
+        "taker": "BLOCK",
+        "taker_size": 10.35183300,
+        "maker": "LTC",
+        "maker_size": 0.27593900
+      },
+      {
+        "timestamp": 1590800582,
+        "fee_txid": "2b6c4cd6c6d3bad8a2981e900a5d3a9c15c04190db7fdf82d187c5cc386924c5",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "d933df2d16c8bbf56692eff557ae0e63d05fcf58662a3ff7bcbdc59b9a149fa6",
+        "taker": "BLOCK",
+        "taker_size": 7.08155700,
+        "maker": "LTC",
+        "maker_size": 0.18494200
+      },
+      {
+        "timestamp": 1590798206,
+        "fee_txid": "a5ba2e2b02d51f59e3f40def663e950ec4594770cb07c3d1067879ecf9a77bee",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "9c5654352cd323bf3b555b5808a42f8577258c451566f4cd69384e58adaefd83",
+        "taker": "BLOCK",
+        "taker_size": 8.28266200,
+        "maker": "LTC",
+        "maker_size": 0.22203200
+      },
+      {
+        "timestamp": 1590791749,
+        "fee_txid": "650799e0257a310c53c65be02743742e315d82d8d5e8718384140ade617c8577",
+        "nodepubkey": "BqwfQ4ww8vmDBZf26cArQCf7rquy3e9RDm",
+        "id": "7f955a0a27f5a97900912fca04bba306f5ec14e2acdf2b8a89f55285d792f3db",
+        "taker": "BLOCK",
+        "taker_size": 37.31018600,
+        "maker": "LTC",
+        "maker_size": 1.00000000
+      },
+      {
+        "timestamp": 1590783504,
+        "fee_txid": "dd3672c6dd877405ab2a27fc1550de1d09bd83bb59b76c6f91ec169c47b20d0c",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "84aa5f9474ee2ca2cbc9c955a6090010fd964a30240f742dfdf29c14886017bb",
+        "taker": "BLOCK",
+        "taker_size": 17.53274700,
+        "maker": "LTC",
+        "maker_size": 0.46608300
+      },
+      {
+        "timestamp": 1590782629,
+        "fee_txid": "1d54202ccd541c71729db4caff08ecef0c20e835428bea05b28381fa2b919356",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "02ba44af73c133ca8d55f7fe064574e47766db0dc71c267e4679f4d3164df3c8",
+        "taker": "BLOCK",
+        "taker_size": 9.78313000,
+        "maker": "LTC",
+        "maker_size": 0.26242200
+      },
+      {
+        "timestamp": 1590778116,
+        "fee_txid": "8965db7de2bf8daf4db28a4d50fae153cce40eff48d0d39222d5f5e4b7c8c1b6",
+        "nodepubkey": "BqbV2R6UuBFNwsWyL5mWXJMnLTMHsMeo1n",
+        "id": "5c7ab76f0ed118e247cf16e1ae5ea9899b42ae808e2cf40f88f5f57cd9e45f73",
+        "taker": "LTC",
+        "taker_size": 13.45000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590778116,
+        "fee_txid": "acc58c6e0131ff25eb4ebb4db5bd1b326dfe7307dfabcaba279f361f7970e8ba",
+        "nodepubkey": "BqwfQ4ww8vmDBZf26cArQCf7rquy3e9RDm",
+        "id": "ccdcdd3f4d21582ad36833b64f1d3a66a801e015cebb225501b3f01f20d69a2a",
+        "taker": "LTC",
+        "taker_size": 13.45000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590778116,
+        "fee_txid": "516b0a02e8c5d6254c384a879ff6e96e51dacff17ed6ef728809715a49b066c4",
+        "nodepubkey": "BXBJP9GxQChMLtuqvwVYxusA3QNhBUbiWd",
+        "id": "388ee8dafb4a499dc563283712f977fe662e1412dec22f81018a394a282fde0f",
+        "taker": "LTC",
+        "taker_size": 13.45000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590745233,
+        "fee_txid": "4a959a8c6371e7243debc49c628cb3b4edd6d43a9b86ea0d49e781f7edd9e74a",
+        "nodepubkey": "BoTuQa8idDuLeFgNkYuwgiJL9BXviBbhTW",
+        "id": "ee900aef5195a856a3a1bfa718b2f38581179e8b1bbc67d19e88ca3fce9b1143",
+        "taker": "LTC",
+        "taker_size": 1.37500000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590744819,
+        "fee_txid": "cd94f8a8f9bbd870242a31265ecd0059a7accafb21b7782239e0f22d37a9ffad",
+        "nodepubkey": "Bm5xuSjVzw9X1Psnyy1zbZFk6JS4ky3X4S",
+        "id": "8af30f8ca818b8c147d9c2aa79421c635586b46db9a767f87de6a46f9e1a79fb",
+        "taker": "LTC",
+        "taker_size": 1.37945000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590744819,
+        "fee_txid": "b31c2455c83aeab70895e5fbaf3943fc78fb4ac483dbd896bf840083cb0aab60",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "9e6ba234d55f68b4aa3581a6bed7f71884eb682f95524b98dc47bdd161370391",
+        "taker": "LTC",
+        "taker_size": 1.37945000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590744680,
+        "fee_txid": "7b22a06d8dbad12dc6beb13e7d92e51a2b50a93348621cae813ee38ad56b435a",
+        "nodepubkey": "BngBQC4Qd6Byk5oMqUXSEtx9kr9uffD6jt",
+        "id": "3906b55a3d154d279f5ea6f90a582cb51609282d541f5e1befb94ef7692cc76c",
+        "taker": "LTC",
+        "taker_size": 1.37945000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590729965,
+        "fee_txid": "e5e2f6a08a292f4b1e584168a1b03d90fcbbd073e929e48e8b06784417093a4f",
+        "nodepubkey": "BiisiCoVcWW34TGrzBVry5wG8edEH8RjC2",
+        "id": "f62123f3be6d31bfc0b91735247a742ac43339f18c8ea04d87fcbd1210cc7248",
+        "taker": "LTC",
+        "taker_size": 14.04000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590728500,
+        "fee_txid": "1e83df1c4858ccc5861fb0dad75fb8dcdfb64fe69eef1e1166c0538930f114d7",
+        "nodepubkey": "BZDpBm5DwYSZhKs4R2jUmEA3wc7DbkaTvG",
+        "id": "e7ded626d0806b1c58b81db0a750e8d711c530d6981461e5d2f5904dc5dc2e6b",
+        "taker": "LTC",
+        "taker_size": 14.04000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590728500,
+        "fee_txid": "8a6b380bff26b754c85b7f1c9edf4253d90950adf40e6407c2b46973277209de",
+        "nodepubkey": "BgfhG3M9CTFby4VZz59Xza5SxDWFvUhcUe",
+        "id": "b9b698a0f9d14c8ab8d7a7a15f777860955e9dda75f8186de000c1390bb2755d",
+        "taker": "LTC",
+        "taker_size": 14.04000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590709237,
+        "fee_txid": "93846ced501e32433b01e6760fc2bbcc621d0e714faa90fe5066548774e8d085",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "14a5f620ffa73d8436481247abd17f78d9dc874f13eba3265ac0bd918d224f56",
+        "taker": "BLOCK",
+        "taker_size": 14.72939100,
+        "maker": "DASH",
+        "maker_size": 0.25000000
+      },
+      {
+        "timestamp": 1590706402,
+        "fee_txid": "b28132f9e5eb734731cf9d6878946f97b222280b511a347900ff02b7a228177a",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "190eb28cc7e67bd22f86738ce6736da786e22dcd612965ff3435a2bf2fbb4163",
+        "taker": "BLOCK",
+        "taker_size": 12.75247800,
+        "maker": "LTC",
+        "maker_size": 0.36454200
+      },
+      {
+        "timestamp": 1590704927,
+        "fee_txid": "3b2fda547273905d6c53f1d9e23ebc18c281a277d15a464481e384c6a29c5509",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "049a1e18cca140d406f638dfa669996f57e3f89bfb5babcbbd21bb57c3a0f0c8",
+        "taker": "BLOCK",
+        "taker_size": 4.14202500,
+        "maker": "LTC",
+        "maker_size": 0.11784400
+      },
+      {
+        "timestamp": 1590704927,
+        "fee_txid": "d6815c5d9f4c96ff21c1d31d2b8cd8d45886ca5469ec8ff81dfcb0e69a3c31cd",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "e86fd9b6f46d093d0a4153413d166d543e435a592d3f2e97ec737beb049e3c25",
+        "taker": "BLOCK",
+        "taker_size": 6.34839000,
+        "maker": "LTC",
+        "maker_size": 0.18061900
+      },
+      {
+        "timestamp": 1590682321,
+        "fee_txid": "9e6ecd0b6a650c3f3241066c0fc138f90868f847504b633ea3847e51555f946b",
+        "nodepubkey": "BngBQC4Qd6Byk5oMqUXSEtx9kr9uffD6jt",
+        "id": "b8948f112d3ff134fca3e22e14bbdfe2e3285b9b6d0917f97c3a105991e1968f",
+        "taker": "LTC",
+        "taker_size": 0.25446500,
+        "maker": "BLOCK",
+        "maker_size": 8.54337200
+      },
+      {
+        "timestamp": 1590679366,
+        "fee_txid": "3685e590331e4c3336737a5ce90c9c135723495476013ef76222713bed2e3fed",
+        "nodepubkey": "BYM4whkeYiW7H7Srt1Ah2ivyWaQbVPYjds",
+        "id": "b1880f822ccd02dc4595ce835ffdae91f1a5a419eb9a8cc6c05ecde5e246227e",
+        "taker": "BLOCK",
+        "taker_size": 7.24815700,
+        "maker": "LTC",
+        "maker_size": 0.21485700
+      },
+      {
+        "timestamp": 1590679216,
+        "fee_txid": "fd62c0caab143ab572ee6ef469eb230c8f5a1460c64be313ca9b7bce14bb6b95",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "babc1242e757d8e79eb8ea7c665ed3638c58f40c4ecf9db1a5e700a79c90ed51",
+        "taker": "BLOCK",
+        "taker_size": 7.24815700,
+        "maker": "LTC",
+        "maker_size": 0.21485700
+      },
+      {
+        "timestamp": 1590673127,
+        "fee_txid": "61c51a718410cda5250feb2ba0f0e6362597b1ab7088afff6c6e6144b5ead79a",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "e1ae297b8d43d4aaf6558f56671aa50c9b307fb08a76c52acbbe6f0a0b51853d",
+        "taker": "LTC",
+        "taker_size": 14.37000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590672454,
+        "fee_txid": "0eda31506fb8b436f0fef5f77cdcec33061df425b75a9419d53d1a24cc38e182",
+        "nodepubkey": "BqbV2R6UuBFNwsWyL5mWXJMnLTMHsMeo1n",
+        "id": "721c9af0fafbc4df0cab8dd34c2b70ea01fde8d3216eb5ac80e4b55d549906f7",
+        "taker": "LTC",
+        "taker_size": 14.37000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590672454,
+        "fee_txid": "73c183dc1d902c598e8b54f596272dd95968a0a71917bacfc6aa1b5add8bf8cf",
+        "nodepubkey": "BpYtRB3Shu9UUmsph238XYLkzBzuxX3kdf",
+        "id": "c88b989153a08ecaae8a4d684d8b840c14a1aa11562cd0e4fc856ff571f40fcb",
+        "taker": "LTC",
+        "taker_size": 14.37000000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1590639043,
+        "fee_txid": "c578ff46b6a415fbcb58bfaeae8db69fdb0b9947d316c0e1a5a75f8ad444e05b",
+        "nodepubkey": "BX4iU4ZBJKdPZMU7gauepP8755wivf5UGo",
+        "id": "0d7aad29a6c38a00565d2ad1b335c3bbdb88759f757da31a738327906038ed73",
+        "taker": "BLOCK",
+        "taker_size": 16.30760700,
+        "maker": "LTC",
+        "maker_size": 0.45888100
+      },
+      {
+        "timestamp": 1590634035,
+        "fee_txid": "96171270d0ec81673f8ca27df1d65b8c815019ac8dcd65da59038fe719a883ba",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "83f5dccad6776249d75b8f630d70ac92f476497122cd8389f3a2889479e8321d",
+        "taker": "LTC",
+        "taker_size": 0.13939400,
+        "maker": "BLOCK",
+        "maker_size": 4.71992200
+      },
+      {
+        "timestamp": 1590633744,
+        "fee_txid": "7485e7915cb6068abc2f46ee9fc9d09bc87106849825b1f059d2d7992e895eb8",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "d9ab41ad6828f3cf015ead8c60043e7ef0983d183c491f5f1280ceeb2c2bf256",
+        "taker": "LTC",
+        "taker_size": 0.33860900,
+        "maker": "BLOCK",
+        "maker_size": 11.48281100
+      },
+      {
+        "timestamp": 1590632172,
+        "fee_txid": "eab858bc95a912b6e4188b373ecacd49d1a540edbc17c01eb48ef037d15fe52c",
+        "nodepubkey": "BqwfQ4ww8vmDBZf26cArQCf7rquy3e9RDm",
+        "id": "4153bc0970eff934c97b580580984da3a31c679124c92dcfd5e79945cf883d60",
+        "taker": "BLOCK",
+        "taker_size": 10.00000000,
+        "maker": "LTC",
+        "maker_size": 0.29434000
+      },
+      {
+        "timestamp": 1590631412,
+        "fee_txid": "06a2a927e387934c41cf5dcfa66e75aab180e26fd69544c24ae00882468779f4",
+        "nodepubkey": "BqbV2R6UuBFNwsWyL5mWXJMnLTMHsMeo1n",
+        "id": "fe33500406d687c1de78642cd3b88f1f0b634cd39ad730a635ee3c0a5a97e300",
+        "taker": "LTC",
+        "taker_size": 0.40147100,
+        "maker": "BLOCK",
+        "maker_size": 13.63990500
+      },
+      {
+        "timestamp": 1590628790,
+        "fee_txid": "a7138d77797d276b1cf9a96fb28108f0a54556ce8b0233ebad726041025df738",
+        "nodepubkey": "BWJij8j3Txkp4nePzP7chdwBdnbZtDCWkr",
+        "id": "3e0c54c720ce65a72eee6760424faa53c5f9a668c5217f989c0fd409399d645b",
+        "taker": "LTC",
+        "taker_size": 0.45106300,
+        "maker": "BLOCK",
+        "maker_size": 15.31517300
+      },
+      {
+        "timestamp": 1590619678,
+        "fee_txid": "d83a17c6ff57c948f7be186809c4e6ab4456e5bc9e56c3bc43ddbe3ba4521c68",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "75415f4ffc0617ca8a5e21ad9080378ef6758338de147a81bbdf22e62c0543a4",
+        "taker": "LTC",
+        "taker_size": 19.65000000,
+        "maker": "BLOCK",
+        "maker_size": 700.00000000
+      },
+      {
+        "timestamp": 1590611259,
+        "fee_txid": "9646b2dd537c27f7414004275584765c26ab7dd31c21dfad383c9c3b4b07fbd5",
+        "nodepubkey": "BgfhG3M9CTFby4VZz59Xza5SxDWFvUhcUe",
+        "id": "9ef385537d9baf32d186dec6d692d8f31d56e8bd224cc5e611a386082f24ef52",
+        "taker": "BLOCK",
+        "taker_size": 20.00000000,
+        "maker": "LTC",
+        "maker_size": 0.58200000
+      },
+      {
+        "timestamp": 1590607312,
+        "fee_txid": "3706599ebde90f0b342f402ac902fa7bac0feabb003659a2a0b55f01b5bcd5be",
+        "nodepubkey": "BZDpBm5DwYSZhKs4R2jUmEA3wc7DbkaTvG",
+        "id": "6019ab0eab9c1e9409e38ead1d2442c0a4249061697ccff806d4f5f0e843c5ba",
+        "taker": "BLOCK",
+        "taker_size": 156.80000000,
+        "maker": "LTC",
+        "maker_size": 4.54720000
+      },
+      {
+        "timestamp": 1590604807,
+        "fee_txid": "32c6c06c231ca3adb7176ccbe6719193ccb03467fdbf5ccb0a695f5ace13add4",
+        "nodepubkey": "BYM4whkeYiW7H7Srt1Ah2ivyWaQbVPYjds",
+        "id": "2e104c388eedbdb3519c51fbddeb84cf59fa99d3db72b4c44edd1c7353273b4b",
+        "taker": "BLOCK",
+        "taker_size": 7.50000000,
+        "maker": "LTC",
+        "maker_size": 0.21750000
+      },
+      {
+        "timestamp": 1590603791,
+        "fee_txid": "8675edef0301a2795cee610ce654423e12786e216162612c07dc209a3de13d1c",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "5d30e2f9992c17302944abf911f4c64a0ebf45872dfbd69aae2813ffd06106df",
+        "taker": "BLOCK",
+        "taker_size": 1152.00000000,
+        "maker": "LTC",
+        "maker_size": 33.40800000
+      },
+      {
+        "timestamp": 1590602733,
+        "fee_txid": "a9894975569e3f513a299a1bfb7cc87e43587257af46910758cdea48d1863d38",
+        "nodepubkey": "Bm5xuSjVzw9X1Psnyy1zbZFk6JS4ky3X4S",
+        "id": "3ccf89f36253bc57b5921e5c251a9beb8726b447b55bcefcff402df85ff0c230",
+        "taker": "BLOCK",
+        "taker_size": 20.05568300,
+        "maker": "LTC",
+        "maker_size": 0.59056000
+      },
+      {
+        "timestamp": 1590601977,
+        "fee_txid": "0c1ad114933c904dedd417daa524e97cc4d403c76828a7792c4acf66ec9a2338",
+        "nodepubkey": "BiisiCoVcWW34TGrzBVry5wG8edEH8RjC2",
+        "id": "bd6eaa64a722570f79ed56950e9ee78c66fc7fa1999272a2b586878faef48b07",
+        "taker": "LTC",
+        "taker_size": 0.41582000,
+        "maker": "BLOCK",
+        "maker_size": 14.17116100
+      },
+      {
+        "timestamp": 1590601452,
+        "fee_txid": "f121e55fc42e8030c694063c783a2f0245c2bf73a11ff1191f3337396d9ff13e",
+        "nodepubkey": "Bqshd156VexPDKELxido2S2pDvqrRzSCi4",
+        "id": "1d1171df9b94aed106bd075bf807db1c8705f31c6e44fdd1a6eac856af855cc6",
+        "taker": "BLOCK",
+        "taker_size": 277.28637500,
+        "maker": "LTC",
+        "maker_size": 8.19187100
+      },
+      {
+        "timestamp": 1590600904,
+        "fee_txid": "7857705a1a460ff3519b9b967fa8863d6b99ac3b510175911c044826e8150abf",
+        "nodepubkey": "BiisiCoVcWW34TGrzBVry5wG8edEH8RjC2",
+        "id": "0cf7af1f780891cdb3bfd0edce72de72b44027e8b9c6f10aa73e6e6912af0432",
+        "taker": "LTC",
+        "taker_size": 2.76285600,
+        "maker": "BLOCK",
+        "maker_size": 94.46482900
+      },
+      {
+        "timestamp": 1590600606,
+        "fee_txid": "39798eeb6a65421fbb01ed5a5f99e5b024df49e098d8f4743224caf0b9785cfb",
+        "nodepubkey": "BWJij8j3Txkp4nePzP7chdwBdnbZtDCWkr",
+        "id": "085b409971f19f06f99881c56fd49ea92464d7d658194e8c49b68356675814e6",
+        "taker": "LTC",
+        "taker_size": 0.47682300,
+        "maker": "BLOCK",
+        "maker_size": 16.38926600
+      },
+      {
+        "timestamp": 1590573856,
+        "fee_txid": "4e9d3746e1d594131f84e7a740876bbebfed4563dfad7690009fefabb258724e",
+        "nodepubkey": "BqbV2R6UuBFNwsWyL5mWXJMnLTMHsMeo1n",
+        "id": "b33d766ddfebe707857500cf7999ff0dd65c0c60f2decf835db821802529368e",
+        "taker": "BLOCK",
+        "taker_size": 4.22680700,
+        "maker": "LTC",
+        "maker_size": 0.11817100
+      },
+      {
+        "timestamp": 1590573856,
+        "fee_txid": "c200acbd6afac93c0840fa18ef9ca6f421ed3e511e7b81dc69b618cc756013b2",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "339cfa06dd0a6735b29d068044f7a02f95bf60aed441163e0ee91b05ee0e80ad",
+        "taker": "LTC",
+        "taker_size": 1.42000000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590573856,
+        "fee_txid": "847c49189175a4f3827bec2a2cf70e21e7f1db2d8cf8c0d66d06daedc0ccd5b5",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "9c6efff2a4c587df139886499d521b555a2023c1aa0dbad3f9f9b929fbecc040",
+        "taker": "LTC",
+        "taker_size": 1.42000000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590572826,
+        "fee_txid": "3bdf79939ed75f9833753d1d035fe2b56d40b10c1229340761128cc3041dd61b",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "d6a0852f524a25285b9d34112445f63a5a36caf6ac72855d29acc395ccc1b87b",
+        "taker": "BLOCK",
+        "taker_size": 4.67986100,
+        "maker": "LTC",
+        "maker_size": 0.13131600
+      },
+      {
+        "timestamp": 1590572619,
+        "fee_txid": "386d15dc2be32b56312fa2d8e72375abb7c89291c1f7691226e6fabda395233e",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "df762bd1d1904c283d8d0ee38234d78b166490b9dc1433452428c91af3fe96fb",
+        "taker": "LTC",
+        "taker_size": 1.42000000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590572619,
+        "fee_txid": "529cd29951a3bce84af29a649cb380bcc00a6a07aaa1d3de8932d8ad2b6e1c5c",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "1b21e8e39ab8a7a0f9ffa06fec090add713e40c416b8a2cdd6374ce9ea56e2be",
+        "taker": "LTC",
+        "taker_size": 1.42000000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590572503,
+        "fee_txid": "1fea5bbd2ed64316361a29b2ae9e692a182c26f7dcf8276a4fe1d1944ac6053e",
+        "nodepubkey": "BUtNr6NxErZTCmeCZKZhdQP9xYCpDQVjAp",
+        "id": "bbf97f053bc4566eb848d5746d839c5c86a15bc3c95f0524edea812c35fa423e",
+        "taker": "LTC",
+        "taker_size": 1.42000000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590572503,
+        "fee_txid": "4d262ed93f4728b0053d14b8fad5542aead3241130ebc61a5cb7b6c7c1eb4abb",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "a5b0ce439a569b4786ff6304046e4691f65c13e59d9fa61c28ea9cad79500ff7",
+        "taker": "LTC",
+        "taker_size": 1.42000000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590560496,
+        "fee_txid": "8b0425779333e072b9a4341f91bc0853fa5dd41fb7e1dafa91b3f9c78c470a61",
+        "nodepubkey": "BX4iU4ZBJKdPZMU7gauepP8755wivf5UGo",
+        "id": "8ebb0f73b4763fb0875a4799b609ac28343257245ea04ba1876dc0a66b520309",
+        "taker": "LTC",
+        "taker_size": 19.63000000,
+        "maker": "BLOCK",
+        "maker_size": 700.00000000
+      },
+      {
+        "timestamp": 1590560496,
+        "fee_txid": "fe7dbfdc5ed7e1dbd771e0c52491aa3378d5c20d1fa3a2c556ba0ba9e054982a",
+        "nodepubkey": "BX4iU4ZBJKdPZMU7gauepP8755wivf5UGo",
+        "id": "19920ce7683ecd2837c04c892f6c5213ef6f2396d387b63a46035f1688cbb748",
+        "taker": "LTC",
+        "taker_size": 16.13000000,
+        "maker": "BLOCK",
+        "maker_size": 575.00000000
+      },
+      {
+        "timestamp": 1590552752,
+        "fee_txid": "4f262d58c70e3b0c846542bcd577a1f0d7387c655f96e782c35b0a3d0d856bbc",
+        "nodepubkey": "BoTuQa8idDuLeFgNkYuwgiJL9BXviBbhTW",
+        "id": "509cbf7ca11e4806a2b95c4cb1a248d9c5e0f080e811690b3e4205950d176cce",
+        "taker": "LTC",
+        "taker_size": 0.14240200,
+        "maker": "BLOCK",
+        "maker_size": 4.84774000
+      },
+      {
+        "timestamp": 1590552081,
+        "fee_txid": "d4b46f4bb727ffd591413051d158e6301803cefead37bf0c0d12fe93ba1792eb",
+        "nodepubkey": "BaDgEyFK2AXMabduggDHf7GbN1aDjFKehf",
+        "id": "e67f79649914a42aaf5a5890a07ba697f40cd84ba6cf7a57ba05e5a86891dfa3",
+        "taker": "LTC",
+        "taker_size": 0.13755400,
+        "maker": "BLOCK",
+        "maker_size": 4.68089400
+      },
+      {
+        "timestamp": 1590552081,
+        "fee_txid": "44d8220748137843f618c96eb41d43f1c370abf0c37a8c244e8cf824e70b953e",
+        "nodepubkey": "BqbV2R6UuBFNwsWyL5mWXJMnLTMHsMeo1n",
+        "id": "38c607153972fdcdde5ca80d8b4f6a74983d696b74e255ceb8bdd056ce7729f8",
+        "taker": "LTC",
+        "taker_size": 1.18392200,
+        "maker": "BLOCK",
+        "maker_size": 40.00000000
+      },
+      {
+        "timestamp": 1590550550,
+        "fee_txid": "f93d2df2da7e7862f5008a086f543fc8ba69bbfa336f8ed1e741fcab84422eed",
+        "nodepubkey": "Bhd1uxZy9LKMjTuLBWJMnzQYvJRbknNCM5",
+        "id": "e65f9633e38fac0d3b0bf19e1fb595c10bd068b52717f14df7087fae49cb829d",
+        "taker": "LTC",
+        "taker_size": 0.21907500,
+        "maker": "BLOCK",
+        "maker_size": 7.45374300
+      },
+      {
+        "timestamp": 1590549933,
+        "fee_txid": "178e8a5bcd7151841a93e21686516d8bbcec13f5f4aaf19d94f80c5d377ff1ae",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "86e3b1ef3698f4220207df2240323da7c60e3d12f34493a58c960dbd372a68ef",
+        "taker": "LTC",
+        "taker_size": 0.25651200,
+        "maker": "BLOCK",
+        "maker_size": 8.73800100
+      },
+      {
+        "timestamp": 1590523532,
+        "fee_txid": "eafd0f5dd9152f9aa585ec618c9741137cf48fb5f999016b5df2c270d5061fa4",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "82ddf720deb2682291d682267bf559580be65b827142d74b6ab8d8939b1bcfe1",
+        "taker": "BLOCK",
+        "taker_size": 992.24445300,
+        "maker": "LTC",
+        "maker_size": 28.71077700
+      },
+      {
+        "timestamp": 1590521600,
+        "fee_txid": "0b476f8ca6e0e23220a69812097c1ce2c7cd46e24e962decf3b4c3e36add9ced",
+        "nodepubkey": "BXBJP9GxQChMLtuqvwVYxusA3QNhBUbiWd",
+        "id": "5bfb32cb65a9b584f9c8f03a5aa4ffb4ec8e91d2e624b9e39a5a132a0cb8a34b",
+        "taker": "LTC",
+        "taker_size": 0.19225600,
+        "maker": "BLOCK",
+        "maker_size": 6.55828200
+      },
+      {
+        "timestamp": 1590515348,
+        "fee_txid": "e7be6378b0f90edd37eb1d7a3fbd80684bdee642d8b7058c9d51ad4461887d2c",
+        "nodepubkey": "BZpi216pnWmjifxyHiL3xdgWWY1xoXH8ho",
+        "id": "158abc84ba8e169000cfe4d23b9259d9cd49b63688179675726acbf2e92814ec",
+        "taker": "BLOCK",
+        "taker_size": 992.21760000,
+        "maker": "LTC",
+        "maker_size": 28.71000000
+      },
+      {
+        "timestamp": 1590468447,
+        "fee_txid": "eb8733659672870c04dec8b465953d8f2249397f01bced83fb03be0e525cca11",
+        "nodepubkey": "BiisiCoVcWW34TGrzBVry5wG8edEH8RjC2",
+        "id": "95f2f7adc8c250d12b899e896f00938206ef09fd60646eddeea00142ac429ee4",
+        "taker": "BLOCK",
+        "taker_size": 8.71641200,
+        "maker": "LTC",
+        "maker_size": 0.24592000
+      },
+      {
+        "timestamp": 1590453059,
+        "fee_txid": "a22504221cbbdf314904681ae36260b921e6dcba3974ffec17b21ef063c9b130",
+        "nodepubkey": "BVJSKZG1YTseYGacMu8nRBqFCwhB4HYecw",
+        "id": "6f9a8e148b81a20eec129889727bb2c599483a784639a6bab4ec4abff104844a",
+        "taker": "BLOCK",
+        "taker_size": 5.37576800,
+        "maker": "LTC",
+        "maker_size": 0.14886200
+      },
+      {
+        "timestamp": 1590453059,
+        "fee_txid": "0266d5cb755c3a51bf78801d913c516dd63f4ed9839fa81ba4cd239819212cc7",
+        "nodepubkey": "BZpi216pnWmjifxyHiL3xdgWWY1xoXH8ho",
+        "id": "3a49bdc66cc16aa74810596f07c5a0dcc67279671a6c2d31596b79b7eef5227b",
+        "taker": "BLOCK",
+        "taker_size": 8.03180800,
+        "maker": "LTC",
+        "maker_size": 0.22260900
+      },
+      {
+        "timestamp": 1590371208,
+        "fee_txid": "22751db789603b9da4574fb16a2d9d96573e5608ddf2f264f8653a2c55f31624",
+        "nodepubkey": "BUtNr6NxErZTCmeCZKZhdQP9xYCpDQVjAp",
+        "id": "34df7c7403a7d1d1cb848ca2a8a659e305ae827eed23e2d9f6509e12d3cf1a63",
+        "taker": "BLOCK",
+        "taker_size": 1.00000000,
+        "maker": "LTC",
+        "maker_size": 0.02840000
+      },
+      {
+        "timestamp": 1590328390,
+        "fee_txid": "da275f39592444185eca0ac1abe672c2f9ca965555b7a35b27ebaf0127169f56",
+        "nodepubkey": "BYM4whkeYiW7H7Srt1Ah2ivyWaQbVPYjds",
+        "id": "ab7b34bcb6adf8594775c0990c125d3267097edebdf24fd0ff124bbc180ace28",
+        "taker": "BLOCK",
+        "taker_size": 5.25000000,
+        "maker": "LTC",
+        "maker_size": 0.15198800
+      },
+      {
+        "timestamp": 1590316514,
+        "fee_txid": "c3f22c4eaffd51a9761613d90772b1d772cd95a969e858cf60381c6ae6eaa26e",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "db3c2189cc99df7c9cb59f2f012959f76960c2c1942545eef69b9a34d533718d",
+        "taker": "BLOCK",
+        "taker_size": 1.00000000,
+        "maker": "LTC",
+        "maker_size": 0.02819000
+      },
+      {
+        "timestamp": 1590263292,
+        "fee_txid": "b6059dd5b2002db2242074b1d07bfa349b9fa8aa638a1f98db0bb23d912c1a2f",
+        "nodepubkey": "BjVtdBgxHWkRZefzB38C4ULBkyLicRdBoP",
+        "id": "539203a848842a50796c87b786998c005323c7b8f846d03076d11a490196041a",
+        "taker": "BLOCK",
+        "taker_size": 1.00000000,
+        "maker": "LTC",
+        "maker_size": 0.02928000
+      },
+      {
+        "timestamp": 1590263292,
+        "fee_txid": "cd689ac8a3469fd30037ca05225bcc6c3fd7fcab1bfa369323c6e9d95c5c3e87",
+        "nodepubkey": "BngBQC4Qd6Byk5oMqUXSEtx9kr9uffD6jt",
+        "id": "1c38fa2e74622ed9fb172726ec0c28aabf83534f981c9146eda22d3839a79f3a",
+        "taker": "BLOCK",
+        "taker_size": 500.54116100,
+        "maker": "LTC",
+        "maker_size": 14.65584500
+      },
+      {
+        "timestamp": 1590256259,
+        "fee_txid": "967bf7af864f0d0998d4f506d925ac8cc8ebbc0d8cda53b5df45c307de6a8102",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "ca5a483ad27d635641ee0b2e8ddac4b73e94cd180c617747d0cf5f76312c5a93",
+        "taker": "LTC",
+        "taker_size": 1.40100000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590253311,
+        "fee_txid": "d74c99dc714293cff8ea66e4495052e6abcc9fee2e7070b09c45208d8348ce6b",
+        "nodepubkey": "BngBQC4Qd6Byk5oMqUXSEtx9kr9uffD6jt",
+        "id": "7d94bba213e16a718d8a969646c47984b30cf54428ffacd50ea75197ef1e08b6",
+        "taker": "BLOCK",
+        "taker_size": 500.00000000,
+        "maker": "LTC",
+        "maker_size": 14.65000000
+      },
+      {
+        "timestamp": 1590245929,
+        "fee_txid": "9d3303b1f6c0e76b6ea272e42868ddd1c94bd26af9cdf35c5d03d7f0864a3f52",
+        "nodepubkey": "BYM4whkeYiW7H7Srt1Ah2ivyWaQbVPYjds",
+        "id": "6fcc61cd07012adfa803561fb17f939b533fa1e01060302fe4ee3af74c1d9a22",
+        "taker": "BLOCK",
+        "taker_size": 500.00000000,
+        "maker": "LTC",
+        "maker_size": 14.63900000
+      },
+      {
+        "timestamp": 1590244450,
+        "fee_txid": "a87008b6e421b5e9a6f5cbea6077455bb0757f45ea03453a6c9b912605e9685e",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "209d6446110b239e60bdd301983790d53a4038f7023cac604e5d555787e0be68",
+        "taker": "BLOCK",
+        "taker_size": 500.00000000,
+        "maker": "LTC",
+        "maker_size": 14.64000000
+      },
+      {
+        "timestamp": 1590243769,
+        "fee_txid": "143cb40918fe8cda708bc2bc2daf7c3ab04fba51055d64c71b958361579e6682",
+        "nodepubkey": "BngBQC4Qd6Byk5oMqUXSEtx9kr9uffD6jt",
+        "id": "d3c004b6463ac6b1e7032a2a1a11a041ce98be31e51d9b9b18e68510a8965f55",
+        "taker": "BLOCK",
+        "taker_size": 500.00000000,
+        "maker": "LTC",
+        "maker_size": 14.69450000
+      },
+      {
+        "timestamp": 1590171397,
+        "fee_txid": "60e641edaa2ef685fde33d94d9413fdb2164a1dfbabc0168d66495ed01ed2a2a",
+        "nodepubkey": "BiisiCoVcWW34TGrzBVry5wG8edEH8RjC2",
+        "id": "975f13283a4dd57286d3647ad4621bde3c6eea89ae3c57f47f225ad0270bc76d",
+        "taker": "BLOCK",
+        "taker_size": 4.45000000,
+        "maker": "LTC",
+        "maker_size": 0.13405600
+      },
+      {
+        "timestamp": 1590144294,
+        "fee_txid": "d519796d41f82b2105b76ae2a522fcf1853955c8c4756bc902b29c60cfeafe96",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "bbece59f2e7ce925db94c951138aee65ddfa07f507b02c1ffb9de13a26542430",
+        "taker": "LTC",
+        "taker_size": 1.51500000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590144179,
+        "fee_txid": "e05c61a0eb739debfe711f9cdec13763f9caa2572f548ebae6819c3b5acb1d40",
+        "nodepubkey": "Bqshd156VexPDKELxido2S2pDvqrRzSCi4",
+        "id": "e58e593e2d0bee771d67bbfbced120f92bfad5e72a1cae0c41e6e711e5b3518b",
+        "taker": "LTC",
+        "taker_size": 1.51500000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590144112,
+        "fee_txid": "96c3cc4ac5f804534014f838aee49f290feff3c016afe03f2f319477cf50779a",
+        "nodepubkey": "Bqshd156VexPDKELxido2S2pDvqrRzSCi4",
+        "id": "b7a9af840a98d48e3b1146a3d42aa0af4a612631e73cb5474d7dbe092e0d1b5c",
+        "taker": "LTC",
+        "taker_size": 1.51500000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590144112,
+        "fee_txid": "9fb4ae8d6f7bc5a15896478385a9c2291793e58f840f51e47f5080fe8e924bc0",
+        "nodepubkey": "BUtNr6NxErZTCmeCZKZhdQP9xYCpDQVjAp",
+        "id": "66da465ceeab2bbf5fa5758ae3d8e0fd61785f0f3e7ae5b1ab645d216262f77f",
+        "taker": "LTC",
+        "taker_size": 1.51500000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1590142698,
+        "fee_txid": "75990b9d55b381f2310e264705bddfa012e6ecfa5fefc4d6641be4307b3525a6",
+        "nodepubkey": "Bqshd156VexPDKELxido2S2pDvqrRzSCi4",
+        "id": "a9d73d2097806bf77df0f21a905447199d4203e7bb358f2d4468f75a2a60fd2c",
+        "taker": "BLOCK",
+        "taker_size": 207.00991800,
+        "maker": "BTC",
+        "maker_size": 0.02939500
+      },
+      {
+        "timestamp": 1590141208,
+        "fee_txid": "8dc76172b1119fdc02f8190730cb1481c8fc874d34e8a0bd6cb706e9bfcd2a6c",
+        "nodepubkey": "Bm5xuSjVzw9X1Psnyy1zbZFk6JS4ky3X4S",
+        "id": "2123554ee4d832071b265cccc3cb2726586800105b8fe0db6ca8cba6135965d2",
+        "taker": "BTC",
+        "taker_size": 0.04230000,
+        "maker": "BLOCK",
+        "maker_size": 300.00000000
+      },
+      {
+        "timestamp": 1590140974,
+        "fee_txid": "443227a2cb64f16c88f7140b4b18748e7f6886df01c8ef3ed843f45f0b1cb9ca",
+        "nodepubkey": "BUtNr6NxErZTCmeCZKZhdQP9xYCpDQVjAp",
+        "id": "8ef477f73742dad87b6070682c71700c29b995fe9800457af8c1d198faef3d6c",
+        "taker": "BTC",
+        "taker_size": 0.04230000,
+        "maker": "BLOCK",
+        "maker_size": 300.00000000
+      },
+      {
+        "timestamp": 1590139591,
+        "fee_txid": "eecaab425b9d715ea7dd57bc046c78f3d0d80b3c38ad9c76621ca846b44410bb",
+        "nodepubkey": "Bqshd156VexPDKELxido2S2pDvqrRzSCi4",
+        "id": "d2ae7faac3a1c201acfc70a6f1b2ab6cd8ff659eb177891e6fbb7638a3e5d727",
+        "taker": "BTC",
+        "taker_size": 0.04350000,
+        "maker": "BLOCK",
+        "maker_size": 300.00000000
+      },
+      {
+        "timestamp": 1590126663,
+        "fee_txid": "35c765f4d809414ea080ae93e4670538b12016e8af2c4804f8f6dfffd2116799",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "7d7c6b1119f0f4fe8ae418f78fa7cd6ebadeb2fdb94a6d425f3785fd89fc1337",
+        "taker": "BLOCK",
+        "taker_size": 9.45195200,
+        "maker": "LTC",
+        "maker_size": 0.28430700
+      },
+      {
+        "timestamp": 1590126462,
+        "fee_txid": "8cb36b9f61ed9149e4673dec5322049b75ec9cd73558c539405bddf522ead434",
+        "nodepubkey": "Bc4XdYsftYjvMQaWN5z7wvoe4HB8Gx92Uo",
+        "id": "6a72d5ae112cc8e1719cc2c2493cbb99d2d6b1bd2a2e55b73048f76e1e1c1886",
+        "taker": "BLOCK",
+        "taker_size": 7.64560500,
+        "maker": "LTC",
+        "maker_size": 0.23081600
+      },
+      {
+        "timestamp": 1590104348,
+        "fee_txid": "0607c6165f8d26b2d6c5d81ef05eb9038ac415e39b1dec84d5b92f6085b24d83",
+        "nodepubkey": "Bhd1uxZy9LKMjTuLBWJMnzQYvJRbknNCM5",
+        "id": "63d5cad49f8c37b0226cfe268f244a78463b09bcfb0ed933eafdfd6cf39c6cc9",
+        "taker": "BLOCK",
+        "taker_size": 15.93036500,
+        "maker": "LTC",
+        "maker_size": 0.48386600
+      },
+      {
+        "timestamp": 1590104136,
+        "fee_txid": "0aed47b11a6bdeb3fe47bf240a83f4a77200eb263536bdff4d35360bb5c2dd66",
+        "nodepubkey": "BZDpBm5DwYSZhKs4R2jUmEA3wc7DbkaTvG",
+        "id": "6c5f4eb98d693bae30aed8de93a38a3725fe64616ca5dec6d98e063ad9f16b14",
+        "taker": "BLOCK",
+        "taker_size": 15.52885100,
+        "maker": "LTC",
+        "maker_size": 0.47353400
+      },
+      {
+        "timestamp": 1590104136,
+        "fee_txid": "30a8f7f252546a3172214f126f21687634ac542808316ce0fa9c7862db1ef19d",
+        "nodepubkey": "BXBJP9GxQChMLtuqvwVYxusA3QNhBUbiWd",
+        "id": "e438125fcf5a291b4604e98c437d9c69e4d7c1ab4e4c13058c7e9fff6f368c74",
+        "taker": "BLOCK",
+        "taker_size": 13.23725000,
+        "maker": "LTC",
+        "maker_size": 0.40521200
+      },
+      {
+        "timestamp": 1590090862,
+        "fee_txid": "17706238f0e1074a6450d71085b7bffbe66018931e0ca05203f187d2f497fd84",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "81c1013c095b4cde4056c630a07cec7f92e56e4123494e1095b6caae88a68465",
+        "taker": "LTC",
+        "taker_size": 0.03103000,
+        "maker": "BLOCK",
+        "maker_size": 1.00000000
+      },
+      {
+        "timestamp": 1590090325,
+        "fee_txid": "b9d7fdbb78e73c8d345eb0c92b6f031f45d37923c16e2c124264259e1434bc21",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "e3ee45ff901b1a317eab36224aa91ec438d52ef0802216a5c0b55c1a6ce89f7f",
+        "taker": "BLOCK",
+        "taker_size": 1087.00000000,
+        "maker": "LTC",
+        "maker_size": 33.69700000
+      },
+      {
+        "timestamp": 1590057042,
+        "fee_txid": "15d56506161650d521f866c1dadb5dfd79d09c0f10f3bcf435556f85e57b26fa",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "ef27a69689a3a8287675a849d135b30daa1b67dcee09f8f613709e43b286bf1e",
+        "taker": "LTC",
+        "taker_size": 0.09944900,
+        "maker": "BLOCK",
+        "maker_size": 3.30404900
+      },
+      {
+        "timestamp": 1590057042,
+        "fee_txid": "ece6e5c3c30a13d536787a1fe750fa48e6bbb6c2d5e9f59aac7a8d5084ae763e",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "56940f29de60183d098528b952a9b6133be4bbff77578168e99c5306e27fd837",
+        "taker": "LTC",
+        "taker_size": 0.29880300,
+        "maker": "BLOCK",
+        "maker_size": 9.90154900
+      },
+      {
+        "timestamp": 1590047736,
+        "fee_txid": "a19fb0fbb74b6c5a8a3279ec05a21a9ee6f6105668fcbf862c7b46a42b43a8fa",
+        "nodepubkey": "BgfhG3M9CTFby4VZz59Xza5SxDWFvUhcUe",
+        "id": "faeb19d54990a0d0959723f9f0cee62d905b2fd748b83e6a1834fc17c1e88f1e",
+        "taker": "BLOCK",
+        "taker_size": 15.12800900,
+        "maker": "DASH",
+        "maker_size": 0.25000000
+      },
+      {
+        "timestamp": 1590046653,
+        "fee_txid": "654740729199ee189845bfbe2b5c3a8c417dbcbc9f03c431458d5a1543e938c8",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "079ea63654944cf482336c7ccc84a7c98e25c13ed5ef228a5872b368f5dbaa5b",
+        "taker": "BLOCK",
+        "taker_size": 15.15208100,
+        "maker": "DASH",
+        "maker_size": 0.25000000
+      },
+      {
+        "timestamp": 1589995930,
+        "fee_txid": "e85e88ac1b4af107ddfdec5c99c3b5f6b16b173670600c86fff69343dfebfe6c",
+        "nodepubkey": "BUtNr6NxErZTCmeCZKZhdQP9xYCpDQVjAp",
+        "id": "9dc818761b2fffdff483c96d55e9cbc3d76d9a57727ea25391be5276806055b8",
+        "taker": "LTC",
+        "taker_size": 1.55950400,
+        "maker": "BLOCK",
+        "maker_size": 52.76616000
+      },
+      {
+        "timestamp": 1589973115,
+        "fee_txid": "e6a34dd329dc0c0607f978def49fe62bd9114b46bef6c664f1a1b8e8f86d2725",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "656436cc299228f8a19dd42e84066cf006d6ad60411118f9fe1a9b00a6325233",
+        "taker": "BLOCK",
+        "taker_size": 12.99340300,
+        "maker": "LTC",
+        "maker_size": 0.37489500
+      },
+      {
+        "timestamp": 1589931012,
+        "fee_txid": "d2703e5ff7bf83ab1eea24bb1fb2d5b5c7681688e5830363d9372bfcb539733e",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "a4aa77e4bf6895b0a5b9dbcf7e819a82fc2c0a83e259458aad06262deb2d0fb2",
+        "taker": "BLOCK",
+        "taker_size": 11.83613900,
+        "maker": "LTC",
+        "maker_size": 0.34616600
+      },
+      {
+        "timestamp": 1589917445,
+        "fee_txid": "620cb6b2385bfc6221a7e10e987708edc22b25dbf5e1708f8e9edc93250d2a5c",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "1813b9bec097d8bbb3325857affaa3d1fb9b3ae179d23468e9eeb3fee45677ec",
+        "taker": "BLOCK",
+        "taker_size": 14.83771900,
+        "maker": "LTC",
+        "maker_size": 0.43100000
+      },
+      {
+        "timestamp": 1589885546,
+        "fee_txid": "a051c1a66947098db7dcb3ebe7a8997d6b1d9e5d61f27d9809b3f6cdf2ea6c31",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "691a5eb7b6c009df687544de85acf1c82d59305238990ba68c3b3034a383a57e",
+        "taker": "LTC",
+        "taker_size": 1.51190000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1589885546,
+        "fee_txid": "9495c7c9759b8e0b77df9a484b3698d942665d517f3338e3ee954316b89f3412",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "4e95b295999dd5d866b8c70f1a75fd8135328ed0d4cb86593bc42c6759de1320",
+        "taker": "LTC",
+        "taker_size": 1.51190000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1589885546,
+        "fee_txid": "530f6eb7f4a78bc98ca839096ed6239ce05f5e5aa253116cababc6b61c68901b",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "4ccb47970708a9913654c820ecde5c1ec9ba8028c36d47e8c5a6a87b7762f33b",
+        "taker": "LTC",
+        "taker_size": 1.51190000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1589885546,
+        "fee_txid": "e766c1b0dfde406430b3733bc772784e08be19d5f0c3f1ec2925d9ad29be248e",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "63d70dd06196cd2ac56842b4e2d8261ad18e6ccb02664ea430639f67fe85340a",
+        "taker": "LTC",
+        "taker_size": 1.51190000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1589885546,
+        "fee_txid": "178485063865d1f0e5c807fd43f857f880997f26e1b52008b685495ad76cd5c8",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "5db8707083b4db3a7117d8fa8024be864520c9075b89c63b747074652fe99624",
+        "taker": "LTC",
+        "taker_size": 1.51190000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1589884209,
+        "fee_txid": "c9163f6170d95930300e794e053d710d9f97538a4968473e600be805849e4a46",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "b0b73b332ebf0733a864b057738e2327aa9b44da63ada41f9fa2a825b72b2450",
+        "taker": "LTC",
+        "taker_size": 1.52135000,
+        "maker": "BLOCK",
+        "maker_size": 50.00000000
+      },
+      {
+        "timestamp": 1589852892,
+        "fee_txid": "bba4322053e2af3acbb92c6eabde2c4dcc79d87f6bf916e29da61099c58a77c0",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "a248caa15e780ccb6201dc630a11ac11eae7092978673022dc4f602ede52d8d6",
+        "taker": "BLOCK",
+        "taker_size": 13.94083900,
+        "maker": "LTC",
+        "maker_size": 0.41851500
+      },
+      {
+        "timestamp": 1589844380,
+        "fee_txid": "34c9ac5b1c810c89a4a4b5b3de86c7a343b0f8cae4670f9dc6851fa73c4f69ee",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "412179311e042b51a9b00fd848ce71c2a5fba7cb739fe4e9b94b6d9ab2e896ce",
+        "taker": "DGB",
+        "taker_size": 1.50000000,
+        "maker": "DOGE",
+        "maker_size": 25.00000000
+      },
+      {
+        "timestamp": 1589840415,
+        "fee_txid": "397ddf74820dc4680b5ea1d48f5455c3e89cb77f488634deb4b7bb2657552e46",
+        "nodepubkey": "Bk9by8cfYYxx8n6FvPSgUzZLm31rDFmNqK",
+        "id": "8bebc688494c68977bcb9b3f4e32ea1178f802a0f5985169e65817a91900fbbb",
+        "taker": "DGB",
+        "taker_size": 1.00000000,
+        "maker": "REEX",
+        "maker_size": 1.00000000
+      },
+      {
+        "timestamp": 1589832040,
+        "fee_txid": "2cbab8e86847f247c64e092b297f129347b9f135e2d4d0c3ebd92f1a86707305",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "32acfc16527762f431d17dcde55361b954ef3b701ea8ab5fdeb9f7845a39350d",
+        "taker": "BLOCK",
+        "taker_size": 9.92230200,
+        "maker": "LTC",
+        "maker_size": 0.29224000
+      },
+      {
+        "timestamp": 1589822920,
+        "fee_txid": "36e27d9c5c563e417b5e1c48d6498ea9649d6aee6f47d509794e7954de435231",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "57d8a59a6382e35ded9c1bcb9a5928b7dacdf229a99d41f750ef3fe84421c225",
+        "taker": "BTC",
+        "taker_size": 0.00635500,
+        "maker": "BLOCK",
+        "maker_size": 44.44103100
+      },
+      {
+        "timestamp": 1589772150,
+        "fee_txid": "9fe1cbd0ff55fc83adf6de61437841e238c90ccfab8aa8bb2264ccf9cd66dbaa",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "bd08abe68d89b232219d7b45653ac5c4c6217da2ca48afe1baf90df941316500",
+        "taker": "BLOCK",
+        "taker_size": 152.00000000,
+        "maker": "LTC",
+        "maker_size": 4.56182400
+      },
+      {
+        "timestamp": 1589771559,
+        "fee_txid": "a1a3e3349f0c0335e5ce0a4f6c314753ec643df73a95b042363fbdf6ea98eaa5",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "adc399e505bb81ae79c388c4491abccda00ba27322ddf0425ef8842dcd5903ac",
+        "taker": "BLOCK",
+        "taker_size": 299.00000000,
+        "maker": "LTC",
+        "maker_size": 8.98285700
+      },
+      {
+        "timestamp": 1589771203,
+        "fee_txid": "64dc51f9d60ec093ccf5a0c1a210fb871e9a40077a7693c665b6de4dd3feda7d",
+        "nodepubkey": "BeAS1djaiUnQghFA6iCYDAx4eTCXvHhQ2c",
+        "id": "55b7f049f875382885e0157e3a23bc4d2dcef58b70b92b10d50fbcd2c13f39aa",
+        "taker": "BLOCK",
+        "taker_size": 500.00000000,
+        "maker": "LTC",
+        "maker_size": 15.02600000
+      },
+      {
+        "timestamp": 1589755334,
+        "fee_txid": "135f562d2be638d1ea6809d87bcfeb56ad38d09757510817253d3a0ff3e4573b",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "891dfbc9677c7f096ba52f75450120eafddad303cb0e58410e57a16b400a0a6a",
+        "taker": "BLOCK",
+        "taker_size": 11.37939000,
+        "maker": "LTC",
+        "maker_size": 0.33269400
+      },
+      {
+        "timestamp": 1589745217,
+        "fee_txid": "61dd6b23b4cf8fe501118077e3c65132b04e9dc242da135143401110843c288f",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "c3ea84dbc101e474a7b4e8b1ee1ca729182e48ed932b0931c37270b8ccf32e54",
+        "taker": "BLOCK",
+        "taker_size": 7.92343000,
+        "maker": "LTC",
+        "maker_size": 0.23310300
+      },
+      {
+        "timestamp": 1589677012,
+        "fee_txid": "08e784159db917f8cb100a020d82b75f65d1791749d293dd7e3c8b2140070909",
+        "nodepubkey": "BbFdpwjiJjbW6LkJX9yodtx4LprK9bKmGd",
+        "id": "b2d0d3c8d11341afca53aec80809e69b809d0055abbd7121534569486dcb79a8",
+        "taker": "BLOCK",
+        "taker_size": 5.97410200,
+        "maker": "LTC",
+        "maker_size": 0.17449700
+      },
+      {
+        "timestamp": 1589676336,
+        "fee_txid": "49102b4ee858da0499bf5ec30ac34e87b4548468fc78f1b6d820ff1d3e22fe95",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "6c0aac1aedb65e7109eaf72e370b6893a1fa455431bfc79292b2f54f481ba83e",
+        "taker": "BLOCK",
+        "taker_size": 2.29607500,
+        "maker": "LTC",
+        "maker_size": 0.06711900
+      },
+      {
+        "timestamp": 1589675740,
+        "fee_txid": "519f88e1ce2d33fd41a07272a0ee850faadd640b914e0b992403b3dd8ded6fb3",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "116a8a35c0614c6ef37f26f3615d4dc133188fa7bb0e17783f97992de87a9d5e",
+        "taker": "BLOCK",
+        "taker_size": 6.42963100,
+        "maker": "LTC",
+        "maker_size": 0.18749400
+      },
+      {
+        "timestamp": 1589675740,
+        "fee_txid": "b0cfe2ac9ff623c507a46faafccd92fa76f1d60c52cf8e31808032c16cbed302",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "6bae75a2e26003c7867a18ec63e721497688021edcbe7ac111281d71a0a3a689",
+        "taker": "BLOCK",
+        "taker_size": 10.06269600,
+        "maker": "LTC",
+        "maker_size": 0.29261200
+      },
+      {
+        "timestamp": 1589674597,
+        "fee_txid": "1596aeaf61d6f0db5f327222c62b6fad5114ce50f5bcdb9e889c7ae3aae7621e",
+        "nodepubkey": "BX7NSb6HJtqDoNFCvQP1qfUHJaewjQC9rd",
+        "id": "8f34ed8c755f6dc7c7df6c34f33195b55bb337ad2362b4b38a982c8c91aeee9f",
+        "taker": "BLOCK",
+        "taker_size": 6.17880700,
+        "maker": "LTC",
+        "maker_size": 0.17895200
+      },
+      {
+        "timestamp": 1589668466,
+        "fee_txid": "47dc35d66d7429273cf3c2b7bb774c066e4d766158c8a915b8d34a8f5027ea3c",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "70c17a6e45e68dd9cc3abac3679d39a7d851d0a78a2a05dc925d1361cb219f0a",
+        "taker": "BLOCK",
+        "taker_size": 14.69989000,
+        "maker": "LTC",
+        "maker_size": 0.42865800
+      },
+      {
+        "timestamp": 1589666906,
+        "fee_txid": "eaaafbceba6ef1aa00c626d239349b2ab711621920f776c6bdaa99ab4d443343",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "40c20fc340739db9dec0bb993a2f0430b527c735619f5b60d2129cb1161d41a3",
+        "taker": "BLOCK",
+        "taker_size": 12.49618600,
+        "maker": "LTC",
+        "maker_size": 0.36366000
+      },
+      {
+        "timestamp": 1589666232,
+        "fee_txid": "35a91f490ea7d9c1c6446a2593e95f6ab3e998d1215e0f86098b3a562226247c",
+        "nodepubkey": "Bqi1XCEFQsaCCTt79PVpZ6Rs5DJ5DwnPvf",
+        "id": "ca6cd69169dbac7cfcced7855931d37ae946877d6f903b9d437d6b997049bfec",
+        "taker": "BLOCK",
+        "taker_size": 11.59032500,
+        "maker": "LTC",
+        "maker_size": 0.33738200
+      },
+      {
+        "timestamp": 1589657737,
+        "fee_txid": "3a6f831a6d521dd06e6079a56ce855d3e233985a4d127078145ef6e9292880de",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "9e711625b5aece0d52b27a6f0668936e33bef89bb0c43c7b316d8b96d8dc6fb9",
+        "taker": "BLOCK",
+        "taker_size": 9.52323400,
+        "maker": "LTC",
+        "maker_size": 0.27882100
+      },
+      {
+        "timestamp": 1589606224,
+        "fee_txid": "e13397911c9dbd8f2fc2a3a64823572e1fb232d9671ea6fe67cc53c8a8418426",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "00251e3a8fd31981792f5f11b1b588b403318fd6e944588044d4c565f4aaad67",
+        "taker": "BLOCK",
+        "taker_size": 14.15986800,
+        "maker": "LTC",
+        "maker_size": 0.42251700
+      },
+      {
+        "timestamp": 1589606172,
+        "fee_txid": "a5ca6671af98c46e6b6f852f56b9827232e60989a69c0c62bc84448406d8a381",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "da7b2073b06f66a2f420ba8233f778f9861d7dfef75d96cf2c2b6243960e90dc",
+        "taker": "BLOCK",
+        "taker_size": 11.96297400,
+        "maker": "LTC",
+        "maker_size": 0.35485500
+      },
+      {
+        "timestamp": 1589604963,
+        "fee_txid": "44b26dab14094514cd0a523d784c753de5af62460010d57903aa7a156b31f05a",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "bee927325b13f50ccf7aa4d4eaad0b926ba08447e5374dba91b9c3fd9b0fe748",
+        "taker": "BLOCK",
+        "taker_size": 3.47282800,
+        "maker": "LTC",
+        "maker_size": 0.10289400
+      },
+      {
+        "timestamp": 1589594078,
+        "fee_txid": "0799312b5f9787682d3f77623b39c853929340e84d598360a017726327e6b6bc",
+        "nodepubkey": "BqmBdodNH6nNT96vJ65VrK4SbKgYyDy2fh",
+        "id": "2dd2edcd3b9a71c4efc54fd24e77f44c276ac1c06e51d03ab4193b9e9cfc093b",
+        "taker": "BLOCK",
+        "taker_size": 12.91146400,
+        "maker": "LTC",
+        "maker_size": 0.38396500
+      },
+      {
+        "timestamp": 1589576728,
+        "fee_txid": "0362eada606b068d565b264d8b0442e1705d481956ef666b364e20c7e9b038a7",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "793e00eaa78bce05f7811f5119a7d508bfc1bfdbbadaea34f23af6db227bd265",
+        "taker": "BLOCK",
+        "taker_size": 1.00000000,
+        "maker": "LTC",
+        "maker_size": 0.02907000
+      },
+      {
+        "timestamp": 1589567716,
+        "fee_txid": "bc00a31d34f60d8776f25072f3f3ae326466248a15364a8e956cb94038443086",
+        "nodepubkey": "BqdqETsCRbvpeuVhfN7S2JiC7NTk9gRWA6",
+        "id": "63b2acdb0c828b652dc8c4eb59a35754a0b4840a71875a325cbaf73304704d5a",
+        "taker": "BLOCK",
+        "taker_size": 13.15779000,
+        "maker": "LTC",
+        "maker_size": 0.39552800
+      },
+      {
+        "timestamp": 1589566854,
+        "fee_txid": "426fa1db47d26667c3847cf07b8360b88d411af77a08108f05026788fdd528d1",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "7c5a02da0746a0fdcce74d8e879640626a95e9714a7ab6fdc27f135f2c2cf71a",
+        "taker": "BLOCK",
+        "taker_size": 9.39917200,
+        "maker": "LTC",
+        "maker_size": 0.28210700
+      },
+      {
+        "timestamp": 1589566256,
+        "fee_txid": "cc1dbca67299316c053ae982475e798219603a721e2b7872789bfc1e946e9adb",
+        "nodepubkey": "BbFdpwjiJjbW6LkJX9yodtx4LprK9bKmGd",
+        "id": "884ed32f8c8ecb499c490b8948d011ea529c72387752912cf73fad334d114d84",
+        "taker": "BLOCK",
+        "taker_size": 9.40221100,
+        "maker": "LTC",
+        "maker_size": 0.28226000
+      },
+      {
+        "timestamp": 1589565652,
+        "fee_txid": "6a871189a57c773155ef285e7c925f7b46896bca45703d296b48ee31258d0bdf",
+        "nodepubkey": "BXBJP9GxQChMLtuqvwVYxusA3QNhBUbiWd",
+        "id": "79cd8c4ce3d45b758f252cd0f86298460621b5ee2446e6adc21be56feb757c3f",
+        "taker": "BLOCK",
+        "taker_size": 11.07049900,
+        "maker": "LTC",
+        "maker_size": 0.33227100
+      },
+      {
+        "timestamp": 1589564569,
+        "fee_txid": "7852fa2c9879208ce584a3f0ee13b621182bf75d019e5637772aee2d973eccd4",
+        "nodepubkey": "Bqi1XCEFQsaCCTt79PVpZ6Rs5DJ5DwnPvf",
+        "id": "230c53020daf3f58c14cbfffffb1289fcd8de69a8317b34bf646ecc04ff0e5df",
+        "taker": "BLOCK",
+        "taker_size": 5.20472300,
+        "maker": "LTC",
+        "maker_size": 0.15416600
+      },
+      {
+        "timestamp": 1589515490,
+        "fee_txid": "c33303a64a7865aecebb069f06bbfc66668805d7e669a0efbf3676a534c60c88",
+        "nodepubkey": "Bqi1XCEFQsaCCTt79PVpZ6Rs5DJ5DwnPvf",
+        "id": "6035e43e34ecc8f86367380f8a1c4cd1cac77d19924bb0712b6866844a202b40",
+        "taker": "BLOCK",
+        "taker_size": 6.45789700,
+        "maker": "LTC",
+        "maker_size": 0.19298400
+      },
+      {
+        "timestamp": 1589499609,
+        "fee_txid": "21ab98d451bc6c4fe7832c1f3658c8b3ab672ec8e4220a3772408032078fba1a",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "4ee4a15f9cffc6d2833eee8c52e674088557f0464ce099b7054694c1e73340f9",
+        "taker": "LTC",
+        "taker_size": 0.72007200,
+        "maker": "BLOCK",
+        "maker_size": 24.00000000
+      },
+      {
+        "timestamp": 1589485918,
+        "fee_txid": "a9f629b6595df9cfd3c121567ca6c7b6db9a4f5790428944425b7464ac99a6e6",
+        "nodepubkey": "Bqi1XCEFQsaCCTt79PVpZ6Rs5DJ5DwnPvf",
+        "id": "5a7f6577752a3aeee38fa409360febfc448a4194887310ce6474da76c19a729d",
+        "taker": "BLOCK",
+        "taker_size": 13.64615800,
+        "maker": "LTC",
+        "maker_size": 0.40699200
+      },
+      {
+        "timestamp": 1589478326,
+        "fee_txid": "0fd3c22efebbef76786b9077e1284cb5ebde2c1c0ce1d34d3877628d51e19b1c",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "1e954387833a93a97a7e81dc704c7af4c42283ae42a0f814b46a5472c84fb9a3",
+        "taker": "LTC",
+        "taker_size": 12.19000000,
+        "maker": "BLOCK",
+        "maker_size": 400.00000000
+      },
+      {
+        "timestamp": 1589478115,
+        "fee_txid": "302b85ba3ea4411fbf2b4df7feb4f01a1942ad393452abea34de888ab8e2c6de",
+        "nodepubkey": "BoLP8jYWZUySbPRNHVHQwMzR9JgYw6csfW",
+        "id": "b4573772bc809df6cc92619f5a774248cdb43124a059b1bb328e1e5442634bcd",
+        "taker": "BLOCK",
+        "taker_size": 32.40000000,
+        "maker": "LTC",
+        "maker_size": 0.98739000
+      },
+      {
+        "timestamp": 1589466072,
+        "fee_txid": "6c546c2b7dbd1f81ef7ab1e4dc8ff5618d1e5c76c71940b109c6f2361b6c1e48",
+        "nodepubkey": "Bo5jrJDA9SeKwj7fPbLahhTorYDESnF8dU",
+        "id": "299c7fdf18645f61182e1ad8138a9c54617a2c72be1f50dd45917717f7f10c5f",
+        "taker": "BTC",
+        "taker_size": 0.02484000,
+        "maker": "BLOCK",
+        "maker_size": 180.00000000
+      },
+      {
+        "timestamp": 1589461678,
+        "fee_txid": "c260507ab00a6adc50e3e436ef1a8aad0fa71fd8a2c6635e430aaf95ee33716a",
+        "nodepubkey": "Bk9g3GEexq1fji4ubxLwHMBvaRVikR4jMr",
+        "id": "76d0d36fbc9b76fb810dfebcb4f6009dc97c67d614bffac8c5a87c9d597c9a42",
+        "taker": "BTC",
+        "taker_size": 0.06950000,
+        "maker": "BLOCK",
+        "maker_size": 500.00000000
+      },
+      {
+        "timestamp": 1589460319,
+        "fee_txid": "29ca32f4e68410f4f1719370c79ab14eb9dd186f9977ead8599fac1bdb8e693a",
+        "nodepubkey": "BZDpBm5DwYSZhKs4R2jUmEA3wc7DbkaTvG",
+        "id": "a29f3a84b89fbbf4dbf0e0067c237c3c2a7493c6808ee49ffbb7239dfb68a74b",
+        "taker": "BLOCK",
+        "taker_size": 156.96125700,
+        "maker": "BTC",
+        "maker_size": 0.02181800
+      },
+      {
+        "timestamp": 1589460319,
+        "fee_txid": "e3b9b145b735b85c8715093d12aa8dc6110009812334adb6a9a710e6de244384",
+        "nodepubkey": "BVMy4NMZLtT2UzX2rzEVqwTeqAhBoeXxmU",
+        "id": "1b83522c3910d0732d280b6ae76aee05bbb4f76cc47c6065436887fde8e5458f",
+        "taker": "BLOCK",
+        "taker_size": 186.65874900,
+        "maker": "BTC",
+        "maker_size": 0.02594600
+      },
+      {
+        "timestamp": 1589426978,
+        "fee_txid": "0e6bb9a08232d2083e8d2038edc141f7d0e300ab9eea17b36fae52771210c70e",
+        "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        "id": "eee248763ec8b0610bb4a42fee6393703af791ab47704c452acd5de41a2397f3",
+        "taker": "LTC",
+        "taker_size": 0.02988000,
+        "maker": "BLOCK",
+        "maker_size": 1.00000000
+      },
+      {
+        "timestamp": 1589426978,
+        "fee_txid": "3ab7712262be94b0c710de1115721c50891d42539b851f25b653d22fbd41a731",
+        "nodepubkey": "Bqshd156VexPDKELxido2S2pDvqrRzSCi4",
+        "id": "54037dee3d77c9fab004f93379b1f9988d2e46729813a7589faec5894392f743",
+        "taker": "LTC",
+        "taker_size": 0.02840000,
+        "maker": "BLOCK",
+        "maker_size": 1.00000000
+      },
+      {
+        "timestamp": 1589426978,
+        "fee_txid": "c841106cf7300b9596ef877ce3ecb8e495ecb110c9d767f0d06e5446ac2ffc95",
+        "nodepubkey": "BYmz9MkUrvqLis33XM4835wcZfxx7ubzkU",
+        "id": "a01685548cf33184a88c73ea816197ba1f6ce31a4f5067533083f82a2239579a",
+        "taker": "LTC",
+        "taker_size": 0.02840000,
+        "maker": "BLOCK",
+        "maker_size": 1.00000000
+      },
+      {
+        "timestamp": 1589426978,
+        "fee_txid": "2149fabda9bce46beefccacd6f775f02291169e9c1485b2f8a105ca4c63d0caa",
+        "nodepubkey": "BeAS1djaiUnQghFA6iCYDAx4eTCXvHhQ2c",
+        "id": "6e1c0b424131b86fda961d70e9129fd507056c065dacef10582034612d549f88",
+        "taker": "LTC",
+        "taker_size": 0.03082000,
+        "maker": "BLOCK",
+        "maker_size": 1.00000000
+      },
+      {
+        "timestamp": 1589426978,
+        "fee_txid": "d707aeb32d9cdde2079e553f3f046de72a48ab831de1061a1a48b9c400aef7de",
+        "nodepubkey": "BmpyNqVPehhiuTCRbq9wSMCGcJz4WvAyBA",
+        "id": "49584adfbbd7c0c6a4981b356e8be1b58a9f62998ef399ac23657bfaccdaa14a",
+        "taker": "LTC",
+        "taker_size": 0.03011000,
+        "maker": "BLOCK",
+        "maker_size": 1.00000000
+      },
+      {
+        "timestamp": 1589426978,
+        "fee_txid": "f9f6c6807e720af5feaf18aa754cbc840ced7903f795def7edac2e435ffb63fa",
+        "nodepubkey": "BeAS1djaiUnQghFA6iCYDAx4eTCXvHhQ2c",
+        "id": "29be41aac111cc48e0ce048c7c368843b0877a0327fc4872ac2357e807bdccdf",
+        "taker": "LTC",
+        "taker_size": 0.02988000,
+        "maker": "BLOCK",
+        "maker_size": 1.00000000
+      }
+    ];
+  var cgIndex = [];
+  var marketList = [];
+  var tradeHistory = {};
+  var targetMarket = "";
+  var bids = [];
+  var asks = [];
+  var marketHistory = [];
+  var loadingTradesMsg = "{{ lang.history.message_loading_trades }}";
+  var noTradesMsg = "{{ lang.history.message_no_trades }}";
+  var loadingErrMsg = "{{ lang.history.message_loading_error }}";
+  var loadingErrAlert = "{{ lang.history.alert_loading_error }}";
+
+
+  if (dev) {
+    processTrades();
+  } else {
+    getHistAjax().then(processTrades);
+  }
+
+  function getHistAjax() {
+    var promise = new Promise(function(resolve, reject){
+      if (dev) { console.log("getHistAjax"); }
+      var xhr = new XMLHttpRequest();
+      var status = true;
+      xhr.timeout = 2000;  
+      xhr.addEventListener("timeout", function(e) {
+        console.log("getHistAjax timeout"); 
+        alert(loadingErrAlert);
+      });
+      var url = "https://data.blocknet.co/api/v2.0/history";
+      xhr.open('GET', url);
+      xhr.send();
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200){
+            if (dev) { console.log("getHistAjax success"); }
+            var response = JSON.parse(this.responseText);
+            historyData = response;
+            resolve(response);
+          } else {
+            console.log("Failed to load history");
+            var loadingErr = "<tr><td>" + loadingErrMsg + "</td><td></td><td></td><td></td><tr>";
+            document.getElementById("dx-tbody-hist").innerHTML = loadingErr;
+            alert(loadingErrAlert);
+          }
+        }
+      }
+    });
+    return promise;
+  }
+
+  function processTrades() {
+    var trades;
+    if (dev) {
+      trades = sampleHistoryData;
+      console.log("processTrades");
+    } else {
+      trades = historyData;
+    }
+    {% comment %}
+      // example trade object 
+        // {
+        //   "timestamp": 1591983995,
+        //   "fee_txid": "163b1f3530581015d29bc3c4d8630ea688700934cbae9af648d93faa6a1fa096",
+        //   "nodepubkey": "BakFLuSW9g48FpQH3fmS7Vu2zJJUN7XwHG",
+        //   "id": "13dc031ec6844b92230a18652f4806f86ca2a1b490c0676d73d6f328993159f7",
+        //   "taker": "BLOCK",
+        //   "taker_size": 17.58581800,
+        //   "maker": "LTC",
+        //   "maker_size": 0.46604600
+        // },
+    {% endcomment %}
+    for(var trade in trades) {
+      // var id = trades[trade]["id"];
+      // var feeHash = trades[trade]["fee_txid"];
+      // var snodeKey = trades[trade]["nodepubkey"];
+      var maker = trades[trade]["maker"];
+      var taker = trades[trade]["taker"];
+      var size = fixedDecimals( trades[trade]["maker_size"] );
+      var total = fixedDecimals( trades[trade]["taker_size"] );
+      // round price to 6 decimals
+      var price = Math.round( Number(trades[trade]["taker_size"]) / Number(trades[trade]["maker_size"]) * 1000000 ) / 1000000;
+      price = fixedDecimals(price);
+      var epoch = trades[trade]["timestamp"];
+
+      // get local trade time in format: Today at 14:32
+      var currentDate = new Date();
+      var currentDay = currentDate.getDate();
+      var tradeDate = new Date( Number(epoch)*1000 );
+      var tradeDay = tradeDate.getDate();
+      var tradeHour = tradeDate.getHours();
+      var tradeMinute = tradeDate.getMinutes();
+      if (currentDay == tradeDay) {
+        tradeDay = "{{ lang.history.time_today }}";
+      } else if ((Number(currentDay)-1) == tradeDay) {
+        tradeDay = "{{ lang.history.time_yesterday }}";
+      } else {
+        tradeDay = tradeDate.toLocaleString('default', { month: 'short' }) + " " + tradeDay;
+      }
+      var time = tradeDay + " {{ lang.history.time_at }} " + tradeHour + ":" + tradeMinute;
+
+      // make an array of maker/taker pairs for the market selection dropdown
+      var market = maker + "/" + taker ;
+      if ( !marketList.includes(market) ) {
+        marketList.push(market);
+        tradeHistory[market] = [{ "maker": maker, "taker": taker, "size": size, "price": price, "total": total, "time": time, "epoch": epoch }];
+      } else {
+        tradeHistory[market].push({ "maker": maker, "taker": taker, "size": size, "price": price, "total": total, "time": time, "epoch": epoch });
+      }
+    }
+
+    // populate the dropdown with markets
+    var marketDropdown = document.getElementById("market-dropdown");
+    for (var market in marketList) {
+      // if (marketList[market] !== "BLOCK/LTC") {
+        var option = document.createElement("option");
+        option.text = marketList[market];
+        option.value = marketList[market];
+        marketDropdown.add(option);
+      // }
+    }
+    reloadTable(false);
+  }
+
+  function fixedDecimals(val) {
+    val = val.toString().split(".");
+    var valBase = val[0];
+    var valDec = "000000";
+    if (val[1] !== undefined ) {
+      valDec = (val[1] + "000000").slice(0,6);
+    }
+    val = valBase + "." + valDec;
+    return val;
+  }
+
+  function reloadTable(inverse) {
+    if (dev) { console.log("reloadTable"); }
+    prepareMarketData(inverse).then(updateTable)
+  }
+
+  function getMarket() {
+    if (dev) { console.log("getMarket"); }
+    var dropdown = document.getElementById("market-dropdown");
+    var market = dropdown.options[dropdown.selectedIndex].value;
+    return market;
+  }
+
+  {% comment %}
+    // block/ltc market
+    //   asks/sells (red)
+    //   size = block
+    //   price = block/ltc
+    //   total = ltc
+    //   --
+    //   bids/buys (green, ltc/block inversed)
+    //   size = block
+    //   price = block/ltc
+    //   total = ltc
+
+    // ltc/block market
+    //   asks/sells (red)
+    //   size = ltc
+    //   price = ltc/block
+    //   total = block
+    //   --
+    //   bids/buys (green, block/ltc inversed)
+    //   size = ltc
+    //   price = ltc/block
+    //   total = block
+  {% endcomment %}
+
+  function prepareMarketData(inverse) {
+    var promise = new Promise(function(resolve, reject){
+      if (dev) { console.log("prepareMarketData"); }
+      var currentMarket;
+      var inverseMarket;
+      asks = [];
+      bids = [];
+      marketHistory = [];
+
+      if (getMarket() !== "all") {
+        if (inverse) {
+          // reverse markets to show inverse
+          inverseMarket = getMarket();
+          currentMarket = inverseMarket.split("/").reverse().join("/");
+          // add inverse market to dropdown if not there already
+          var marketDropdown = document.getElementById("market-dropdown");
+          if ( !marketList.includes(currentMarket) ) {
+            marketList.push(currentMarket);
+            var option = document.createElement("option");
+            option.text = currentMarket;
+            option.value = currentMarket;
+            marketDropdown.add(option);
+          }
+          // update dropdown option
+          marketDropdown.value = currentMarket;
+        } else {
+          // set target markets
+          currentMarket = getMarket();
+          inverseMarket = currentMarket.split("/").reverse().join("/");
+        }
+        targetMarket = currentMarket;
+
+        // update table body with loading message
+        var tableLoading = "<tr><td>" + loadingTradesMsg + "</td><td></td><td></td><td></td><td></td><tr>";
+        document.getElementById("dx-tbody-hist").innerHTML = tableLoading;
+
+        asks = tradeHistory[currentMarket];
+        if (asks !== undefined) {
+          for (ask in asks) {
+            var type = "<div class='sell'>{{ lang.history.type_sell }} <img src='{{ baseurl }}assets/img/arrow-down.svg'/></div>";
+            var size = asks[ask]["size"];
+            var price = asks[ask]["price"];
+            var total = asks[ask]["total"];
+            var time = asks[ask]["time"];
+            var epoch = asks[ask]["epoch"];
+            marketHistory.push({ "type": type, "size": size, "price": price, "total": total, "time": time, "epoch": epoch });
+          }
+        }
+
+        bids = tradeHistory[inverseMarket];
+        if (bids !== undefined) {
+          for (bid in bids) {
+            var type = "<div class='buy'>{{ lang.history.type_buy }} <img src='{{ baseurl }}assets/img/arrow-up.svg'/></div>";
+            var size = bids[bid]["total"];
+            var total = bids[bid]["size"];
+            var price = Math.round( Number(total) / Number(size) * 1000000 ) / 1000000;
+            price = fixedDecimals(price);
+            var time = bids[bid]["time"];
+            var epoch = bids[bid]["epoch"];
+            marketHistory.push({ "type": type, "size": size, "price": price, "total": total, "time": time, "epoch": epoch });
+          }
+        }
+      } else {
+        if (dev) { console.log(tradeHistory); }        
+        for (market in tradeHistory) {
+          for (trade in tradeHistory[market]) {
+            var type = "<div class='sell'>{{ lang.history.type_sell }} <img src='{{ baseurl }}assets/img/arrow-down.svg'/></div>";
+            var maker = tradeHistory[market][trade]["maker"];
+            var taker = tradeHistory[market][trade]["taker"];
+            var size = tradeHistory[market][trade]["size"] + " " + maker;
+            var price = tradeHistory[market][trade]["price"];
+            var total = tradeHistory[market][trade]["total"] + " " + taker;
+            var time = tradeHistory[market][trade]["time"];
+            var epoch = tradeHistory[market][trade]["epoch"];
+
+            marketHistory.push({ "type": type, "size": size, "price": price, "total": total, "time": time, "epoch": epoch });
+          }
+        }
+      }
+      
+      // sort trades by ascending time
+      marketHistory.sort(function(a, b) {
+        var epochA = Number(a.epoch);
+        var epochB = Number(b.epoch);
+        if (epochA < epochB) return 1;
+        if (epochA > epochB) return -1;
+        return 0;
+      });
+
+      // updateTable();
+      if (dev) {
+        console.log("============LOADING============");
+        console.log("---MARKETS---");
+        console.log(marketList);
+        console.log("---ALL TRADES---");
+        console.log(tradeHistory);
+        console.log("---CURRENT MARKET---");
+        console.log(currentMarket);
+        console.log("---ASKS---");
+        console.log(asks);
+        console.log("---BIDS---");
+        console.log(bids);
+        console.log("---COMBINED---");
+        console.log(marketHistory);
+        console.log("============DONE============");
+      }
+      resolve();
+    });
+    return promise;
+  }
+
+  function updateTable() {
+    if (dev) { console.log("updateTable"); }
+    var historyTable = "";
+    var tableHeader = "";
+    // generate html table markup with orders
+    console.log("marketHistory.length: " + marketHistory.length);
+    if (marketHistory == undefined || marketHistory.length == 0) {
+      historyTable = "<tr><td>" + noTradesMsg + "</td><td></td><td></td><td></td><td></td><tr>";
+    } else {
+      for (trade in marketHistory) {
+        historyTable += "<tr><td>" + marketHistory[trade]["type"] + "</td><td>" + marketHistory[trade]["size"] + "</td><td>" + marketHistory[trade]["price"] + "</td><td>" + marketHistory[trade]["total"] + "</td><td>" + marketHistory[trade]["time"] + "</td><tr>";
+      }
+    }
+    // update table body with orders
+    document.getElementById("dx-tbody-hist").innerHTML = historyTable;
+    // update table headers
+    if (getMarket() !== "all") {
+      var marketMaker = targetMarket.split("/")[0];
+      var marketTaker = targetMarket.split("/")[1];
+      // update table headers with units
+      document.querySelectorAll('.market-maker').forEach((element, index, array) => {
+          element.innerHTML = " (" + marketMaker + ")";
+      })
+      document.querySelectorAll('.market-taker').forEach((element, index, array) => {
+          element.innerHTML = " (" + marketTaker + ")";
+      })
+    } else {
+      // update table headers to remove units
+      document.querySelectorAll('.market-maker').forEach((element, index, array) => {
+          element.innerHTML = "";
+      })
+      document.querySelectorAll('.market-taker').forEach((element, index, array) => {
+          element.innerHTML = "";
+      })
+    }
+    console.log("History table loaded");
+  }
+
+
+  // update embedded twitter feed
+  setTimeout(function(){
+    if (window.__twttr&&window.__twttr.widgets&&window.__twttr.widgets.loaded&&window.twttr.widgets.load&&window.twttr.widgets.load(),window.__twttr&&window.__twttr.widgets&&window.__twttr.widgets.init) {
+      [].slice.call(document.querySelectorAll('iframe.twitter-timeline')).forEach(function(e,i,a){
+        // update header
+        var header = e.contentDocument.getElementsByClassName('timeline-Header-title');
+        var title = '{{ lang.history.stats_subheader }}';
+        var newHeader = title + '<span class="timeline-Header-byline" data-scribe="element:byline"> by <a class="customisable-highlight" href="https://twitter.com/DxStats" title="‎@DxStats on Twitter">‎@DxStats</a></span>';
+        header[0].innerHTML = newHeader;
+        // update font size
+        var tweets = e.contentDocument.getElementsByClassName('timeline-Tweet-text');
+        for (tweet in tweets) {
+          tweets[tweet].style.fontSize = '1.1rem';
+        }
+      });
+    } 
+  }, 1800);
+
+
+// table scroll
+// table error message after alert
+
+
+</script>
+
