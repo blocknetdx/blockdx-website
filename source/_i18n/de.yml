@@ -65,13 +65,11 @@ footer:
 
 index:
   header: Die sicherste & am meisten dezentralisierte Kryptobörse
-  # subheader: Block DX bietet vollständig dezentrales und vertrauensloses Handeln durch atomare Wechsel zwischen Blockchains.
   subheader: Block DX bietet vollständig dezentrales und vertrauensloses Handeln durch atomare Wechsel zwischen Blockchains.
   button1: Handel beginnen
   button2: Mehr erfahren
 
 features:
-  # header: Features
   subheader: Warum Block DX
   intro: Viele Kryptobörsen *behaupten* dezentral zu sein, während sie die Details ihrer zentralisierten Bestandteile verbergen. Block DX ist die einzige Kryptobörse, die jeden Bestandteil dezentralisiert. __*Dezentral. Vertrauenslos. Sicher. Privat. Offen. Unzensiert. Unaufhaltbar.*__
   items:
@@ -122,9 +120,7 @@ features:
       description: Block DX basiert auf dem Blocknet-Protokoll. Alle Dienste, die das Blocknet-Protokoll nutzen, teilen sich ein Auftragsbuch und tragen zum selben Liquiditätspool bei, Block DX eingeschlossen. Das erzeugt einen Netzwerkeffekt für Liquidität.
 
 downloads:
-  # header: Downloads
   subheader: Gleich loslegen
-  # intro: 
   macos: MacOS
   windows: Windows
   linux: Linux
@@ -136,22 +132,15 @@ downloads:
   version: Aktuelle Version
 
 stats:
-  # header:  
   subheader: Statistiken
-  # intro: 
   assets: Währungen
-  # assets_val:  # dynamic
   pairs: Handelspaare
-  # pairs_val:  # dynamic
   trades: Vertrauenslose Tauschgeschäfte
   trades_val: '35000'
   middlemen: Mittelsmänner
-  # middlemen_val:  # static (0)
 
 faq:
-  # header: FAQ
   subheader: Häufig gestellte Fragen
-  # intro: 
   questions:
     - question: Was ist der Unterschied zwischen Block DX, Blocknet, und BLOCK?
       answer: Block DX ist eine dezentrale Kryptobörsen-dApp. Die Börse basiert auf [Blocknet]({{ site.exlink_docs }}), einem Projekt um ein Protokoll zur Blockchain-Interoperabilität, das die Kommunikation, Interaktion und den Austausch zwischen verschiedenen öffentlichen und privaten Blockchains ermöglicht. [BLOCK]({{ site.exlink_docs_blockchain }}) ist der Token, der zur Bezahlung von Gebühren für die Services des Blocknet-Netzwerks genutzt wird, einschließlich der dezentralen Kryptobörse, dezentraler Orakeldaten außerhalb von Blockchains, eines dezentalen SPV-Netzwerks und dezentraler Mikrodienste.
@@ -198,16 +187,13 @@ faq:
       topic: general, dev # Do not translate
 
 subscribe:
-  # header: 
   subheader: Abonniere unseren Newsletter
   intro: Bleibe informiert über die aktuellsten Features, Updates und Neuigkeiten!
   input: E-Mail-Adresse eingeben
   button: Abonnieren
 
 blog1:
-  # header: Blog
   subheader: Letzte Artikel
-  # intro: 
   posts:
     - url: https://blocknet.co/understanding-a-decentralized-exchange/ # Do not translate
       title: Eine dezentrale Kryptobörse verstehen
@@ -251,7 +237,6 @@ listing_application:
   meta_description: Auf Block DX gelistet zu werden ist 100% kostenfrei und bietet viele Vorteile jenseits davon, auf der Börse gehandelt zu werden.
   meta_keywords: block dx, bockdx, listung, antrag, formular, voraussetzungen, gebühren, verfahren, prozess, integration
   title: Antrag auf Listung
-  # intro: 
   button: Antragsformular
   benefits_header: Vorteile einer Listung
   benefits: Eine Listung auf Block DX bietet viele Vorteile jenseits davon, auf der Börse gehandelt zu werden. Gelistet zu sein bedeutet, dass die Währung ins [Blocknet-Protokoll]({{ site.exlink_docs }}) integriert wurde, auf dem die Block DX basiert, und das das Erstellen anderer Dienste erlaubt, die die Währung verwenden. Das erweitert die Nachfrage, den Nutzen und die Zugänglichkeit der Währung für das übrige Blockchain-Ökosystem.
