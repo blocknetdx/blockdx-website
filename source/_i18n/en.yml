@@ -17,6 +17,7 @@ global:
   link_troubleshooting: 'troubleshooting/'
   link_how: 'how-it-works/'
   link_orders: 'orders/'
+  link_history: 'trade-history/'
   link_market_making: 'market-making/'
   link_whitelabel: 'whitelabel/'
   link_nodes: 'nodes/'
@@ -27,7 +28,9 @@ nav:
   features: Features
   listings: Listings
   setup_menu: Setup
+  markets_menu: Markets
   orders: Open Orders
+  history: Trade History
   macos: MacOS
   windows: Windows
   linux: Linux
@@ -55,6 +58,7 @@ footer:
   listings: Listings
   application: Listing Application
   orders: Open Orders
+  history: Trade History
   fees: Fees
   stats: Stats
   branding: Branding
@@ -275,7 +279,34 @@ orders:
   message_loading_orders: Loading orders...
   message_no_orders: There are no open orders
   message_loading_error: Error loading orders
-  alert_loading_error: Error loading orders, please try refreshing the page  
+  alert_loading_error: Error loading orders, please try refreshing the page
+
+history:
+  meta_title: Trade History
+  meta_description: View all recent trade history and stats on Block DX.
+  meta_keywords: block dx, trade, history, stats
+  title: Trade History
+  button: View Trade Stats
+  intro: Select a market to recent trades on Block DX.
+  select_market: Select An Active Market
+  all_markets_option: All Markets
+  view_market: View Market
+  view_inverse_market: View Inverse Market
+  table_type: Type
+  table_price: Price
+  table_size: Size
+  table_total: Total
+  table_time: Time
+  type_buy: Buy
+  type_sell: Sell
+  time_today: Today
+  time_yesterday: Yesterday
+  time_at: at
+  message_loading_trades: Loading history...
+  message_no_trades: No trades in past 24hrs
+  message_loading_error: Error loading history
+  alert_loading_error: Error loading history, please try refreshing the page
+  stats_subheader: Daily Trade Stats
 
 e404:
   title: Error
