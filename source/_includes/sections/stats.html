@@ -1,27 +1,27 @@
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
 <section id="stats" class="stats bg-dark section">
   <div class="container">
 
-    {% 
+    {%- 
       include templates/section-header.html
       header=lang.stats.header
       subheader=lang.stats.subheader
       p=lang.stats.intro
-    %}
+    -%}
 
-    {% comment %} <!-- Create manifest array containing manifest-latest.json data  --> {% endcomment %}
-    {% assign manifest = site.data.manifest-latest %}
-    {% comment %} <!-- Create array of unique blockchain names --> {% endcomment %}
-    {% assign blockchains = manifest | map: "blockchain" | uniq %}
-    {% comment %} <!-- Number of unique blockchains listed --> {% endcomment %}
-    {% assign assetCount = blockchains | size %}
-    {% comment %} <!-- Calculate number of trading pairs combinations --> {% endcomment %}
-    {% assign n = assetCount | minus: 1 %}
-    {% assign combinations = 0 %}
-    {% for i in (1..n) %}
-      {% assign combinations = combinations | plus: i %}
-    {% endfor %}
+    {%- comment -%} <!-- Create manifest array containing manifest-latest.json data  --> {%- endcomment -%}
+    {%- assign manifest = site.data.manifest-latest -%}
+    {%- comment -%} <!-- Create array of unique blockchain names --> {%- endcomment -%}
+    {%- assign blockchains = manifest | map: "blockchain" | uniq -%}
+    {%- comment -%} <!-- Number of unique blockchains listed --> {%- endcomment -%}
+    {%- assign assetCount = blockchains | size -%}
+    {%- comment -%} <!-- Calculate number of trading pairs combinations --> {%- endcomment -%}
+    {%- assign n = assetCount | minus: 1 -%}
+    {%- assign combinations = 0 -%}
+    {%- for i in (1..n) -%}
+      {%- assign combinations = combinations | plus: i -%}
+    {%- endfor -%}
 
 
     <div class="row justify-content-center">

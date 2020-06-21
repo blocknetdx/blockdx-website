@@ -1,13 +1,13 @@
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
-{% if 
+{%- if 
   include.postUrl and
   include.postUrl != '' and
   include.postTitle and
   include.postTitle != '' and
   include.postImg and
   include.postImg != ''
-%}
+-%}
   <div class="col-lg-4 col-md-10 dx-animate">
     <div class="blog-entry mb-4 h-shadow h-scale shadow-sm" {% if include.animationDelay and include.animationDelay != '' %}data-aos-delay="{{ include.animationDelay }}"{% endif %}>
       <a href="{{ include.postUrl | liquify }}" class="blog-img" 
@@ -23,4 +23,4 @@
       </div>
     </div>
   </div>
-{% endif %}
+{%- endif -%}

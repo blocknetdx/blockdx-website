@@ -1,29 +1,29 @@
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
 <section id="blog" class="section bg-light">
   <div class="container">
 
-    {% 
+    {%- 
       include templates/section-header.html
       header=lang.blog1.header
       subheader=lang.blog1.subheader
       p=''
-    %}
+    -%}
 
     <div class="row justify-content-center">
 
-      {% assign delay = 0 %}
-      {% for post in lang.blog1.posts %}
-        {% 
+      {%- assign delay = 0 -%}
+      {%- for post in lang.blog1.posts -%}
+        {%- 
           include templates/blog-tile.html
           postUrl=post.url
           postTitle=post.title
           postImg=post.image
           coverPos=post.image_position
           animationDelay=delay
-        %}
-        {% assign delay = delay | plus: 100 %}
-      {% endfor %}
+        -%}
+        {%- assign delay = delay | plus: 100 -%}
+      {%- endfor -%}
 
     </div>
   </div>
