@@ -1,5 +1,21 @@
 [
   {
+    "blockchain": "Abosom",
+    "ticker": "ABS",
+    "ver_id": "abosom--v1.0.0",
+    "ver_name": "Abosom",
+    "conf_name": "abosom.conf",
+    "dir_name_linux": "abosomcore",
+    "dir_name_mac": "AbosomCore",
+    "dir_name_win": "AbosomCore",
+    "repo_url": "https://github.com/ZenyattaAbosom/Abosom",
+    "versions": [
+      "v1.0.0"
+    ],
+    "xbridge_conf": "abosom--v1.0.0.conf",
+    "wallet_conf": "abosom--v1.0.0.conf"
+  },
+  {
     "blockchain": "AeriumX",
     "ticker": "AEX",
     "ver_id": "aeriumx--v2.0",
@@ -14,6 +30,22 @@
     ],
     "xbridge_conf": "aeriumx--v2.0.conf",
     "wallet_conf": "aeriumx--v2.0.conf"
+  },
+  {
+    "blockchain": "Altbet",
+    "ticker": "ABET",
+    "ver_id": "abet--v3.4.1.0",
+    "ver_name": "Altbet",
+    "conf_name": "abet.conf",
+    "dir_name_linux": "abet",
+    "dir_name_mac": "Abet",
+    "dir_name_win": "Abet",
+    "repo_url": "https://github.com/altbet/abet",
+    "versions": [
+      "v3.4.1.0"
+    ],
+    "xbridge_conf": "abet--v3.4.1.0.conf",
+    "wallet_conf": "abet--v3.4.1.0.conf"
   },
   {
     "blockchain": "APR Coin",
@@ -212,7 +244,7 @@
     "dir_name_win": "BCZ",
     "repo_url": "https://github.com/SpecialCoins/bitcoincz",
     "versions": [
-      "6.0.2.1"
+      "6.0.3.2"
     ],
     "xbridge_conf": "bcz--6.0.0.8.conf",
     "wallet_conf": "bcz--6.0.0.8.conf"
@@ -229,7 +261,8 @@
     "repo_url": "https://github.com/bitgreen/bitgreen",
     "versions": [
       "v1.4.0.8",
-      "v1.4.0.9"
+      "v1.4.0.9",
+      "v1.5.0.1"
     ],
     "xbridge_conf": "bitgreen--v1.4.0.8.conf",
     "wallet_conf": "bitgreen--v1.4.0.8.conf"
@@ -248,7 +281,9 @@
       "0.90.8.8.1",
       "0.90.8.9",
       "0.90.8.10",
-      "0.90.8.11"
+      "0.90.8.11",
+      "0.90.9.0",
+      "0.90.9.1"
     ],
     "xbridge_conf": "bitcore--0.15.2.0.0.conf",
     "wallet_conf": "bitcore--0.90.8.8.1.conf"
@@ -328,7 +363,7 @@
     "dir_name_win": "Blocknet",
     "repo_url": "https://github.com/blocknetdx/blocknet",
     "versions": [
-      "v4.1.0"
+      "v4.2.0"
     ],
     "xbridge_conf": "blocknet--v4.0.1.conf",
     "wallet_conf": "blocknet--v4.0.1.conf"
@@ -675,7 +710,8 @@
     "repo_url": "https://github.com/duality-solutions/Dynamic",
     "versions": [
       "v2.4.3.0",
-      "v2.4.4.0"
+      "v2.4.4.0",
+      "v2.4.4.1"
     ],
     "xbridge_conf": "dynamic--v2.3.5.0.conf",
     "wallet_conf": "dynamic--v2.3.5.0.conf"
@@ -707,7 +743,8 @@
     "dir_name_win": "Electra",
     "repo_url": "https://github.com/Electra-project/electra-core",
     "versions": [
-      "2.1.1"
+      "2.1.1",
+      "2.1.2"
     ],
     "xbridge_conf": "electra--2.0.2.1.conf",
     "wallet_conf": "electra--2.0.2.1.conf"
@@ -980,8 +1017,7 @@
     "dir_name_win": "HTMLCOIN",
     "repo_url": "https://github.com/HTMLCOIN/HTMLCOIN",
     "versions": [
-      "v2.4.1",
-      "v2.4.2"
+      "v2.5.0"
     ],
     "xbridge_conf": "htmlcoin--v2.0.3.0.conf",
     "wallet_conf": "htmlcoin--v2.0.3.0.conf"
@@ -1296,22 +1332,6 @@
     "wallet_conf": "mnpcoin--v1.2.5.conf"
   },
   {
-    "blockchain": "MinexCoin",
-    "ticker": "MNX",
-    "ver_id": "minexcoin--v1.3.1",
-    "ver_name": "MinexCoin",
-    "conf_name": "minexcoin.conf",
-    "dir_name_linux": "Minexcoin",
-    "dir_name_mac": "Minexcoin",
-    "dir_name_win": "Minexcoin",
-    "repo_url": "https://github.com/minexcoin/minexcoin",
-    "versions": [
-      "v1.3.2"
-    ],
-    "xbridge_conf": "minexcoin--v1.3.1.conf",
-    "wallet_conf": "minexcoin--v1.3.1.conf"
-  },
-  {
     "blockchain": "MktCoin",
     "ticker": "MLM",
     "ver_id": "mktcoin--0.14.3",
@@ -1354,7 +1374,8 @@
     "dir_name_win": "MonetaryUnitCore",
     "repo_url": "https://github.com/muecoin/MUE",
     "versions": [
-      "v2.1.4"
+      "v2.1.4",
+      "v2.1.6"
     ],
     "xbridge_conf": "monetaryunit--v2.0.2.conf",
     "wallet_conf": "monetaryunit--v2.0.2.conf"
@@ -1427,7 +1448,7 @@
     "dir_name_win": "NativeCoinCore",
     "repo_url": "https://github.com/N8VCoin/nativecoin",
     "versions": [
-      "v1.0.0"
+      "1.2"
     ],
     "xbridge_conf": "nativecoin--v1.0.0.conf",
     "wallet_conf": "nativecoin--v1.0.0.conf"
@@ -1476,8 +1497,7 @@
     "dir_name_win": "noir",
     "repo_url": "https://github.com/noirofficial/noir",
     "versions": [
-      "v2.1.0.5",
-      "v2.1.0.6"
+      "v2.1.0.7"
     ],
     "xbridge_conf": "noir--v1.0.0.2.conf",
     "wallet_conf": "noir--v1.0.0.2.conf"
@@ -1493,8 +1513,8 @@
     "dir_name_win": "Northern",
     "repo_url": "https://github.com/northern-community/Northern",
     "versions": [
-      "3.2.0",
-      "3.2.1"
+      "3.3.1",
+      "3.3.2"
     ],
     "xbridge_conf": "northern--1.0.0.conf",
     "wallet_conf": "northern--1.0.0.conf"
@@ -1622,9 +1642,7 @@
     "dir_name_win": "PIVX",
     "repo_url": "https://github.com/PIVX-Project/PIVX",
     "versions": [
-      "v4.0.0",
-      "v4.0.1",
-      "v4.0.2"
+      "v4.1.1"
     ],
     "xbridge_conf": "pivx--v3.3.0.conf",
     "wallet_conf": "pivx--v3.3.0.conf"
@@ -1658,7 +1676,8 @@
     "versions": [
       "v1.6.0",
       "v1.6.1",
-      "v1.6.2"
+      "v1.6.2",
+      "v1.6.3"
     ],
     "xbridge_conf": "polis--v1.3.1.conf",
     "wallet_conf": "polis--v1.3.1.conf"
@@ -1723,7 +1742,7 @@
     "dir_name_win": "Rapids",
     "repo_url": "https://github.com/RapidsOfficial/Rapids",
     "versions": [
-      "v1.0.0.1"
+      "v2.0.0.0-b784ecbf4d"
     ],
     "xbridge_conf": "rapids--v1.0.0.1.conf",
     "wallet_conf": "rapids--v1.0.0.1.conf"
@@ -1759,6 +1778,22 @@
     ],
     "xbridge_conf": "raven--v0.15.99.0.conf",
     "wallet_conf": "raven--v0.15.99.0.conf"
+  },
+  {
+    "blockchain": "Reecore",
+    "ticker": "REEX",
+    "ver_id": "Reecore--v1.4.2.2",
+    "ver_name": "Reecore",
+    "conf_name": "Reecore.conf",
+    "dir_name_linux": "Reecore",
+    "dir_name_mac": "Reecore",
+    "dir_name_win": "Reecore",
+    "repo_url": "https://github.com/reecore-coin/Reex",
+    "versions": [
+      "v1.4.2.2"
+    ],
+    "xbridge_conf": "reecore--v1.4.2.2.conf",
+    "wallet_conf": "reecore--v1.4.2.2.conf"
   },
   {
     "blockchain": "Scribe",
@@ -2048,7 +2083,8 @@
     "dir_name_win": "VITAE",
     "repo_url": "https://github.com/VitaeTeam/Vitae",
     "versions": [
-      "v4.4.0.3"
+      "v4.4.0.3",
+      "v4.4.2"
     ],
     "xbridge_conf": "vitae--v4.1.0.1.conf",
     "wallet_conf": "vitae--v4.1.0.1.conf"
