@@ -8,8 +8,8 @@ permalink: /trade-history/
 ---
 
 
-{% assign lang = site.translations[site.lang] %}
-{% assign baseurl = site.url | append: lang.global.link_index %}
+{%- assign lang = site.translations[site.lang] -%}
+{%- assign baseurl = site.url | append: lang.global.link_index -%}
 
 {% 
   include templates/page-header.html
@@ -85,10 +85,8 @@ permalink: /trade-history/
 </section>
 
 
-
-
 <script type="text/javascript">
-  var dev = true;  
+  var dev = false;  
   var historyData = [];
   var sampleHistoryData = [
       {
@@ -274,7 +272,6 @@ permalink: /trade-history/
   var loadingErrMsg = "{{ lang.history.message_loading_error }}";
   var loadingErrAlert = "{{ lang.history.alert_loading_error }}";
 
-
   if (dev) {
     processTrades();
   } else {
@@ -321,7 +318,7 @@ permalink: /trade-history/
     } else {
       trades = historyData;
     }
-    {% comment %}
+    {%- comment -%}
       // example trade object 
         // {
         //   "timestamp": 1591983995,
@@ -333,7 +330,7 @@ permalink: /trade-history/
         //   "maker": "LTC",
         //   "maker_size": 0.46604600
         // },
-    {% endcomment %}
+    {%- endcomment -%}
     for(var trade in trades) {
       // var id = trades[trade]["id"];
       // var feeHash = trades[trade]["fee_txid"];
@@ -376,12 +373,10 @@ permalink: /trade-history/
     // populate the dropdown with markets
     var marketDropdown = document.getElementById("market-dropdown");
     for (var market in marketList) {
-      // if (marketList[market] !== "BLOCK/LTC") {
-        var option = document.createElement("option");
-        option.text = marketList[market];
-        option.value = marketList[market];
-        marketDropdown.add(option);
-      // }
+      var option = document.createElement("option");
+      option.text = marketList[market];
+      option.value = marketList[market];
+      marketDropdown.add(option);
     }
     reloadTable(false);
   }
@@ -409,7 +404,7 @@ permalink: /trade-history/
     return market;
   }
 
-  {% comment %}
+  {%- comment -%}
     // block/ltc market
     //   asks/sells (red)
     //   size = block
@@ -417,9 +412,9 @@ permalink: /trade-history/
     //   total = ltc
     //   --
     //   bids/buys (green, ltc/block inversed)
-    //   size = block
-    //   price = block/ltc
-    //   total = ltc
+    //   size = ltc
+    //   price = ltc/block
+    //   total = block
 
     // ltc/block market
     //   asks/sells (red)
@@ -428,10 +423,10 @@ permalink: /trade-history/
     //   total = block
     //   --
     //   bids/buys (green, block/ltc inversed)
-    //   size = ltc
-    //   price = ltc/block
-    //   total = block
-  {% endcomment %}
+    //   size = block
+    //   price = block/ltc
+    //   total = ltc
+  {%- endcomment -%}
 
   function prepareMarketData(inverse) {
     var promise = new Promise(function(resolve, reject){
@@ -472,7 +467,7 @@ permalink: /trade-history/
         asks = tradeHistory[currentMarket];
         if (asks !== undefined) {
           for (ask in asks) {
-            var type = "<div class='sell'>{{ lang.history.type_sell }} <img src='{{ baseurl }}assets/img/arrow-down.svg'/></div>";
+            var type = "<div class='sell'>{{ lang.history.type_sell }} <img src='https://blockdx.com/assets/img/arrow-down.svg'/></div>";
             var size = asks[ask]["size"];
             var price = asks[ask]["price"];
             var total = asks[ask]["total"];
@@ -485,7 +480,7 @@ permalink: /trade-history/
         bids = tradeHistory[inverseMarket];
         if (bids !== undefined) {
           for (bid in bids) {
-            var type = "<div class='buy'>{{ lang.history.type_buy }} <img src='{{ baseurl }}assets/img/arrow-up.svg'/></div>";
+            var type = "<div class='buy'>{{ lang.history.type_buy }} <img src='https://blockdx.com/assets/img/arrow-up.svg'/></div>";
             var size = bids[bid]["total"];
             var total = bids[bid]["size"];
             var price = Math.round( Number(total) / Number(size) * 1000000 ) / 1000000;
@@ -499,7 +494,7 @@ permalink: /trade-history/
         if (dev) { console.log(tradeHistory); }        
         for (market in tradeHistory) {
           for (trade in tradeHistory[market]) {
-            var type = "<div class='sell'>{{ lang.history.type_sell }} <img src='{{ baseurl }}assets/img/arrow-down.svg'/></div>";
+            var type = "<div class='sell'>{{ lang.history.type_sell }} <img src='https://blockdx.com/assets/img/arrow-down.svg'/></div>";
             var maker = tradeHistory[market][trade]["maker"];
             var taker = tradeHistory[market][trade]["taker"];
             var size = tradeHistory[market][trade]["size"] + " " + maker;
@@ -582,7 +577,6 @@ permalink: /trade-history/
     console.log("History table loaded");
   }
 
-
   // update embedded twitter feed
   setTimeout(function(){
     if (window.__twttr&&window.__twttr.widgets&&window.__twttr.widgets.loaded&&window.twttr.widgets.load&&window.twttr.widgets.load(),window.__twttr&&window.__twttr.widgets&&window.__twttr.widgets.init) {
@@ -602,4 +596,3 @@ permalink: /trade-history/
   }, 1800);
 
 </script>
-

@@ -5,7 +5,6 @@ keywords: listings.meta_keywords
 layout: default
 namespace: listings
 permalink: /listings/
-permalink_zh: /列表/
 ---
 
 
@@ -124,31 +123,32 @@ Content notes:
 </section>
 
 
-
 <script type="text/javascript">
-  var manifestURL = "https://raw.githubusercontent.com/blocknetdx/blockchain-configuration-files/master/manifest-latest.json";
+  var dev = false; 
+  getManifestAjax().then(tabulate);
 
-  getManifest().then(tabulate);
-  function getManifest() {
-    var manifestPromise = new Promise(function(resolve, reject){
-      ajax(manifestURL, true).then(function(manifest) {
-        manifestJSON = manifest;
-        localStorage.setItem('manifest', JSON.stringify(manifest));
-        resolve(manifestJSON);
-      }, false);
-    });
-    return manifestPromise;
-  }
-  function ajax(url, json) {
-    var ajaxPromise = new Promise(function(resolve, reject){
+  // pull latest manifest file from github
+  function getManifestAjax() {
+    var promise = new Promise(function(resolve, reject){
+      if (dev) { console.log("getManifestAjax"); }
       var xhr = new XMLHttpRequest();
       var status = true;
+      xhr.timeout = 2000;  
+      xhr.addEventListener("timeout", function(e) {
+        console.log("getManifestAjax timeout"); 
+      });
+      var url = "https://raw.githubusercontent.com/blocknetdx/blockchain-configuration-files/master/manifest-latest.json";
       xhr.open('GET', url);
       xhr.send();
       xhr.onreadystatechange = function(){
         if (xhr.readyState === 4) {
           if (xhr.status === 200){
-            var response = json ? JSON.parse(this.responseText) : this.responseText
+            var response = JSON.parse(this.responseText);
+            if (dev) { 
+              console.log("getManifestAjax success");
+              console.log( JSON.stringify(response) );
+            }
+            // localStorage.setItem('manifest', JSON.stringify(response));
             resolve(response);
           } else {
             console.log("Failed to load manifest");
@@ -156,9 +156,12 @@ Content notes:
         }
       }
     });
-    return ajaxPromise;
+    return promise;
   }
+
+  // generate updated listings table
   function tabulate(data) {
+    if (dev) { console.log("tabulate"); }
     var manifest = data;
     var tableData = {};
     var table = "";
@@ -166,13 +169,13 @@ Content notes:
     for(var asset in manifest) {
       var name = manifest[asset]["blockchain"];
       var ticker = manifest[asset]["ticker"];
-
       var repo = manifest[asset]["repo_url"];
+      // remove trailing slash in repo link
       if (repo.substr(-1) === "/") {
         repo = repo.slice(0, -1);
       }
       repo += "/releases/tag/";
-
+      // generate list of versions with links to release
       var versionsArray = manifest[asset]["versions"];
       var versionLinks = "";
       for (var version in versionsArray) {
@@ -191,7 +194,6 @@ Content notes:
           }
         }
       }
-
       // combine version groups if same asset (e.g. btc v15-v19)
       if (tableData[name]) {
         tableData[name]["versions"] += ", " + versionLinks;
@@ -199,8 +201,9 @@ Content notes:
         tableData[name] = {"name": name, "ticker": ticker, "versions": versionLinks};
       }
     }
-
+    // generate and update table
     for (var asset in tableData) {
+      if (dev) { console.log( tableData[asset] ); }
       var row = "<tr><td>" + tableData[asset]["name"] + "</td><td>" + tableData[asset]["ticker"] + "</td><td>" + tableData[asset]["versions"] + "</td><tr>";
       table += row;
     }
@@ -208,4 +211,3 @@ Content notes:
     console.log("Listings table updated");
   }
 </script>
-

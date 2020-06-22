@@ -161,7 +161,7 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 
-{% if jekyll.environment != "dev" %}
+{%- if jekyll.environment != "dev" -%}
   document.addEventListener("DOMContentLoaded", function() {
     // adds target=_blank to https and pdf links so they open in a new tab
     var links = document.getElementsByTagName('a');
@@ -176,4 +176,4 @@ $(function () {
       }
     }
   });
-{% endif %}
+{%- endif -%}

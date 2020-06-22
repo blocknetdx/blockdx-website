@@ -116,7 +116,6 @@ permalink: /orders/
 </section>
 
 
-
 <script type="text/javascript">
   var dev = false;  
   var orderData = [];
@@ -323,7 +322,6 @@ permalink: /orders/
   var noOrdersMsg = "{{ lang.orders.message_no_orders }}";
   var loadingErrMsg = "{{ lang.orders.message_loading_error }}";
   var loadingErrAlert = "{{ lang.orders.alert_loading_error }}";
-
 
   if (dev) {
     getCGIndexAjax().then(processOrders);
@@ -574,7 +572,7 @@ permalink: /orders/
   function getBTCPriceAjax() {
     var promise = new Promise(function(resolve, reject){
       if (dev) { console.log("getBTCPriceAjax"); }
-      assetTicker = targetMarket.split("/")[1];;
+      assetTicker = targetMarket.split("/")[1];
       if (dev) { console.log("assetTicker: " + assetTicker); }
       if (assetTicker !== "BTC") {
         var assetID;
