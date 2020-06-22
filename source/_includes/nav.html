@@ -12,15 +12,15 @@
       </button>
       <div class="collapse navbar-collapse" id="nav-links">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a href="{{ baseurl }}" class="nav-link">{{ lang.nav.home | liquify }}</a></li>
-          <li class="nav-item "><a href="{{ baseurl | append: '#features' }}" class="nav-link">{{ lang.nav.features | liquify }}</a></li>
-          <li class="nav-item "><a href="{{ baseurl | append: lang.global.link_listings }}" class="nav-link">{{ lang.nav.listings | liquify }}</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ baseurl }}">{{ lang.nav.home | liquify }}</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ baseurl | append: '#features' }}">{{ lang.nav.features | liquify }}</a></li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="exploreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{  lang.nav.markets_menu | liquify }}
             </a>
             <div class="dropdown-menu" aria-labelledby="exploreDropdown">
+              <a class="dropdown-item" href="{{ baseurl | append: lang.global.link_listings }}">{{ lang.nav.listings | liquify }}</a>
               <a class="dropdown-item" href="{{ baseurl | append: lang.global.link_orders }}">{{ lang.nav.orders | liquify }}</a>
               <a class="dropdown-item" href="{{ baseurl | append: lang.global.link_history }}">{{ lang.nav.history | liquify }}</a>
             </div>
@@ -44,30 +44,28 @@
             </div>
           </li>
           {%- comment -%}
-          <li class="nav-item "><a href="{{ baseurl | append: '#faq' }}" class="nav-link">{{ lang.nav.faq | liquify }}</a></li>
+          <li class="nav-item "><a class="nav-link" href="{{ baseurl | append: '#faq' }}">{{ lang.nav.faq | liquify }}</a></li>
           {%- endcomment -%}
-          {%- comment -%}
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="setupDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-language"></i> 
-                {{ lang.global.lang }}
-              </a>
-              <div class="dropdown-menu" aria-labelledby="setupDropdown">
-                <a class="dropdown-item" href="{{ site.url }}/">English</a>
-                <!-- <a class="dropdown-item" href="{{ site.url }}/zh/">中文</a> -->
-                <!-- <a class="dropdown-item" href="{{ site.url }}/ko/">한국어</a> -->
-                <!-- <a class="dropdown-item" href="{{ site.url }}/ru/">Pусский</a> -->
-                <!-- <a class="dropdown-item" href="{{ site.url }}/es/">Español</a> -->
-                <!-- <a class="dropdown-item" href="{{ site.url }}/ar/">عربى</a> -->
-                <!-- <a class="dropdown-item" href="{{ site.url }}/ja/">日本語</a> -->
-                <!-- <a class="dropdown-item" href="{{ site.url }}/de/">Deutsch</a> -->
-                <!-- <a class="dropdown-item" href="{{ site.url }}/fr/">Français</a> -->
-                <!-- <a class="dropdown-item" href="{{ site.url }}/it/">Italian</a> -->
-              </div>
-            </li>
-          {%- endcomment -%}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="setupDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-language"></i> 
+              {{ lang.global.lang }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="setupDropdown">
+              <a class="dropdown-item" href="{{ site.url }}/">English</a>
+              <!-- <a class="dropdown-item" href="{{ site.url }}/zh/">中文</a> -->
+              <!-- <a class="dropdown-item" href="{{ site.url }}/ko/">한국어</a> -->
+              <!-- <a class="dropdown-item" href="{{ site.url }}/ru/">Pусский</a> -->
+              <!-- <a class="dropdown-item" href="{{ site.url }}/es/">Español</a> -->
+              <!-- <a class="dropdown-item" href="{{ site.url }}/ar/">عربى</a> -->
+              <!-- <a class="dropdown-item" href="{{ site.url }}/ja/">日本語</a> -->
+              <a class="dropdown-item" href="{{ site.url }}/de/">Deutsch</a>
+              <a class="dropdown-item" href="{{ site.url }}/fr/">Français</a>
+              <!-- <a class="dropdown-item" href="{{ site.url }}/it/">Italian</a> -->
+            </div>
+          </li>
 
-          <li class="nav-item cta"><a href="{{ baseurl | append: '#downloads' }}" class="nav-link"><span>{{ lang.nav.downloads | liquify }}</span></a></li>
+          <li class="nav-item cta"><a class="nav-link" href="{{ baseurl | append: '#downloads' }}"><span>{{ lang.nav.downloads | liquify }}</span></a></li>
         </ul>
       </div>
     </div>

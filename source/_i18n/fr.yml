@@ -1,6 +1,6 @@
 global:
-  lang: Français
-  locale: fr_ca
+  lang: Français # Localization language
+  locale: fr_CA # Language locale
   meta_title: Block DX
   meta_description: Block DX est l'échange DEX le plus rapide, le plus sûr, le plus fiable et le plus décentralisé, utilisant des échanges atomiques inter-chaînes alimentés par le protocole Blocknet.
   meta_keywords: block dx, decentralisé, échange, dex, échange atomique, sans confiance, cross-chain, blockchain, blocknet, protocole
@@ -17,6 +17,7 @@ global:
   link_troubleshooting: 'résolution-de-problèmes/'
   link_how: 'comment-ca-marche/'
   link_orders: 'ordres/'
+  link_history: 'histoire-de-trading/'
   link_market_making: 'tenue-de-marché/'
   link_whitelabel: 'marque-blanche/'
   link_nodes: 'noeuds/'
@@ -25,7 +26,10 @@ nav:
   menu: Menu
   home: Accueil
   features: Caractéristiques
+  markets_menu: Marchés
   listings: Inscriptions
+  orders: Ordres Ouvertes
+  history: Histoire de Trading
   setup_menu: Installation
   macos: MacOS
   windows: Windows
@@ -53,8 +57,10 @@ footer:
   trading_header: Échange
   listings: Inscriptions
   application: Formulaire d'Inscription
-  orders: Ordres
+  orders: Ordres Ouvertes
+  history: Histoire de Trading
   fees: Frais
+  stats: Statistiques
   branding: Image de Marque
   developers_header: Developpeurs
   api: API
@@ -71,7 +77,7 @@ index:
 
 features:
   subheader: Pourquoi Block DX?
-  intro: Beaucoup d'échanges prétendent être *décentralisés* tout en cachant les détails de composants centralisés. Block DX est le seul échange dont tous les composants sont décentralisés. __*Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.*__
+  intro: Beaucoup d'échanges prétendent être *décentralisés* tout en cachant les détails de composants centralisés. Block DX est le seul échange dont tous les composants sont décentralisés. __*Décentralisé. Sans confiance. Sécurisé. Privé. Ouvert. Non censuré. Inarrêtable.*__
   items:
     - feature: Carnets de commandes décentralisés
       icon: <i class="fas fa-network-wired"></i> # Do not translate
@@ -253,6 +259,54 @@ branding:
   title: Ensemble Média
   intro: Le kit multimédia Block DX comprend les [directives de marque](https://blockdx.com/assets/files/blockdx-brand-guidelines.pdf), les types de fichiers PNG / SVG / ESP et les versions RVB / CMJN / PMS de notre marque .
   button: Télécharger l'ensemble Média
+
+orders:
+  meta_title: Ordres Ouvertes
+  meta_description: Affichez tous les marchés actifs et ouvrez les commandes sur Block DX.
+  meta_keywords: block dx, ordres, ouvertes, carnet de ordres, marchés, actif
+  title: Ordres Ouvertes
+  intro: Sélectionnez un marché pour afficher tous les ordres ouverts sur Block DX.
+  select_market: Sélectionnez un marché actif
+  view_market: Voir le marché
+  view_inverse_market: Afficher le marché inversé
+  asks_subheader: Ordres de Vente
+  asks_button: Afficher les Ordres de Acheter
+  bids_subheader: Ordres de Acheter
+  bids_button: Afficher les Ordres de Vente
+  table_price: Prix
+  table_size: Montant
+  table_total: Total
+  message_loading_orders: Chargement des ordres...
+  message_no_orders: Il n'y a pas de ordres ouvertes
+  message_loading_error: Erreur lors du chargement des ordres
+  alert_loading_error: Erreur lors du chargement des ordres, veuillez essayer de rafraîchir la page
+
+history:
+  meta_title: Histoire de Trading
+  meta_description: Afficher l'historique et les statistiques récentes sur Block DX.
+  meta_keywords: block dx, trading, l'histoire, statistiques
+  title: Histoire de Trading
+  button: Afficher les Statistiques de Trading
+  intro: Sélectionnez un marché pour afficher les transactions sur Block DX au cours des dernières 24 heures.
+  select_market: Sélectionnez un Marché Actif
+  all_markets_option: Tous les Marchés
+  view_market: Voir le marché
+  view_inverse_market: Afficher le marché inversé
+  table_type: Catégorie
+  table_price: Prix
+  table_size: Montant
+  table_total: Total
+  table_time: Temps
+  type_buy: Achat
+  type_sell: Vente
+  time_today: Aujourd'hui
+  time_yesterday: Heir
+  time_at: à
+  message_loading_trades: Historique de chargement...
+  message_no_trades: Aucun métier au cours des dernières 24 heures
+  message_loading_error: Erreur lors du chargement de l'historique
+  alert_loading_error: Erreur lors du chargement de l'historique, veuillez essayer de rafraîchir la page
+  stats_subheader: Statistiques quotidiennes des transactions
 
 e404:
   title: Error

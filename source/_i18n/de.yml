@@ -1,10 +1,10 @@
 global:
-  lang: Deutsch
-  locale: de_DE
+  lang: Deutsch # Localization language
+  locale: de_DE # Language locale
   meta_title: Block DX
   meta_description: Block DX ist die schnellste, sicherste, zuverlässigste, und am meisten dezentralisierte Kryptowährungsbörse (decentralized exchange - DEX), die Blockchain-übergreifende atomare Wechsel nutzt und auf dem Blocknet-Protokoll basiert.
   meta_keywords: block dx, dezentralisiert, dezentrale, kryptobörse, dex, atomare wechsel, vertrauenslos, blockchain-übergreifend, blockchain, blocknet, protokoll
-  link_index: '/'
+  link_index: '/de/'
   link_features: '#features' # Do not translate
   link_mac_setup: 'mac-einrichtung/'
   link_windows_setup: 'windows-einrichtung/'
@@ -17,6 +17,7 @@ global:
   link_troubleshooting: 'problemloesung/'
   link_how: 'wie-es-funktioniert/'
   link_orders: 'auftraege/'
+  link_history: 'austauschhistorie/'
   link_market_making: 'market-making/'
   link_whitelabel: 'whitelabel/'
   link_nodes: 'nodes/'
@@ -25,7 +26,10 @@ nav:
   menu: Menü
   home: Home
   features: Features
+  markets_menu: Märkte
   listings: Gelistete Währungen
+  orders: Offen Bestellungen
+  history: Austauschhistorie
   setup_menu: Einrichtung
   macos: MacOS
   windows: Windows
@@ -53,8 +57,10 @@ footer:
   trading_header: Kryptobörse
   listings: Gelistete Währungen
   application: Antrag auf Listung
-  orders: Aufträge
+  orders: Offen Bestellungen
+  history: Austauschhistorie
   fees: Gebühren
+  stats: Statistiken
   branding: Markenbildung
   developers_header: Entwickler
   api: API
@@ -253,6 +259,54 @@ branding:
   title: Medienmappe
   intro: Die Block DX Medienmappe beinhaltet die [Markenrichtlinien](https://blockdx.com/assets/files/blockdx-brand-guidelines.pdf), Dateien in den Formaten PNG/SVG/ESP, und RGB/CMYK/PMS Versionen der Markenzeichen.
   button: Download der Medienmappe
+
+orders:
+  meta_title: Offen Bestellungen
+  meta_description: Alle aktiven Märkte und offenen Aufträge auf Block DX anzeigen.
+  meta_keywords: block dx, bestellungen, öffnen, auftragsbuch, handel
+  title: Offen Bestellungen
+  intro: Wählen Sie einen Markt aus, um alle offenen Aufträge auf Block DX anzuzeigen.
+  select_market: Wählen Sie einen aktiven Markt
+  view_market: Markt anzeigen
+  view_inverse_market: Inversen Markt anzeigen
+  asks_subheader: Verkaufsaufträge
+  asks_button: Kaufauftrag Anzeigen
+  bids_subheader: Bestellungen Kaufen
+  bids_button: Verkaufsauftrag Anzeigen
+  table_price: Preis
+  table_size: Menge
+  table_total: Gesamt
+  message_loading_orders: Bestellungen sammeln...
+  message_no_orders: There are no open orders
+  message_loading_error: Fehler beim sammeln von bestellungen
+  alert_loading_error: Fehler beim sammeln von bestellungen, bitte versuchen sie die seite zu aktualisieren
+
+history:
+  meta_title: Austauschhistorie
+  meta_description: Alle aktuellen transaktionshistorien und Block DX statistiken anzeigen.
+  meta_keywords: block dx, austauschhistorie, transaktionshistorien, handel, historie, statistiken
+  title: Austauschhistorie
+  button: Handelsstatistiken anzeigen
+  intro: Wählen sie einen markt aus, um Trades auf Block DX in den letzten 24 stunden anzuzeigen.
+  select_market: Wählen sie einen aktiven Markt
+  all_markets_option: Alle Märkte
+  view_market: Markt anzeigen
+  view_inverse_market: Inversen Markt Anzeigen
+  table_type: Kategorie
+  table_price: Preis
+  table_size: Menge
+  table_total: Gesamt
+  table_time: Zeit
+  type_buy: Kaufen
+  type_sell: Verkaufen
+  time_today: Heute
+  time_yesterday: Gestern
+  time_at: beim
+  message_loading_trades: Ladeverlauf...
+  message_no_trades: Keine Trades in den letzten 24 stunden
+  message_loading_error: Fehler beim laden des verlaufs
+  alert_loading_error: Fehler beim laden des verlaufs, bitte versuchen sie die seite zu aktualisieren
+  stats_subheader: Tägliche Handelsstatistik
 
 e404:
   title: Fehler

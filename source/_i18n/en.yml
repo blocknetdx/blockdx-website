@@ -1,6 +1,6 @@
 global:
-  lang: English # Do not translate
-  locale: en_us # Do not translate
+  lang: English # Localization language
+  locale: en_US # Language locale
   meta_title: Block DX
   meta_description: Block DX is the fastest, most secure, most reliable, and most decentralized exchange (DEX), utilizing cross-chain atomic swaps powered by the Blocknet Protocol.
   meta_keywords: block dx, decentralized, exchange, dex, atomic swap, trustless, cross-chain, blockchain, blocknet, protocol
@@ -26,11 +26,11 @@ nav:
   menu: Menu
   home: Home
   features: Features
-  listings: Listings
-  setup_menu: Setup
   markets_menu: Markets
+  listings: Listings
   orders: Open Orders
   history: Trade History
+  setup_menu: Setup
   macos: MacOS
   windows: Windows
   linux: Linux

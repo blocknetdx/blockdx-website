@@ -24,8 +24,9 @@ plugins:
 
 # Localization settings
 # The first lang is the default/root site
-# languages: ["en","zh","ko","es","ar","ru","it","de"]
-languages: ["en"]
+# languages: ["en","zh","ko","es","ar","ru","it","de","fr"]
+languages: ["en","de","fr"]
+# languages: ["en"]
 # exclude_from_localizations: ["assets/"]
 
 # Custom variables, use them within content like this: {{ site.variable_name }}
