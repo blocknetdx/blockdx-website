@@ -352,10 +352,16 @@ permalink_fr: /histoire-de-trading/
       var tradeDate = new Date( Number(epoch)*1000 );
       var tradeDay = tradeDate.getDate();
       var tradeHour = tradeDate.getHours();
+      if ( Number(tradeHour) < 10 ) {
+        tradeHour = "0" + tradeHour;
+      }
       var tradeMinute = tradeDate.getMinutes();
+      if ( Number(tradeMinute) < 10 ) {
+        tradeMinute = "0" + tradeMinute;
+      }
       if (currentDay == tradeDay) {
         tradeDay = "{{ lang.history.time_today }}";
-      } else if ((Number(currentDay)-1) == tradeDay) {
+      } else if ( (Number(currentDay) - 1) == tradeDay ) {
         tradeDay = "{{ lang.history.time_yesterday }}";
       } else {
         tradeDay = tradeDate.toLocaleString('default', { month: 'short' }) + " " + tradeDay;
