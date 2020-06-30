@@ -379,6 +379,7 @@ permalink_fr: /histoire-de-trading/
     }
 
     // populate the dropdown with markets
+    marketList.sort();
     var marketDropdown = document.getElementById("market-dropdown");
     for (var market in marketList) {
       var option = document.createElement("option");

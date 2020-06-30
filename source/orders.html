@@ -119,7 +119,7 @@ permalink_fr: /ordres/
 
 
 <script type="text/javascript">
-  var dev = false;  
+  var dev = false; 
   var orderData = [];
   var sampleOrderData = [
       {
@@ -325,11 +325,14 @@ permalink_fr: /ordres/
   var loadingErrMsg = "{{ lang.orders.message_loading_error }}";
   var loadingErrAlert = "{{ lang.orders.alert_loading_error }}";
 
-  if (dev) {
-    getCGIndexAjax().then(processOrders);
-  } else {
-    getOrdersAjax().then(getCGIndexAjax).then(processOrders);
-  }
+  document.addEventListener("DOMContentLoaded", function() {
+    if (dev) {
+      getCGIndexAjax().then(processOrders);
+      // getOrdersAjax().then(getCGIndexAjax).then(processOrders);
+    } else {
+      getOrdersAjax().then(getCGIndexAjax).then(processOrders);
+    }
+  });
 
   function getOrdersAjax() {
     var promise = new Promise(function(resolve, reject){
@@ -339,7 +342,10 @@ permalink_fr: /ordres/
       xhr.timeout = 2000;  
       xhr.addEventListener("timeout", function(e) {
         console.log("getOrdersAjax timeout"); 
-        alert(loadingErrAlert);
+        var ordersTableErr = "<tr><td>" + loadingErrMsg + "</td><td></td><td></td><td></td><tr>";
+        document.getElementById("dx-tbody-asks").innerHTML = ordersTableErr;
+        document.getElementById("dx-tbody-bids").innerHTML = ordersTableErr;
+        // alert(loadingErrAlert);
       });
       var url = "https://data.blocknet.co/api/v2.0/dxgetorders";
       xhr.open('GET', url);
@@ -353,10 +359,11 @@ permalink_fr: /ordres/
             resolve(response);
           } else {
             console.log("Failed to load orders");
+            console.log(this.responseText);
             var ordersTableErr = "<tr><td>" + loadingErrMsg + "</td><td></td><td></td><td></td><tr>";
             document.getElementById("dx-tbody-asks").innerHTML = ordersTableErr;
             document.getElementById("dx-tbody-bids").innerHTML = ordersTableErr;
-            alert(loadingErrAlert);
+            // alert(loadingErrAlert);
           }
         }
       }
@@ -367,6 +374,7 @@ permalink_fr: /ordres/
   function getCGIndexAjax() {
     var promise = new Promise(function(resolve, reject){
       cgIndex = JSON.parse( localStorage.getItem('cgIndex') );
+      if (dev) { console.log(cgIndex); }
       if (cgIndex === undefined || cgIndex === null || cgIndex.length == 0) {
         if (dev) { console.log("cgIndex - ajax"); }
         var xhr = new XMLHttpRequest();
@@ -374,7 +382,8 @@ permalink_fr: /ordres/
         xhr.timeout = 2000;  
         xhr.addEventListener("timeout", function(e) {
           console.log("cgIndex timeout");
-          alert(loadingErrAlert);
+          if (dev) { alert(loadingErrAlert); }
+          resolve();
         });
         var url = "https://api.coingecko.com/api/v3/coins/list";
         xhr.open('GET', url);
@@ -389,6 +398,7 @@ permalink_fr: /ordres/
               resolve(cgIndex);
             } else {
               console.log("Failed to load CG index");
+              resolve();
             }
           }
         }
@@ -445,6 +455,7 @@ permalink_fr: /ordres/
         marketDropdown.add(option);
       }
     }
+    sortOptions();
     reloadTable(false);
   }
 
@@ -513,6 +524,7 @@ permalink_fr: /ordres/
         inverseMarket = currentMarket.split("/").reverse().join("/");
       }
       targetMarket = currentMarket;
+      sortOptions()
 
       // update table body with loading message
       var ordersTableLoading = "<tr><td>" + loadingOrdersMsg + "</td><td></td><td></td><td></td><tr>";
@@ -576,46 +588,50 @@ permalink_fr: /ordres/
       if (dev) { console.log("getBTCPriceAjax"); }
       assetTicker = targetMarket.split("/")[1];
       if (dev) { console.log("assetTicker: " + assetTicker); }
-      if (assetTicker !== "BTC") {
-        var assetID;
-        // lookup asset id based off ticker
-        for (asset in cgIndex) {
-          if (cgIndex[asset]["symbol"].toLowerCase() === assetTicker.toLowerCase()) {
-            assetID = cgIndex[asset]["id"];
-          }
-        }
-        if (dev) { console.log("assetID: " + assetID); }
-        if (assetID === undefined) {
-          resolve(undefined);
-        }
-        // get asset price in btc
-        var xhr = new XMLHttpRequest();
-        var status = true;
-        xhr.timeout = 2000;  
-        xhr.addEventListener("timeout", function(e) {
-          console.log("getBTCPriceAjax timeout");
-          resolve(undefined);
-        });
-        var url = "https://api.coingecko.com/api/v3/simple/price?ids=" + assetID + "&vs_currencies=btc";
-        xhr.open('GET', url);
-        xhr.send();
-        xhr.onreadystatechange = function(){
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200){
-              // example response = {"litecoin":{"btc":0.0047943}}
-              var response = JSON.parse(this.responseText);
-              if (dev) { console.log(response); }
-              var priceBTC = response[Object.keys(response)[0]]["btc"];
-              if (dev) { console.log(assetTicker + " price: " + priceBTC); }
-              resolve(priceBTC);
-            } else {
-              console.log("Failed to load BTC pricing");
-              resolve(undefined);
+      if (cgIndex == undefined) {
+        resolve(undefined);
+      } else {
+        if (assetTicker !== "BTC") {
+          var assetID;
+          // lookup asset id based off ticker
+          for (asset in cgIndex) {
+            if (cgIndex[asset]["symbol"].toLowerCase() === assetTicker.toLowerCase()) {
+              assetID = cgIndex[asset]["id"];
             }
           }
+          if (dev) { console.log("assetID: " + assetID); }
+          if (assetID === undefined) {
+            resolve(undefined);
+          }
+          // get asset price in btc
+          var xhr = new XMLHttpRequest();
+          var status = true;
+          xhr.timeout = 2000;  
+          xhr.addEventListener("timeout", function(e) {
+            console.log("getBTCPriceAjax timeout");
+            resolve(undefined);
+          });
+          var url = "https://api.coingecko.com/api/v3/simple/price?ids=" + assetID + "&vs_currencies=btc";
+          xhr.open('GET', url);
+          xhr.send();
+          xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4) {
+              if (xhr.status === 200){
+                // example response = {"litecoin":{"btc":0.0047943}}
+                var response = JSON.parse(this.responseText);
+                if (dev) { console.log(response); }
+                var priceBTC = response[Object.keys(response)[0]]["btc"];
+                if (dev) { console.log(assetTicker + " price: " + priceBTC); }
+                resolve(priceBTC);
+              } else {
+                console.log("Failed to load BTC pricing");
+                resolve(undefined);
+              }
+            }
+          }
+        } else {
+          resolve(1);
         }
-      } else {
-        resolve(1);
       }
     });
     return promise;
@@ -632,9 +648,11 @@ permalink_fr: /ordres/
     var bidTable = "";
     var askHeader = "";
     var bidHeader = "";
-    var noOrdersTable = "<tr><td>" + noOrdersMsg + "</td><td></td><td></td><tr>";
+    var noOrdersTable1 = "<tr><td>" + noOrdersMsg + "</td><td></td><td></td><tr>";
+    var noOrdersTable2 = "<tr><td>" + noOrdersMsg + "</td><td></td><td></td><td></td><tr>";
     // generate html table markup with orders
-    if (asks !== undefined) {
+    if (asks !== undefined && asks.length !== 0) {
+      if (dev) { console.log("Ask orders present"); }
       if (priceBTC === undefined) {
         for (ask in asks) {
           askTable += "<tr><td>" + asks[ask]["size"] + "</td><td>" + asks[ask]["price"] + "</td><td>n/a</td><td>" + asks[ask]["total"] + "</td><tr>";
@@ -656,9 +674,11 @@ permalink_fr: /ordres/
         }
       }
     } else {
-      askTable = noOrdersTable;
+      if (dev) { console.log("Asks undefined or empty"); }
+      askTable = (priceBTC === undefined) ? noOrdersTable1 : noOrdersTable2;
     }
-    if (bids !== undefined) {
+    if (bids !== undefined && bids.length !== 0) {
+      if (dev) { console.log("Bid orders present"); }
       if (priceBTC === undefined) {
         for (ask in asks) {
           bidTable += "<tr><td>" + bids[bid]["size"] + "</td><td>" + bids[bid]["price"] + "</td><td>n/a</td><td>" + bids[bid]["total"] + "</td><tr>";
@@ -680,7 +700,8 @@ permalink_fr: /ordres/
         }
       }
     } else {
-      bidTable = noOrdersTable;
+      if (dev) { console.log("Bids undefined or empty"); }
+      bidTable = (priceBTC === undefined) ? noOrdersTable1 : noOrdersTable2;
     }
     // update table body with orders
     document.getElementById("dx-tbody-asks").innerHTML = askTable;
@@ -693,6 +714,33 @@ permalink_fr: /ordres/
         element.innerHTML = " (" + marketTaker + ")";
     })
     console.log("Orders table loaded");
+  }
+
+  function sortOptions() {
+    var dropdown = document.getElementById("market-dropdown");
+    var selected = dropdown.options[dropdown.selectedIndex].value;
+    var options = dropdown.options;
+    // make an array of the options
+    var optionsArray = [];
+    for (var i = 0; i < options.length; i++) {
+      optionsArray.push(options[i]);
+      if (dev) { console.log(optionsArray[i].text); }
+    }
+    // sort the options alphabetically
+    optionsArray = optionsArray.sort(function (a, b) {      
+      var optionA = a.text.toLowerCase();
+      var optionB = b.text.toLowerCase();
+      if (optionA < optionB) return -1;
+      if (optionA > optionB) return 1;
+      return 0;
+    });
+    if (dev) { for (var i = 0; i < optionsArray.length; i++) { console.log(optionsArray[i].text); } }
+    // reload the sorted options
+    options.length = 0;
+    for (var i = 0; i < optionsArray.length; i++) {
+      dropdown.add(optionsArray[i]);
+    }
+    dropdown.value = selected;
   }
 </script>
 
