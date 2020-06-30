@@ -2,7 +2,7 @@
 
 {%- assign title = lang.global.meta_title -%}
   {%- if page.title -%}
-    {%- capture page_title -%}{% t page.title %}  | {{ title }}{%- endcapture -%}
+    {%- capture page_title -%}{% t page.title %} | {{ title }}{%- endcapture -%}
     {%- assign title = page_title -%}
   {%- endif -%}
 
