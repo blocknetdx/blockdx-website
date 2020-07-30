@@ -1,27 +1,27 @@
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
-{% assign title = lang.global.meta_title %}
-  {% if page.title %}
-    {% capture page_title %}{% t page.title %} | {{ title }}{% endcapture %}
-    {% assign title = page_title %}
-  {% endif %}
+{%- assign title = lang.global.meta_title -%}
+  {%- if page.title -%}
+    {%- capture page_title -%}{% t page.title %} | {{ title }}{%- endcapture -%}
+    {%- assign title = page_title -%}
+  {%- endif -%}
 
-{% assign description = lang.global.meta_description %}
-  {% if page.description %}
-    {% capture page_description %}{% t page.description %}{% endcapture %}
-    {% assign description = page_description %}
-  {% endif %}
+{%- assign description = lang.global.meta_description -%}
+  {%- if page.description -%}
+    {%- capture page_description -%}{%- t page.description -%}{%- endcapture -%}
+    {%- assign description = page_description -%}
+  {%- endif -%}
 
-{% assign keywords = lang.global.meta_keywords %}
-  {% if page.keywords %}
-    {% capture page_keywords %}{% t page.keywords %}{% endcapture %}
-    {% assign keywords = page_keywords %}
-  {% endif %}
+{%- assign keywords = lang.global.meta_keywords -%}
+  {%- if page.keywords -%}
+    {%- capture page_keywords -%}{%- t page.keywords -%}{%- endcapture -%}
+    {%- assign keywords = page_keywords -%}
+  {%- endif -%}
 
-{% assign page_link = site.url | append: '/' | append: site.lang | append: page.url %}
-{% if site.lang == 'en' %}
-  {% assign page_link = site.url | append: page.url %}
-{% endif %}
+{%- assign page_link = site.url | append: '/' | append: site.lang | append: page.url -%}
+{%- if site.lang == 'en' -%}
+  {%- assign page_link = site.url | append: page.url -%}
+{%- endif -%}
 
 <head>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109213957-6"></script>
@@ -36,11 +36,11 @@
 
   <link rel="profile" href="http://gmpg.org/xfn/11">
   <link rel="dns-prefetch" href="//www.blockdx.com">
-  <link rel="canonical" href="{{ site.url }}">
+  <link rel="canonical" href="https://blockdx.com/">
   <link rel="icon" type="image/png" sizes="16x16" href="https://blockdx.com/assets/img/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://blockdx.com/assets/img/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="https://blockdx.com/assets/img/apple-touch-icon.png">
-  <link rel="shortcut icon" href="/assets/img/favicon.ico">
+  <link rel="shortcut icon" href="https://blockdx.com/assets/img/favicon.ico">
 
   <meta name="msapplication-TileColor" content="#fff">
   <meta name="theme-color" content="#fff">
@@ -60,19 +60,10 @@
   <meta name="twitter:site" content="@BlockDXExchange">
   <meta name="twitter:creator" content="@The_Blocknet">
 
-
-
-  {% comment %}
-    <link rel="stylesheet" href="https://blockdx.com/assets/css/normalize.css">
-    <link rel="stylesheet" href="https://blockdx.com/assets/css/animate.css">
-    <link rel="stylesheet" href="https://blockdx.com/assets/css/aos.css">
-
-    <!-- <link rel="stylesheet" href="https://blockdx.com/assets/css/bootstrap.css"> -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://blockdx.com/assets/css/style.css">
+  {%- comment -%}
     <!-- <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl_root }}"> -->
-  {% endcomment %}
-  <link rel="stylesheet" href="https://blockdx.com/assets/css/main.css">
+  {%- endcomment -%}
+  <link rel="stylesheet" href="{{ site.url }}/assets/css/main.css">
 
   <script src="https://kit.fontawesome.com/47c7ccecfb.js"></script>
 </head>

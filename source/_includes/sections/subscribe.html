@@ -1,4 +1,4 @@
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
 <section id="subscribe" class="section bg-dark">
   <div class="container">
@@ -13,9 +13,9 @@
               <div class="input-group mx-auto">
                 <input id="mce-EMAIL" class="required email form-control" type="email" value="" name="EMAIL" placeholder="{{ lang.subscribe.input | liquify }}" aria-label="{{ lang.subscribe.input | liquify }}">
                 <div class="input-group-append">
-                  {% comment %}
+                  {%- comment -%}
                   <!-- <button id="mc-embedded-subscribe" class="btn btn-primary" type="submit" name="subscribe">{{ lang.subscribe.button | liquify }}</button> -->
-                  {% endcomment %}
+                  {%- endcomment -%}
                   <input id="mc-embedded-subscribe" class="btn btn-primary" type="submit" value="{{ lang.subscribe.button | liquify }}" name="subscribe">
                 </div>
               </div>

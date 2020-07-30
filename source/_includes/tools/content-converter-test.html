@@ -1,8 +1,8 @@
-{% assign global = site.translations[site.lang].global %}
-{% assign lang = site.translations[site.lang] %}
+{%- assign global = site.translations[site.lang].global -%}
+{%- assign lang = site.translations[site.lang] -%}
 
 
-{% comment %}
+{%- comment -%}
 <!-- Place in data file -->
   test:
     variables: |
@@ -13,7 +13,7 @@
       * **Bold Text**
       * __More Bold Text__
       * *Italic Text*
-{% endcomment %}
+{%- endcomment -%}
 
 <br><br>
 
@@ -22,4 +22,3 @@
 
 <h5>Custom Converter:</h5>
 {% include tools/content-converter.html content=lang.test.variables %}
-

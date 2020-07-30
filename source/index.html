@@ -1,15 +1,17 @@
 ---
-title: global.meta_title
+title: 
 description: global.meta_description
 keywords: global.meta_keywords
 layout: default
 namespace: home
 permalink: /
+permalink_de: /
+permalink_fr: /
 ---
 
 
-{% assign lang = site.translations[site.lang] %}
-{% assign baseurl = site.url | append: lang.global.link_index %}
+{%- assign lang = site.translations[site.lang] -%}
+{%- assign baseurl = site.url | append: lang.global.link_index -%}
 
 <header id="hero">
   <div class="container">
@@ -23,7 +25,7 @@ permalink: /
         </div>
       </div>
       <div class="col-sm-12 col-lg-8 align-self-center">
-        <img src="/assets/img/blockdx-pc-min.png" srcset="/assets/img/blockdx-pc-min@2x.png 2x" class="img-fluid img" alt="">
+        <img src="https://blockdx.com/assets/img/blockdx-pc-min.png" srcset="https://blockdx.com/assets/img/blockdx-pc-min@2x.png 2x" class="img-fluid img" alt="">
       </div>
     </div>
   </div>
@@ -35,4 +37,3 @@ permalink: /
 {% include sections/faq.html %}
 {% include sections/subscribe.html %}
 {% include sections/blog1.html %}
-

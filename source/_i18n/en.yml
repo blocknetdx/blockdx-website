@@ -1,6 +1,6 @@
 global:
-  lang: English # Do not translate
-  locale: en_us # Do not translate
+  lang: English # Localization language
+  locale: en_US # Language locale
   meta_title: Block DX
   meta_description: Block DX is the fastest, most secure, most reliable, and most decentralized exchange (DEX), utilizing cross-chain atomic swaps powered by the Blocknet Protocol.
   meta_keywords: block dx, decentralized, exchange, dex, atomic swap, trustless, cross-chain, blockchain, blocknet, protocol
@@ -17,6 +17,7 @@ global:
   link_troubleshooting: 'troubleshooting/'
   link_how: 'how-it-works/'
   link_orders: 'orders/'
+  link_history: 'trade-history/'
   link_market_making: 'market-making/'
   link_whitelabel: 'whitelabel/'
   link_nodes: 'nodes/'
@@ -25,7 +26,10 @@ nav:
   menu: Menu
   home: Home
   features: Features
+  markets_menu: Markets
   listings: Listings
+  orders: Open Orders
+  history: Trade History
   setup_menu: Setup
   macos: MacOS
   windows: Windows
@@ -53,8 +57,10 @@ footer:
   trading_header: Exchange
   listings: Listings
   application: Listing Application
-  orders: Orders
+  orders: Open Orders
+  history: Trade History
   fees: Fees
+  stats: Stats
   branding: Branding
   developers_header: Developers
   api: API
@@ -65,13 +71,11 @@ footer:
 
 index:
   header: The Most Secure & Decentralized Exchange
-  # subheader: Block DX offers completely decentralized and trustless cross-chain trading via atomic swaps.
   subheader: Block DX offers completely decentralized and trustless trading via cross-chain atomic swaps.
   button1: Start trading
   button2: Learn more
 
 features:
-  # header: Features
   subheader: Why Block DX
   intro: Many exchanges *claim* to be decentralized while hiding the details of centralized components. Block DX is the only exchange that decentralizes every component. __*Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.*__
   items:
@@ -122,9 +126,7 @@ features:
       description: Block DX is powered by the Blocknet Protocol. All services using the Blocknet Protocol have a shared order book and contribute to the same liquidity pool, including Block DX. This creates a network effect for liquidity.
 
 downloads:
-  # header: Downloads
   subheader: Get Started
-  # intro: 
   macos: MacOS
   windows: Windows
   linux: Linux
@@ -136,20 +138,15 @@ downloads:
   version: Latest version
 
 stats:
-  # header:  
   subheader: Stats
-  # intro: 
   assets: Assets
   pairs: Trading Pairs
   trades: Trustless Trades
   trades_val: '35000'
   middlemen: Middlemen
-  # middlemen_val:  # static (0)
 
 faq:
-  # header: FAQ
   subheader: Frequently Asked Questions
-  # intro: 
   questions:
     - question: What is the difference between Block DX, Blocknet, and BLOCK?
       answer: Block DX is a decentralized exchange dApp. The exchange is powered by [Blocknet]({{ site.exlink_docs }}), a blockchain interoperability protocol project that enables communication, interaction, and exchange between different public and private blockchains. [BLOCK]({{ site.exlink_docs_blockchain }}) is the token used to pay fees for the services on Blocknet's network, including decentralized exchange, decentralized off-chain oracle data, decentralized SPV network, and decentralized microservices.
@@ -180,32 +177,29 @@ faq:
       answer: Block DX is not currently compatible with Electrum, hardware wallets, lite wallets, or web wallets. The full node of the blockchains you want to trade must be downloaded and synced, along with the [Blocknet wallet]({{ site.exlink_wallet_download }}) (used to power the exchange process). However, a third party is developing the world's first decentralized lite multiwallet on the [Blocknet Protocol]({{ site.exlink_docs }}), which will allow Block DX to be used without downloading the blockchains of the assets being traded.
       topic: general, trading  # Do not translate
     - question: How can a project get listing on Block DX?
-      answer: There is no cost to be listed on Block DX. However, since Block DX utilizes atomic swaps, the asset's blockchain must meet certain compatibility and testing requirements. See [Listings]({{ lang.global.link_listings }}) for more information.
+      answer: There is no cost to be listed on Block DX. However, since Block DX utilizes atomic swaps, the asset's blockchain must meet certain compatibility and testing requirements. See [Listing Application]({{ lang.global.link_listing_application }}) for more information.
       topic: general, listings, dev # Do not translate
     - question: Can Block DX be used in the browser?
-      answer: At the moment Block DX is only available as a desktop application. However, a third party is developing the world's first decentralized lite multiwallet on the [Blocknet Protocol]({{ site.exlink_blocknet }}), which would render a browser-based exchange and app possible.
+      answer: At the moment Block DX is only available as a desktop application. However, a third party is developing the world's first decentralized lite multiwallet on the [Blocknet Protocol]({{ site.exlink_docs }}), which would render a browser-based exchange and app possible.
       topic: general, trading # Do not translate
     - question: How long do trades take?
       answer: Even though native assets are exchanged and trades are settled on their respective blockchain, the trade times are independent of block times. Block DX is very fast with trades typically being completed in 5-15 seconds.
       topic: general, trading # Do not translate
     - question: Why isn't Block DX listed on CoinMarketCap?
-      answer: An application has already been submitted for Block DX to be listed as an exchange on CoinMarketCap and are awaiting listing.
+      answer: An application has already been submitted for Block DX to be listed as an exchange on CoinMarketCap and we are waiting to be listed.
       topic: general # Do not translate
     - question: Does Block DX have an API?
       answer: Yes! Block DX is 100% bot-friendly, see Blocknet's [API docs]({{ site.exlink_api_xbridge }}) for setup and usage documentation. There is also a [market making bot]({{ site.exlink_makerbot }}) that can be used to automatically post orders based off specified price data sources.
       topic: general, dev # Do not translate
 
 subscribe:
-  # header: 
   subheader: Subscribe to Our Newsletter
   intro: Stay up-to-date on our latest features, updates, and news!
   input: Enter email address
   button: Subscribe
 
 blog1:
-  # header: Blog
   subheader: Recent Articles
-  # intro: 
   posts:
     - url: https://blocknet.co/understanding-a-decentralized-exchange/ # Do not translate
       title: Understanding a Decentralized Exchange
@@ -249,7 +243,6 @@ listing_application:
   meta_description: Getting listed on Block DX is 100% free and holds many benefits beyond just being traded on the exchange.
   meta_keywords: block dx, bockdx, listing, application, form, requirements, fee, process, integration
   title: Listing Application
-  # intro: 
   button: Application Form
   benefits_header: Listing Benefits
   benefits: A Block DX listing holds many benefits beyond just being traded on the exchange. Being listed means the asset has been integrated with the [Blocknet Protocol]({{ site.exlink_docs }}), which powers Block DX, and allows other services to be built utilizing the asset. This extends the demand, utility, and accessibility of the asset to the rest of the blockchain ecosystem.
@@ -257,7 +250,7 @@ listing_application:
   process: Getting listed on Block DX is 100% free. If you would like to have a digital asset listed, please ask a member of that project to fill out the application form. After submission, the asset will be added to the queue for integration and compatibility testing.
   requirements_header: Requirements
   requirements: >-
-    In order for for a blockchain to be compatible it must support JSON RPC, CLTV atomic swaps, and the following calls:
+    In order for a blockchain to be compatible it must support JSON RPC, CLTV atomic swaps, and the following calls:
 
 branding:
   meta_title: Branding
@@ -266,6 +259,54 @@ branding:
   title: Media Kit
   intro: The Block DX media kit includes [branding guidelines](https://blockdx.com/assets/files/blockdx-brand-guidelines.pdf), PNG/SVG/ESP file types, and RGB/CMYK/PMS versions of our branding.
   button: Download Media Kit
+
+orders:
+  meta_title: Open Orders
+  meta_description: View all active markets and open orders on Block DX.
+  meta_keywords: block dx, orders, open, order book, markets, active
+  title: Open Orders
+  intro: Select a market to view all open orders on Block DX.
+  select_market: Select An Active Market
+  view_market: View Market
+  view_inverse_market: View Inverse Market
+  asks_subheader: Asks
+  asks_button: View Bids
+  bids_subheader: Bids
+  bids_button: View Asks
+  table_price: Price
+  table_size: Size
+  table_total: Total
+  message_loading_orders: Loading orders...
+  message_no_orders: There are no open orders
+  message_loading_error: Error loading orders
+  alert_loading_error: Error loading orders, please try refreshing the page
+
+history:
+  meta_title: Trade History
+  meta_description: View all recent trade history and stats on Block DX.
+  meta_keywords: block dx, trade, history, stats
+  title: Trade History
+  button: View Trade Stats
+  intro: Select a market to view trades on Block DX in the last 24hrs.
+  select_market: Select An Active Market
+  all_markets_option: All Markets
+  view_market: View Market
+  view_inverse_market: View Inverse Market
+  table_type: Type
+  table_price: Price
+  table_size: Size
+  table_total: Total
+  table_time: Time
+  type_buy: Buy
+  type_sell: Sell
+  time_today: Today
+  time_yesterday: Yesterday
+  time_at: at
+  message_loading_trades: Loading history...
+  message_no_trades: No trades in past 24hrs
+  message_loading_error: Error loading history
+  alert_loading_error: Error loading history, please try refreshing the page
+  stats_subheader: Daily Trade Stats
 
 e404:
   title: Error

@@ -5,13 +5,14 @@ keywords: branding.meta_keywords
 layout: default
 namespace: branding
 permalink: /branding/
-permalink_zh: /品牌化/
+permalink_de: /markenbildung/
+permalink_fr: /image-de-marque/
 ---
 
 
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
-{% 
+{%
   include templates/page-header.html
   title=lang.branding.title
   intro=lang.branding.intro

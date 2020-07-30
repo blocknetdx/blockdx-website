@@ -1,6 +1,6 @@
 global:
-  lang: Français
-  locale: fr_ca
+  lang: Français # Localization language
+  locale: fr_CA # Language locale
   meta_title: Block DX
   meta_description: Block DX est l'échange DEX le plus rapide, le plus sûr, le plus fiable et le plus décentralisé, utilisant des échanges atomiques inter-chaînes alimentés par le protocole Blocknet.
   meta_keywords: block dx, decentralisé, échange, dex, échange atomique, sans confiance, cross-chain, blockchain, blocknet, protocole
@@ -12,12 +12,12 @@ global:
   link_listings: 'inscription/'
   link_application: 'formulaire-inscription/'
   link_fees: 'frais/'
-  link_fees: 'frais/'
   link_branding: 'image-de-marque/'
   link_trading: 'transiger/'
   link_troubleshooting: 'résolution-de-problèmes/'
   link_how: 'comment-ca-marche/'
   link_orders: 'ordres/'
+  link_history: 'histoire-de-trading/'
   link_market_making: 'tenue-de-marché/'
   link_whitelabel: 'marque-blanche/'
   link_nodes: 'noeuds/'
@@ -26,7 +26,10 @@ nav:
   menu: Menu
   home: Accueil
   features: Caractéristiques
+  markets_menu: Marchés
   listings: Inscriptions
+  orders: Ordres Ouvertes
+  history: Histoire de Trading
   setup_menu: Installation
   macos: MacOS
   windows: Windows
@@ -54,8 +57,10 @@ footer:
   trading_header: Échange
   listings: Inscriptions
   application: Formulaire d'Inscription
-  orders: Ordres
+  orders: Ordres Ouvertes
+  history: Histoire de Trading
   fees: Frais
+  stats: Statistiques
   branding: Image de Marque
   developers_header: Developpeurs
   api: API
@@ -66,15 +71,13 @@ footer:
 
 index:
   header: L'échange le plus sécurisé et décentralisé
-  # subheader: Block DX offre des échanges inter-chaînes complètement décentralisés et sans confiance via des swaps atomiques.
   subheader: Block DX offre des échanges totalement décentralisés et sans confiance via des échanges atomiques inter-chaînes.
   button1: Commencer à transiger
   button2: En apprendre davantage
 
 features:
-  # header: Features
   subheader: Pourquoi Block DX?
-  intro: Beaucoup d'échanges prétendent être *décentralisés* tout en cachant les détails de composants centralisés. Block DX est le seul échange dont tous les composants sont décentralisés. __*Decentralized. Trustless. Secure. Private. Open. Uncensored. Unstoppable.*__
+  intro: Beaucoup d'échanges prétendent être *décentralisés* tout en cachant les détails de composants centralisés. Block DX est le seul échange dont tous les composants sont décentralisés. __*Décentralisé. Sans confiance. Sécurisé. Privé. Ouvert. Non censuré. Inarrêtable.*__
   items:
     - feature: Carnets de commandes décentralisés
       icon: <i class="fas fa-network-wired"></i> # Do not translate
@@ -123,9 +126,7 @@ features:
       description: Block DX est propulsé par le protocole Blocknet. Tous les services utilisant le protocole Blocknet ont un carnet de commandes partagé et contribuent au même pool de liquidité y compris Block DX.
 
 downloads:
-  # header: Downloads
   subheader: Commencer
-  # intro: 
   macos: MacOS
   windows: Windows
   linux: Linux
@@ -137,22 +138,15 @@ downloads:
   version: Dernière version
 
 stats:
-  # header:  
   subheader: Statistiques
-  # intro: 
   assets: Actifs
-  # assets_val:  # dynamic
   pairs: Paires transigeables
-  # pairs_val:  # dynamic
   trades: Échanges sans confiance
   trades_val: '35000'
   middlemen: Intermédiaire
-  # middlemen_val:  # static (0)
 
 faq:
-  # header: FAQ
   subheader: Questions fréquemment posées
-  # intro: 
   questions:
     - question: Quelles sont les différences entre Block DX, Blocknet, and BLOCK?
       answer: Block DX est une application d'échange décentralisée. L'échange est alimentée par [Blocknet]({{ site.exlink_docs }}), un protocole d'interopérabilité de la chaîne de blocs qui permet la communication, l'interaction et les échanges entre différentes chaînes de blocs publiques et privées. [BLOCK]({{ site.exlink_docs_blockchain }}) est le jeton utilisé pour payer les frais des services sur le réseau de Blocknet, y compris l'échange décentralisée, les données oracle décentralisées hors chaîne, réseau SPV décentralisé et microservices décentralisés.
@@ -183,10 +177,10 @@ faq:
       answer: Block DX n'est actuellement pas compatible avec Electrum, les portefeuilles matériels, les portefeuilles légers ou les portefeuilles Web. Le nœud complet des chaînes de blocs que vous souhaitez échanger doit être téléchargé et synchronisé, ainsi que le [portefeuille Blocknet]({{ site.exlink_wallet_download }}) (utilisé pour alimenter le processus d'échange). Cependant, un tiers développe le premier multiwallet léger décentralisé au monde sur le [protocole Blocknet]({{ site.exlink_docs }}), qui permettra d'utiliser Block DX sans télécharger les blockchains des actifs négociés.
       topic: general, trading  # Do not translate
     - question: Comment un projet peut-il être répertorié sur Block DX?
-      answer: Il n'y a aucun coût à inscrire sur Block DX. Cependant, puisque Block DX utilise des swaps atomiques, la chaîne de blocs de l'actif doit répondre à certaines exigences de compatibilité et de tests. Voir [Actifs listés]({{ lang.global.link_listings }}) pour plus d'informations.
+      answer: Il n'y a aucun coût à inscrire sur Block DX. Cependant, puisque Block DX utilise des swaps atomiques, la chaîne de blocs de l'actif doit répondre à certaines exigences de compatibilité et de tests. Voir [Demande d'inscription]({{ lang.global.link_listing_application }}) pour plus d'informations.
       topic: general, listings, dev # Do not translate
     - question: Block DX peut-il être utilisé dans un navigateur?
-      answer: Àctuellement, Block DX est uniquement disponible en tant qu'application bureautique. Cependant, un tiers développe le premier multiwallet léger décentralisé au monde sur le [protocole Blocknet]({{ site.exlink_blocknet }}), qui rendra possible un échange et une application utilisables dans un navigateur.
+      answer: Àctuellement, Block DX est uniquement disponible en tant qu'application bureautique. Cependant, un tiers développe le premier multiwallet léger décentralisé au monde sur le [protocole Blocknet]({{ site.exlink_docs }}), qui rendra possible un échange et une application utilisables dans un navigateur.
       topic: general, trading # Do not translate
     - question: Combien de temps prennent les transactions?
       answer: Même si les actifs natifs sont échangés et les transactions sont complétées sur leur blockchains respectives, les heures de transaction sont indépendantes des heures de bloc. Block DX est très rapide, les transactions étant généralement effectuées dans les 5 à 15 secondes.
@@ -199,16 +193,13 @@ faq:
       topic: general, dev # Do not translate
 
 subscribe:
-  # header: 
   subheader: Abonnez-vous à notre newsletter
   intro: Restez à jour sur nos dernières fonctionnalités, mises à jour et nouvelles!
   input: Entrer votre adresse courriel
   button: Abonnement
 
 blog1:
-  # header: Blog
   subheader: Articles récents
-  # intro: 
   posts:
     - url: https://blocknet.co/understanding-a-decentralized-exchange/ # Do not translate
       title: Comprendre les échanges décentralisés
@@ -252,7 +243,6 @@ listing_application:
   meta_description: Être coté sur Block DX est 100% gratuit et offre de nombreux avantages au-delà de la simple négociation sur l'échange.
   meta_keywords: block dx, bockdx, listing, application, form, requirements, fee, process, integration
   title: Demande d'inscription
-  # intro: 
   button: Formulaire d'application
   benefits_header: Avantages de l'inscription
   benefits: Être listé sur Block DX présente de nombreux avantages au-delà du simple fait d'être négocié sur l'échange. Le fait d'être répertorié signifie que l'actif a été intégré au [protocole Blocknet]({{ site.exlink_docs }}), qui alimente Block DX et permet de créer d'autres services à l'aide de l'actif. Cela étend la demande, l'utilité et l'accessibilité de l'actif au reste de l'écosystème de la blockchain.
@@ -269,6 +259,54 @@ branding:
   title: Ensemble Média
   intro: Le kit multimédia Block DX comprend les [directives de marque](https://blockdx.com/assets/files/blockdx-brand-guidelines.pdf), les types de fichiers PNG / SVG / ESP et les versions RVB / CMJN / PMS de notre marque .
   button: Télécharger l'ensemble Média
+
+orders:
+  meta_title: Ordres Ouvertes
+  meta_description: Affichez tous les marchés actifs et ouvrez les commandes sur Block DX.
+  meta_keywords: block dx, ordres, ouvertes, carnet de ordres, marchés, actif
+  title: Ordres Ouvertes
+  intro: Sélectionnez un marché pour afficher tous les ordres ouverts sur Block DX.
+  select_market: Sélectionnez un marché actif
+  view_market: Voir le marché
+  view_inverse_market: Afficher le marché inversé
+  asks_subheader: Ordres de Vente
+  asks_button: Afficher les Ordres de Acheter
+  bids_subheader: Ordres de Acheter
+  bids_button: Afficher les Ordres de Vente
+  table_price: Prix
+  table_size: Montant
+  table_total: Total
+  message_loading_orders: Chargement des ordres...
+  message_no_orders: Il n'y a pas de ordres ouvertes
+  message_loading_error: Erreur lors du chargement des ordres
+  alert_loading_error: Erreur lors du chargement des ordres, veuillez essayer de rafraîchir la page
+
+history:
+  meta_title: Histoire de Trading
+  meta_description: Afficher l'historique et les statistiques récentes sur Block DX.
+  meta_keywords: block dx, trading, l'histoire, statistiques
+  title: Histoire de Trading
+  button: Afficher les Statistiques de Trading
+  intro: Sélectionnez un marché pour afficher les transactions sur Block DX au cours des dernières 24 heures.
+  select_market: Sélectionnez un Marché Actif
+  all_markets_option: Tous les Marchés
+  view_market: Voir le marché
+  view_inverse_market: Afficher le marché inversé
+  table_type: Catégorie
+  table_price: Prix
+  table_size: Montant
+  table_total: Total
+  table_time: Temps
+  type_buy: Achat
+  type_sell: Vente
+  time_today: Aujourd'hui
+  time_yesterday: Heir
+  time_at: à
+  message_loading_trades: Historique de chargement...
+  message_no_trades: Aucun métier au cours des dernières 24 heures
+  message_loading_error: Erreur lors du chargement de l'historique
+  alert_loading_error: Erreur lors du chargement de l'historique, veuillez essayer de rafraîchir la page
+  stats_subheader: Statistiques quotidiennes des transactions
 
 e404:
   title: Error
