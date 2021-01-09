@@ -9,7 +9,7 @@ source "https://rubygems.org"
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
 # gem "jekyll", "~> 3.8.6"
-gem "jekyll", "~> 3.8.5"
+gem 'jekyll', '~> 4.2'
 
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 # gem "minima", "~> 2.0"
@@ -22,11 +22,11 @@ gem "jekyll", "~> 3.8.5"
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   # gem "jekyll-feed", "~> 0.6"
-  gem "jekyll-sitemap", "~> 1.2.0"
-  gem "jekyll-last-modified-at", "~> 1.1.0"
+  gem "jekyll-sitemap", "~> 1.4.0"
+  gem "jekyll-last-modified-at", "~> 1.3.0"
   # gem "jekyll-language-plugin", "~> 1.3.5"
-  gem "jekyll-multiple-languages-plugin", "~> 1.6.0"
-  gem "html-proofer", "~> 3.15.0"
+  gem "jekyll-multiple-languages-plugin", "~> 1.7.0"
+  gem "html-proofer", "~> 3.18.5"
   gem "liquify", "~> 0.2.7"
 end
 

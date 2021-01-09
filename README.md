@@ -11,13 +11,39 @@ This repository contains the source code for Blocknet's [Block DX website](https
 
 
 ## Getting Started
+Using Windows 10:
+
+Download & install ruby+devkit 2.7.2 x64 from here https://rubyinstaller.org/downloads/archives/.
+
+Download & install nodejs from here https://nodejs.org/en/
+
+1. Download cURL from the following URL: https://curl.haxx.se/windows/ (I chose 64bit because that's the system I'm using)
+2. Go into the archive and browse to /bin
+3. Locate libcurl_x64.dll (it may be just libcurl.dll)
+4. Extract to your local drive
+5. Rename it to libcurl.dll if it has the _x64 suffix
+6. Cut + paste the file into the /bin directory of your Ruby installation
+
+Open a command console:
+```
+bundle install
+bundle update
+gem uninstall eventmachine
+gem install eventmachine --platform ruby
+bundle exec jekyll serve
+```
 
 Using Linux or MacOS:
 
-1. Install dependencies: `bundle install`
-1. Update dependencies: `bundle update`
-1. Start local server: `bundle exec jekyll serve`
-
+Open a terminal:
+```
+# Install dependencies: 
+bundle install
+# Update dependencies: 
+bundle update
+#Start local server: 
+bundle exec jekyll serve
+```
 You can now see the docs at http://localhost:4400. This will reload automatically when changes are saved.
 
 
