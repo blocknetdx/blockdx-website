@@ -32,11 +32,11 @@ languages: ["en"]
 # Example: 'Block DX requires Blocknet wallet v{{ site.min_wallet_version }} or greater.'
 
 # Version Updates
-blockdx_version: '1.6.0'
-min_wallet_version: '4.1'
-exlink_mac_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.6.0/BLOCK-DX-1.6.0-mac.dmg'
-exlink_win_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.6.0/BLOCK-DX-1.6.0-win.exe'
-exlink_linux_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.6.0/BLOCK-DX-1.6.0-linux.AppImage'
+blockdx_version: '1.9.0'
+min_wallet_version: '4.3'
+exlink_mac_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.9.0/BLOCK-DX-1.9.0-mac.dmg'
+exlink_win_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.9.0/BLOCK-DX-1.9.0-win.exe'
+exlink_linux_download: 'https://github.com/blocknetdx/block-dx/releases/download/v1.9.0/BLOCK-DX-1.9.0-linux.AppImage'
 exlink_all_downloads: 'https://github.com/blocknetdx/block-dx/releases'
 exlink_wallet_download: 'https://github.com/blocknetdx/blocknet/releases/latest'
 
@@ -68,7 +68,7 @@ exlink_listing_application: 'https://docs.google.com/forms/d/e/1FAIpQLScgW8lm9qw
 
 # Social Links
 exlink_github: 'https://github.com/blocknetdx/block-dx'
-exlink_discord: 'https://discord.gg/tuJwdWY'
+exlink_discord: 'https://discord.gg/5az6JsnjsH'
 exlink_twitter: 'https://twitter.com/BlockDXExchange'
 exlink_facebook: 'https://www.facebook.com/BlockDX'
 

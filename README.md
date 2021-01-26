@@ -36,7 +36,7 @@ You can now see the docs at http://localhost:4400. This will reload automaticall
   * All external links should be constrained to the `_config.yml` file.
 * __Components__:
   * Sections - All reusable sections should be placed in `source/_includes/sections`.
-  * Repetitive - Templates should be created for all reptitive content and placed in `source/_includes/templates`.
+  * Repetitive - Templates should be created for all repetitive content and placed in `source/_includes/templates`.
   * Core - All core components used on every page should be placed in `source/_includes`.
 * __Tags/Variables__:
   * Naming - Should be all lowercase and use underscores, no hyphens
@@ -44,7 +44,7 @@ You can now see the docs at http://localhost:4400. This will reload automaticall
     * Correct: `{{ nav.downloads }}`
     * Incorrect: `{{nav.downloads}}`
 * __Asset Info__:
-  * Manifest - Data found in `source/_data/manifest-latest.json`; used to populate Listings table.
+  * Manifest - Data found in `source/_data/manifest-latest.json`; used to populate listings table.
   * Profiles - Data found in `source/_data/profiles/`; used to populate asset profiles.
 * __Resources__:
   * [Jekyll Documentation](https://jekyllrb.com/docs/)
@@ -58,7 +58,7 @@ You can now see the docs at http://localhost:4400. This will reload automaticall
 
 ## Translating
 
-Follow these steps if you'd like to contribute to translating the website to another language. If you are not familiar with how to create a PR, put the translations in a Google Doc and reach out to @hanniabu on [Discord](https://discord.gg/2e6s7H8) with the link. Also feel free to reach out for clarifications on these instructions. Collaborations are encouraged to help cross check the translations! For any questions or clarifications with translating, reach out to @hanniabu.
+Follow these steps if you'd like to contribute to translating the website to another language. If you are not familiar with how to create a PR, put the translations in a Google Doc and reach out to @hanniabu on [Discord](https://discord.gg/2e6s7H8) with the link. Also feel free to reach out for clarifications on these instructions. Collaborations are encouraged to help cross check the translations! For any questions or clarifications with translating, reach out to @shorn.
 
 1. Create a YAML language file in the `source/_i18n/` directory for the language you want to translate the site into. The files should be named after the language abbreviation. For example with French, it would be `source/_i18n/fr.yml`.
 1. Copy the contents of `source/_i18n/en.yml` into this new file and begin translating. For those unfamiliar with YAML, each line starts with a *key*, followed by a colon delimiter, and then the associated text for that key. For example in `lang: English`, *lang* is the key and *English* is the test you'd actually want to translate. For French the translated line would become `lang: Français`. The top level keys (non-indented keys), for example `nav:`, are used for context. So with `nav:`, all the keys/text underneath it (up to the next top level key) is pertaining to the navigation menu.
