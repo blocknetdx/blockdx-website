@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>http://localhost:4400/404/</loc>
+<lastmod>2020-04-29T21:00:13-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4400/branding/</loc>
+<lastmod>2020-04-29T22:31:07-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4400/fees/</loc>
+<lastmod>2020-04-29T21:00:13-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4400/</loc>
+<lastmod>2021-01-26T05:43:58-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4400/listing-application/</loc>
+<lastmod>2020-04-29T21:00:13-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4400/listings/</loc>
+<lastmod>2020-04-29T22:31:07-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4400/assets/files/blockdx-brand-guidelines.pdf</loc>
+<lastmod>2021-01-21T09:46:39-05:00</lastmod>
+</url>
+</urlset>

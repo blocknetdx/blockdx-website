@@ -1,6 +1,6 @@
 *~
 .DS_Store
 /backups/
-/build/
+#/build/
 /vendor/
 /published/
