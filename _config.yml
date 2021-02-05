@@ -13,7 +13,7 @@ data_dir: '_data/'
 timezone: 'America/New_York'
 markdown: 'kramdown'
 livereload: true
-port: 4400
+port: 4000
 sass:
   style: 'compressed'
 # Plugins ignored if building with Github pages

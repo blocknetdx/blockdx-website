@@ -18,6 +18,10 @@ Using Linux or MacOS:
 1. Update dependencies: `bundle update`
 1. Start local server: `bundle exec jekyll serve`
 
+### Docker
+* Docker windows: `docker run --rm --volume=%cd%:/srv/jekyll -p 4000:4000 -it jekyll/builder:3.8.5 jekyll serve`
+* Docker mac/linux: `docker run --rm --volume=$PWD:/srv/jekyll -p 4000:4000 -it jekyll/builder:3.8.5 jekyll serve`
+
 You can now see the docs at http://localhost:4400. This will reload automatically when changes are saved.
 
 
