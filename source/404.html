@@ -8,9 +8,9 @@ permalink: /404/
 ---
 
 
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
-{% 
+{%
   include templates/page-header.html
   title=lang.e404.title
   intro=lang.e404.error

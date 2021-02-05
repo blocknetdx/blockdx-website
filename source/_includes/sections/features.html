@@ -1,25 +1,25 @@
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
 <section id="features" class="section">
   <div class="container">
 
-    {%
+    {%-
       include templates/section-header.html
       header=lang.features.header
       subheader=lang.features.subheader
       p=lang.features.intro
-    %}
+    -%}
 
     <div class="row">
 
-      {% for item in lang.features.items %}
-        {%
+      {%- for item in lang.features.items -%}
+        {%-
           include templates/feature.html
           icon=item.icon
           feature=item.feature
           description=item.description
-        %}
-      {% endfor %}
+        -%}
+      {%- endfor -%}
 
     </div>
   </div>

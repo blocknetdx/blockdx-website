@@ -86,11 +86,14 @@ Follow these steps if you'd like to contribute to translating the website to ano
 ## Publishing
 
 1. Run HTMLProofer to check links: `bundle exec htmlproofer ./build`
+    * Docker windows: `docker run --rm --volume=%cd%:/srv/jekyll -it jekyll/builder:3.8.5 bundle exec htmlproofer ./build`
+    * Docker mac/linux: `docker run --rm --volume=$PWD:/srv/jekyll -it jekyll/builder:3.8.5 bundle exec htmlproofer ./build`
 1. Make sure `url:` in `_config.yml` is correct (not the staging URL).
 1. Build the docs with the `bundle exec jekyll build` command.
 1. Deploy `build/` contents to staging site for testing.
+    * Docker windows: `docker run --rm --volume=%cd%:/srv/jekyll -it jekyll/builder:3.8.5 jekyll build`
+    * Docker mac/linux: `docker run --rm --volume=$PWD:/srv/jekyll -it jekyll/builder:3.8.5 jekyll build`
 1. Deploy `build/` contents to [https://blockdx.com/](https://blockdx.com/).
-
 
 
 
