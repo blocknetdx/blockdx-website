@@ -1,14 +1,14 @@
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
 <section id="downloads" class="section bg-light">
   <div class="container">
 
-    {% 
+    {%-
       include templates/section-header.html
       header=lang.downloads.header
       subheader=lang.downloads.subheader
       p=''
-    %}
+    -%}
 
     <div class="row justify-content-center">
       <div class="col-10 col-sm-10 col-md-4 mb-4 mb-lg-0 dx-animate">
@@ -17,11 +17,11 @@
             <h3 class="heading">{{ lang.downloads.macos | liquify }}</h3>
             <img class="os-logo" style="max-height: 125px;" src="https://blockdx.com/assets/img/apple-logo.svg">
             <hr>
-            {% comment %}
+            {%- comment -%}
             <!-- <a href="{{ site.exlink_mac_setup | liquify }}" class="resource-link d-block">{{ lang.downloads.setup | liquify }}</a>
             <a href="{{ site.exlink_trading | liquify }}" class="resource-link d-block">{{ lang.downloads.trading | liquify }}</a>
             <a href="{{ site.exlink_troubleshooting | liquify }}" class="resource-link d-block">{{ lang.downloads.troubleshooting | liquify }}</a> -->
-            {% endcomment %}
+            {%- endcomment -%}
             <a href="{{ site.exlink_docs_setup | liquify }}" class="resource-link d-block">{{ lang.downloads.setup | liquify }}</a>
             <a href="{{ site.exlink_docs_trading | liquify }}" class="resource-link d-block">{{ lang.downloads.trading | liquify }}</a>
             <hr>
@@ -36,11 +36,11 @@
             <h3 class="heading">{{ lang.downloads.windows | liquify }}</h3>
             <img class="os-logo" style="max-height: 125px;" src="https://blockdx.com/assets/img/windows-logo.svg">
             <hr>
-            {% comment %}
+            {%- comment -%}
             <!-- <a href="{{ site.exlink_windows_setup | liquify }}" class="resource-link d-block">{{ lang.downloads.setup | liquify }}</a>
             <a href="{{ site.exlink_trading | liquify }}" class="resource-link d-block">{{ lang.downloads.trading | liquify }}</a>
             <a href="{{ site.exlink_troubleshooting | liquify }}" class="resource-link d-block">{{ lang.downloads.troubleshooting | liquify }}</a> -->
-            {% endcomment %}
+            {%- endcomment -%}
             <a href="{{ site.exlink_docs_setup | liquify }}" class="resource-link d-block">{{ lang.downloads.setup | liquify }}</a>
             <a href="{{ site.exlink_docs_trading | liquify }}" class="resource-link d-block">{{ lang.downloads.trading | liquify }}</a>
             <hr style="height: 1px;">
@@ -55,11 +55,11 @@
             <h3 class="heading">{{ lang.downloads.linux | liquify }}</h3>
             <img class="os-logo" style="max-height: 125px;" src="https://blockdx.com/assets/img/linux-logo.svg">
             <hr>
-            {% comment %}
+            {%- comment -%}
             <!-- <a href="{{ site.exlink_linux_setup | liquify }}" class="resource-link d-block">{{ lang.downloads.setup | liquify }}</a>
             <a href="{{ site.exlink_trading | liquify }}" class="resource-link d-block">{{ lang.downloads.trading | liquify }}</a>
             <a href="{{ site.exlink_troubleshooting | liquify }}" class="resource-link d-block">{{ lang.downloads.troubleshooting | liquify }}</a> -->
-            {% endcomment %}
+            {%- endcomment -%}
             <a href="{{ site.exlink_docs_setup | liquify }}" class="resource-link d-block">{{ lang.downloads.setup | liquify }}</a>
             <a href="{{ site.exlink_docs_trading | liquify }}" class="resource-link d-block">{{ lang.downloads.trading | liquify }}</a>
             <hr style="height: 1px;">

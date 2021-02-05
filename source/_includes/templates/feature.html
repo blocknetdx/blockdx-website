@@ -1,22 +1,22 @@
 {% assign lang = site.translations[site.lang] %}
 
-{% comment %}
+{%- comment -%}
   <!-- 
   format 1 = centered icon
   format 2 = justfied left icon 
   -->
-{% endcomment %}
+{%- endcomment -%}
 
-{% assign format = '2' %}
-{% if 
+{%- assign format = '2' -%}
+{%- if 
   include.icon and
   include.icon != '' and
   include.feature and
   include.feature != '' and
   include.description and
   include.description != ''
-%}
-  {% if format == '1' %}
+-%}
+  {%- if format == '1' -%}
     <div class="col-lg-4 col-md-6 d-flex dx-animate">
       <div class="feature media d-block text-center h-shadow h-scale">
         <div class="d-flex justify-content-center">
@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-  {% elsif format == '2' %}
+  {%- elsif format == '2' -%}
     <div class="col-lg-4 col-md-6 d-flex dx-animate">
       <div class="feature media d-block h-shadow h-scale">
         <div class="d-flex">
@@ -44,5 +44,5 @@
         </div>
       </div>
     </div>
-  {% endif %}
-{% endif %}
+  {%- endif -%}
+{%- endif -%}

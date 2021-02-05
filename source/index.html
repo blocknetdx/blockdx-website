@@ -8,8 +8,8 @@ permalink: /
 ---
 
 
-{% assign lang = site.translations[site.lang] %}
-{% assign baseurl = site.url | append: lang.global.link_index %}
+{%- assign lang = site.translations[site.lang] -%}
+{%- assign baseurl = site.url | append: lang.global.link_index -%}
 
 <header id="hero">
   <div class="container">
@@ -34,5 +34,5 @@ permalink: /
 {% include sections/stats.html %}
 {% include sections/faq.html %}
 {% include sections/subscribe.html %}
-<!--{% include sections/blog1.html %}-->
+<!-- {% include sections/blog1.html %} -->
 
