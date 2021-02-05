@@ -1,59 +1,59 @@
-{% assign lang = site.translations[site.lang] %}
+{%- assign lang = site.translations[site.lang] -%}
 
 <section id="faq" class="section bg-light">
   <div class="container">
 
-    {% 
+    {%- 
       include templates/section-header.html
       header=lang.faq.header
       subheader=lang.faq.subheader
       p=''
-    %}
+    -%}
 
     <div class="row">
       <div class="col-md-12 dx-animate accordion">
         <div class="row justify-content-center">
           <div class="col-lg-6 col-md-10">
 
-            {% assign faq_section_limit = 14 %}
-            {% assign question_count = lang.faq.questions | size %}
-            {% if faq_section_limit > question_count %}
-              {% assign faq_section_limit = question_count %}
-            {% endif %}
-            {% assign half_limit = faq_section_limit | divided_by: 2 | round %}
+            {%- assign faq_section_limit = 14 -%}
+            {%- assign question_count = lang.faq.questions | size -%}
+            {%- if faq_section_limit > question_count -%}
+              {%- assign faq_section_limit = question_count -%}
+            {%- endif -%}
+            {%- assign half_limit = faq_section_limit | divided_by: 2 | round -%}
 
-            {% for i in (0..half_limit) %}
-              {% if i < half_limit %}
-                {% assign q = lang.faq.questions[i].question %}
-                {% assign a = lang.faq.questions[i].answer %}
-                {% 
+            {%- for i in (0..half_limit) -%}
+              {%- if i < half_limit -%}
+                {%- assign q = lang.faq.questions[i].question -%}
+                {%- assign a = lang.faq.questions[i].answer -%}
+                {%- 
                   include templates/accordion.html
                   section='faq'
                   expanded=false
                   num=i
                   header=q
                   content=a
-                %}
-              {% endif %}
-            {% endfor %}
+                -%}
+              {%- endif -%}
+            {%- endfor -%}
 
           </div>
           <div class="col-lg-6 col-md-10">
 
-            {% for i in (half_limit..faq_section_limit) %}
-              {% if i >= half_limit %}
-                {% assign q = lang.faq.questions[i].question %}
-                {% assign a = lang.faq.questions[i].answer %}
-                {% 
+            {%- for i in (half_limit..faq_section_limit) -%}
+              {%- if i >= half_limit -%}
+                {%- assign q = lang.faq.questions[i].question -%}
+                {%- assign a = lang.faq.questions[i].answer -%}
+                {%- 
                   include templates/accordion.html
                   section='faq'
                   expanded=false
                   num=i
                   header=q
                   content=a
-                %}
-              {% endif %}
-            {% endfor %}
+                -%}
+              {%- endif -%}
+            {%- endfor -%}
 
           </div>
         </div>

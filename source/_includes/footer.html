@@ -1,5 +1,5 @@
-{% assign lang = site.translations[site.lang] %}
-{% assign baseurl = site.url | append: lang.global.link_index %}
+{%- assign lang = site.translations[site.lang] -%}
+{%- assign baseurl = site.url | append: lang.global.link_index -%}
 
 <footer id="footer" class="section bg-dark">
   <div class="container">
@@ -23,11 +23,11 @@
             <li><a href="{{ baseurl | append: '#downloads' }}" class="py-2 d-block">{{ lang.footer.downloads | liquify }}</a></li>
             <li><a href="{{ site.exlink_docs_setup }}" class="py-2 d-block">{{ lang.footer.setup | liquify }}</a></li>
             <li><a href="{{ site.exlink_docs_trading }}" class="py-2 d-block">{{ lang.footer.trading | liquify }}</a></li>
-            {% comment %}
+            {%- comment -%}
             <!-- <li><a href="{{ baseurl | append: lang.global.link_setup }}" class="py-2 d-block">{{ lang.footer.setup | liquify }}</a></li>
             <li><a href="{{ baseurl | append: lang.global.link_trading }}" class="py-2 d-block">{{ lang.footer.trading | liquify }}</a></li>
             <li><a href="{{ baseurl | append: lang.global.link_troubleshooting }}" class="py-2 d-block">{{ lang.footer.troubleshooting | liquify }}</a></li> -->
-            {% endcomment %}
+            {%- endcomment -%}
           </ul>
         </div>
       </div>
@@ -36,12 +36,13 @@
           <h2>{{ lang.footer.learn_header | liquify }}</h2>
           <ul class="list-unstyled">
             <li><a href="{{ baseurl | append: '#features' }}" class="py-2 d-block">{{ lang.footer.features | liquify }}</a></li>
-            {% comment %}
+            {%- comment -%}
             <!-- <li><a href="{{ baseurl | append: lang.global.link_comparisons }}" class="py-2 d-block">{{ lang.footer.comparisons | liquify }}</a></li> -->
             <!-- <li><a href="{{ baseurl | append: lang.global.link_how }}" class="py-2 d-block">{{ lang.footer.how | liquify }}</a></li> -->
-            {% endcomment %}
+            {%- endcomment -%}
             <li><a href="{{ baseurl | append: '#faq' }}" class="py-2 d-block">{{ lang.footer.faq | liquify }}</a></li>
-            <li><a href="{{ baseurl | append: '#blog' }}" class="py-2 d-block">{{ lang.footer.blog | liquify }}</a></li>
+            <!-- <li><a href="{{ baseurl | append: '#blog' }}" class="py-2 d-block">{{ lang.footer.blog | liquify }}</a></li> -->
+            <li><a href="{{ baseurl | append: lang.global.link_branding }}" class="py-2 d-block">{{ lang.footer.branding | liquify }}</a></li>
           </ul>
         </div>
       </div>
@@ -51,15 +52,16 @@
           <ul class="list-unstyled">
             <li><a href="{{ baseurl | append: lang.global.link_listings }}" class="py-2 d-block">{{ lang.footer.listings | liquify }}</a></li>
             <li><a href="{{ baseurl | append: lang.global.link_application }}" class="py-2 d-block">{{ lang.footer.application | liquify }}</a></li>
-            {% comment %}
-            <!-- <li><a href="{{ baseurl | append: lang.global.link_orders }}" class="py-2 d-block">{{ lang.footer.orders | liquify }}</a></li> -->
-            {% endcomment %}
+            <li><a href="{{ baseurl | append: lang.global.link_orders }}" class="py-2 d-block">{{ lang.footer.orders | liquify }}</a></li>
+            <li><a href="{{ baseurl | append: lang.global.link_history }}" class="py-2 d-block">{{ lang.nav.history | liquify }}</a></li>
             <li><a href="{{ baseurl | append: lang.global.link_fees }}" class="py-2 d-block">{{ lang.footer.fees | liquify }}</a></li>
-            <li><a href="{{ baseurl | append: lang.global.link_branding }}" class="py-2 d-block">{{ lang.footer.branding | liquify }}</a></li>
+            {% comment %}
+            <!-- <li><a href="https://twitter.com/dxstats" class="py-2 d-block">{{ lang.footer.stats | liquify }}</a></li> -->
+            {% endcomment %}
           </ul>
         </div>
       </div>
-      {% comment %}
+      {%- comment -%}
       <!-- <div class="col-md">
         <div class="mb-4">
           <h2>{{ lang.footer.developers_header | liquify }}</h2>
@@ -72,7 +74,7 @@
           </ul>
         </div>
       </div> -->
-      {% endcomment %}
+      {%- endcomment -%}
     </div>
     <div class="powered-by mt-5 text-center">
       <a href="{{ site.exlink_blocknet }}">

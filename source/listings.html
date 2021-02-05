@@ -9,11 +9,11 @@ permalink_zh: /列表/
 ---
 
 
-{% assign lang = site.translations[site.lang] %}
-{% assign baseurl = site.url | append: lang.global.link_index %}
-{% assign listing_application = baseurl | append: lang.global.link_application %}
+{%- assign lang = site.translations[site.lang] -%}
+{%- assign baseurl = site.url | append: lang.global.link_index -%}
+{%- assign listing_application = baseurl | append: lang.global.link_application -%}
 
-{% comment %}
+{%- comment -%}
 <!--
 Content notes:
 - uncensored, open network, no listing fee, trading pair freedom
@@ -23,14 +23,12 @@ Content notes:
 
 - Access for everyone. Freedom to trade between any assets. Complete trading pair freedom allowing any coin on Block DX to be traded with any other. Every coin is accepted. There’re no listing fees to be added to Block DX. However, we do preliminary testing to ensure 100% compatibility. Contact us to submit your coin.
 -->
-{% endcomment %}
+{%- endcomment -%}
 
-{% 
+{%
   include templates/page-header.html
   title=lang.listings.title
   intro=lang.listings.intro
-  button_text=lang.listings.button
-  button_link=listing_application
   class='bg-light'
 %}
 
@@ -39,7 +37,7 @@ Content notes:
     <div class="row">
       <div class="col-md-12 dx-animate">
         <div class="table-responsive">
-          <table class="table shadow-sm">
+          <table id="listings-table" class="table shadow-sm">
             <thead class="thead-primary">
               <tr>
                 <th>{{ lang.listings.table_assets | liquify }}</th>
@@ -50,7 +48,7 @@ Content notes:
             </thead>
             <tbody id="dx-tbody">
 
-              {% comment %}
+              {%- comment -%}
                   Example manifest version group entry
                   {
                     "blockchain": "AeriumX",
@@ -68,54 +66,54 @@ Content notes:
                     "xbridge_conf": "aeriumx--v2.0.conf",
                     "wallet_conf": "aeriumx--v2.0.conf"
                   }
-              {% endcomment %}
+              {%- endcomment -%}
 
-              {% comment %}<!-- Create manifest array containing manifest-latest.json data  -->{% endcomment %}
-              {% assign manifest = site.data.manifest-latest %}
+              {%- comment -%}<!-- Create manifest array containing manifest-latest.json data  -->{%- endcomment -%}
+              {%- assign manifest = site.data.manifest-latest -%}
 
-              {% comment %}<!-- Create array of unique blockchain names -->{% endcomment %}
-              {% assign blockchains = manifest | map: "blockchain" | uniq %}
+              {%- comment -%}<!-- Create array of unique blockchain names -->{%- endcomment -%}
+              {%- assign blockchains = manifest | map: "blockchain" | uniq -%}
 
-              {% comment %}<!-- For each unique blockchain name -->{% endcomment %}
-              {% for blockchain in blockchains %}
+              {%- comment -%}<!-- For each unique blockchain name -->{%- endcomment -%}
+              {%- for blockchain in blockchains -%}
 
-                {% comment %}<!-- Temporary string variable to store the wallet versions for each unique blockchain name -->{% endcomment %}
-                {% assign versionList = "" %}
+                {%- comment -%}<!-- Temporary string variable to store the wallet versions for each unique blockchain name -->{%- endcomment -%}
+                {%- assign versionList = "" -%}
 
-                {% comment %}<!-- Create array of version groups that match the unique blockchain name -->{% endcomment %}
-                {% assign groups = manifest | where: "blockchain", blockchain %}
+                {%- comment -%}<!-- Create array of version groups that match the unique blockchain name -->{%- endcomment -%}
+                {%- assign groups = manifest | where: "blockchain", blockchain -%}
 
-                {% comment %}<!-- Temporary variables to reference other info for each unique blockchain name -->{% endcomment %}
-                {% assign currentBlockchain = groups | first %}
-                {% assign blockchainName = currentBlockchain.blockchain %}
-                {% assign blockchainTicker = currentBlockchain.ticker %}
-                {% assign blockchainRepo = currentBlockchain.repo_url %}
+                {%- comment -%}<!-- Temporary variables to reference other info for each unique blockchain name -->{%- endcomment -%}
+                {%- assign currentBlockchain = groups | first -%}
+                {%- assign blockchainName = currentBlockchain.blockchain -%}
+                {%- assign blockchainTicker = currentBlockchain.ticker -%}
+                {%- assign blockchainRepo = currentBlockchain.repo_url -%}
 
-                {% comment %}<!-- For each manifest version groups that matches the unique blockchain name  -->{% endcomment %}
-                {% for group in groups %}
+                {%- comment -%}<!-- For each manifest version groups that matches the unique blockchain name  -->{%- endcomment -%}
+                {%- for group in groups -%}
 
-                  {% comment %}<!-- For each wallet version in that version group -->{% endcomment %}
-                  {% for version in group.versions %}
+                  {%- comment -%}<!-- For each wallet version in that version group -->{%- endcomment -%}
+                  {%- for version in group.versions -%}
 
-                    {% comment %}<!-- Add the version and delimiter to the versionList string -->{% endcomment %}
-                    {% assign versionList = versionList | append: version %}
-                    {% assign versionList = versionList | append: "||" %}
-                  {% endfor %}
-                {% endfor %}
+                    {%- comment -%}<!-- Add the version and delimiter to the versionList string -->{%- endcomment -%}
+                    {%- assign versionList = versionList | append: version -%}
+                    {%- assign versionList = versionList | append: "||" -%}
+                  {%- endfor -%}
+                {%- endfor -%}
 
-                {% comment %}<!-- Create array of versions from the versionList string -->{% endcomment %}
-                {% assign versionListArray =  versionList | split: "||" %}
+                {%- comment -%}<!-- Create array of versions from the versionList string -->{%- endcomment -%}
+                {%- assign versionListArray =  versionList | split: "||" -%}
                 <tr>
                   <td>{{ blockchainName }}</td>
                   <td>{{ blockchainTicker }}</td>
                   <td>
-                    {% for version in versionListArray %}
-                      {% comment %}<!-- kept on same line to avoid a space being added before the comma -->{% endcomment %}
-                      <a href="{{ blockchainRepo }}/releases/tag/{{ version }}" target="_blank">{{ version }}</a>{% if version != versionListArray.last %}, {% endif %}
-                    {% endfor %}
+                    {%- for version in versionListArray -%}
+                      <a href="{{ blockchainRepo }}/releases/tag/{{ version }}" target="_blank">{{ version }}</a>
+                      {%- if version != versionListArray.last -%}, {%- endif -%}
+                    {%- endfor -%}
                   </td>
                 </tr>
-              {% endfor %}
+              {%- endfor -%}
 
             </tbody>
           </table>
@@ -148,9 +146,13 @@ Content notes:
       xhr.open('GET', url);
       xhr.send();
       xhr.onreadystatechange = function(){
-        if (xhr.readyState === 4 && xhr.status === 200){
-          var response = json ? JSON.parse(this.responseText) : this.responseText
-          resolve(response);
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200){
+            var response = json ? JSON.parse(this.responseText) : this.responseText
+            resolve(response);
+          } else {
+            console.log("Failed to load manifest");
+          }
         }
       }
     });
@@ -203,7 +205,7 @@ Content notes:
       table += row;
     }
     document.getElementById("dx-tbody").innerHTML = table;
-    console.log("Dynamically updated listings");
+    console.log("Listings table updated");
   }
 </script>
 
